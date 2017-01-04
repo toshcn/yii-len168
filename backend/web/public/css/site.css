@@ -1,0 +1,422 @@
+label {
+  margin-bottom: 0;
+}
+input[type=checkbox]{
+  border: 1px solid #b4b9be;
+    background: #fff;
+    color: #555;
+    clear: none;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 0;
+    height: 16px;
+    margin: -4px 4px 0 0;
+    outline: 0;
+    padding: 0!important;
+    text-align: center;
+    vertical-align: middle;
+    width: 16px;
+    min-width: 16px;
+    -webkit-appearance: none;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+    -webkit-transition: .05s border-color ease-in-out;
+    transition: .05s border-color ease-in-out;
+}
+input[type=checkbox]:hover,
+input[type=checkbox]:focus{
+  border-color: #5b9dd9;
+  outline: 0;
+  -webkit-box-shadow: 0 0 2px rgba(30,140,190,.8);
+  box-shadow: 0 0 2px rgba(30,140,190,.8);
+}
+input[type=checkbox]:checked:before {
+    content: '\f00c';
+    color: #1e8cbe;
+}
+
+input[type=checkbox]:checked:before {
+    float: left;
+    display: inline-block;
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+    font: 100 14px/1 FontAwesome;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+/** 清除内边距*/
+.no-p-t {
+  padding-top: 0 !important;
+}
+
+.no-p-b {
+  padding-bottom: 0 !important;
+}
+
+.no-p-l {
+  padding-left: 0 !important;
+}
+
+.no-p-r {
+  padding-right: 0 !important;
+}
+
+/** 清除外边距*/
+.no-m-t {
+  margin-top: 0 !important;
+}
+
+.no-m-b {
+  margin-bottom: 0 !important;
+}
+
+.no-m-l {
+  margin-left: 0 !important;
+}
+
+.no-m-r {
+  margin-right: 0 !important;
+}
+
+/** 输入框 */
+.input-label {
+  line-height: 34px;
+  padding: 0 5px;
+  margin: 0;
+}
+
+.input-inline {
+  width: auto;
+}
+.checkbox-label {
+  cursor: pointer;
+}
+/** 手风琴列表 */
+.accordion-container {
+  width: 100%;
+  max-width: 360px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+}
+
+ul.outer-border {
+  list-style-type: none;
+  margin-bottom: 0;
+}
+
+.accordion-section {
+  border-bottom: 1px solid #dfdfdf;
+  margin: 0;
+}
+
+.accordion-section .accordion-section-title {
+  position: relative;
+  margin: 0;
+  height: 48px;
+  border-left: none;
+  border-right: none;
+  padding: 10px 12px;
+  line-height: 28px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.accordion-section.open .accordion-section-title {
+  border-bottom: 1px solid #dfdfdf;
+  background: #f5f5f5;
+}
+
+.control-section:hover .accordion-section-title {
+  background: #f5f5f5;
+}
+
+.accordion-section .accordion-section-title  i {
+  position: absolute;
+  left: auto;
+  font-size: 18px;
+  color: #595959;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+
+.accordion-section .accordion-section-title i.fa-chevron-down {
+  right: 14px;
+  left: auto;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.accordion-section.open .accordion-section-title i.fa-chevron-down {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.accordion-section-content {
+  padding: 18px 13px;
+}
+
+/** 外观菜单 */
+.surface-menu {
+  border: 1px solid #e5e5e5;
+  overflow: hidden;
+}
+
+.surface-menu .ibox-title {
+  border: 0;
+}
+
+.surface-menu .form-group {
+  margin: 0;
+}
+
+/** 分类编辑 折叠列表 start */
+#menu-sortable .dd-item  button {
+  position: absolute;
+  font-family: FontAwesome;
+  height: 32px;
+  width: 33px;
+  color: #c1c1c1;
+}
+
+#menu-sortable .dd-item > button[data-action="expand"]:before {
+  content: "\f067";
+}
+
+#menu-sortable .dd-item > button[data-action="collapse"]:before {
+  content: "\f068";
+}
+
+#menu-sortable .dd-handle {
+  width: 90%;
+  color: inherit;
+  background: #f3f3f4;
+  padding: 10px 0 10px 33px;
+  margin-bottom: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+#menu-sortable .dd-handle .menu-item-title font {
+  font-weight: normal;
+  color: #999;
+}
+#menu-sortable .menu-controls {
+  padding: 0 10px;
+}
+#menu-sortable .dd-handle .menu-controls i.fa-caret-down {
+  -webkit-transition: all .5s ease;
+  -o-transition: all .5s ease;
+  transition: all .5s ease;
+}
+#menu-sortable .menu-item-open .menu-controls i.fa-caret-down {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+#menu-sortable .dd-item  a.menu-item-dropdown {
+  position: absolute;
+  top: 0;
+  right: 10%;
+  float: right;
+  width: 100px;
+  height: 100%;
+  cursor: pointer;
+  display: block;
+  z-index: 10;
+}
+
+.menu-item-settings {
+  display: block;
+  width: 90%;
+  min-height: 160px;
+  padding: 10px;
+  position: relative;
+  z-index: 10;
+  border: 1px solid #e5e5e5;
+  border-top: none;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+  overflow: hidden;
+}
+
+.menu-item-type {
+  display: inline-block;
+  padding: 0 10px;
+  color: #999;
+  font-size: 12px;
+}
+
+.menu-item-actions {
+  padding-top: 15px;
+}
+
+.menu-item-actions .link-to-original {
+  display: block;
+  margin: 0 0 10px;
+  padding: 3px 5px 5px;
+  border: 1px solid #dfdfdf;
+  color: #777;
+  font-size: 12px;
+}
+
+.menu-item-actions .link-to-original a {
+  padding-left: 4px;
+  font-style: normal;
+  text-decoration: underline;
+}
+
+.surface-menu .submitcancel {
+  border-bottom: 1px solid #0073aa;
+  padding: 1px 2px;
+  color: #0073aa;
+  text-decoration: none;
+}
+
+.surface-menu .submitdelete,
+.surface-menu .menu-item-actions .meta-sep,
+.surface-menu .menu-item-actions .submitcancel {
+  display: block;
+  float: left;
+  margin: 6px 0 0 5px;
+  line-height: 15px;
+}
+
+.surface-menu .submitdelete {
+  text-decoration: none;
+  padding: 1px 2px;
+}
+
+.surface-menu .submitdelete {
+  color: #a00;
+}
+
+.surface-menu .submitdelete:hover {
+  color: red;
+  text-decoration: none;
+  border: none;
+}
+
+.surface-menu .submitcancel:hover {
+  background: #0073aa;
+  color: #fff;
+}
+
+.surface-menu .surface-menu-name,
+.surface-menu .nav-menu-footer {
+  padding: 7px 15px 7px;
+  overflow: hidden;
+}
+
+.surface-menu .nav-menu-footer {
+  background: #fff;
+  border-top: 1px solid #f5f5f5;
+}
+
+.surface-menu .menu-settings {
+  border-top: 1px solid #eee;
+  margin-top: 2em;
+  padding-top: 1em;
+}
+
+.surface-menu .menu-settings dl {
+  margin: 0 0 10px;
+  overflow: hidden;
+  padding-left: 18%;
+}
+
+.surface-menu .menu-settings dt {
+  float: left;
+  clear: both;
+  width: 21.951%;
+  padding: 6px 0 0;
+  margin-left: -21.951%;
+}
+
+.surface-menu .menu-settings dd {
+  float: left;
+  margin: 0;
+  width: 100%;
+}
+
+.surface-menu .menu-settings .howto {
+  color: #666;
+  font-style: normal;
+  display: block;
+}
+
+.surface-menu .menu-settings .checkbox-input {
+  margin-top: 4px;
+}
+
+.surface-menu .menu-settings span {
+  height: 22px;
+  line-height: 22px;
+}
+
+/** 手风琴 */
+.categorydiv .tab-pane .panel-body,
+.customlinkdiv .tab-pane .panel-body,
+.posttypediv .tab-pane .panel-body {
+  padding: 0;
+}
+
+.categorydiv .tab-pane .panel-body ul,
+.customlinkdiv .tab-pane .panel-body ul,
+.posttypediv .tab-pane .panel-body ul {
+  min-height: 42px;
+  max-height: 300px;
+  overflow: auto;
+  padding: 0 .9em;
+  margin: -1px;
+  margin-top: 0;
+  border: 1px solid #dfdfdf;
+  border-top: 0;
+  background-color: #fdfdfd;
+}
+
+.categorydiv .tab-pane .panel-body ul li,
+.customlinkdiv .tab-pane .panel-body ul li,
+.posttypediv .tab-pane .panel-body ul li {
+  margin: 0;
+  padding: 0;
+  line-height: 24px;
+  word-wrap: break-word;
+}
+
+.accordion-container .search-result {
+    overflow: auto;
+    margin-top: 10px;
+    padding: 10px 5px;
+    border: 1px solid #eee;
+    max-height: 300px;
+}
+/** 手风琴end */
+
+.backend-head-box,
+.backend-left-box,
+.backend-right-box {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.white-box {
+    background: white;
+    padding: 10px;
+}
+.menu-search-box {
+  overflow: hidden;
+}
+
+.simple-txt {
+  font-weight: normal;
+}
+
+
+
+
+
+
