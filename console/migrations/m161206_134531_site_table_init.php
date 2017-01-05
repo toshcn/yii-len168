@@ -170,8 +170,8 @@ class m161206_134531_site_table_init extends Migration
             'parent' => $this->integer()->unsigned()->notNull()->defaultValue(0)->comment('父级termid'),
             'counts' => $this->integer()->unsigned()->notNull()->defaultValue(0)->comment('分类文章数'),
         ], $tableOptions);
-        $this->createIndex('index-terms-parent', self::TB_AUTH, ['termid']);
-        $this->createIndex('index-terms-counts', self::TB_AUTH, ['counts']);
+        $this->createIndex('index-terms-parent', self::TB_TERMS, ['termid']);
+        $this->createIndex('index-terms-counts', self::TB_TERMS, ['counts']);
 
         /**
          * menu菜单表数据结构
