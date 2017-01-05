@@ -51,7 +51,7 @@ class SiteController extends Controller
      * 首页
      */
     public function actionIndex()
-    {echo Yii::$app->getSecurity()->generateRandomString(12);die;
+    {
         $post = new PostViews();
 
         $query = $post->getNicePostViews()
