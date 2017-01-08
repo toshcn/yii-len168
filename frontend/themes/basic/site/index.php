@@ -7,7 +7,6 @@ use yii\widgets\LinkPager;
 use frontend\assets\SiteIndexAsset;
 
 /* @var $this yii\web\View */
-$this->title = 'My Yii Application';
 $this->params['bodyClass'] = 'gray-bg';
 $this->params['route'] = '';
 
