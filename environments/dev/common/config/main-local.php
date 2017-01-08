@@ -48,19 +48,15 @@ return [
             'useFileTransport' => false,
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp.163.com',
-                //'host' => 'smtp.qq.com',
+                'host' => 'smtp.aliyun.com',
                 'port' => 465,
                 'encryption' => 'ssl',//tls or ssl
-                //'username' => 'toshcn@foxmail.com',
-                //'password' => '',
-                'username' => 'potian79@163.com',
+                'username' => 'len168@len168.com',
                 'password' => '',
             ],
             'messageConfig' => [
                 'charset' => 'UTF-8',
-                //'from' => ['toshcn@foxmail.com' => '水木瓜'],
-                'from' => ['potian79@163.com' => 'len168'],
+                'from' => ['len168@len168.com' => 'len168'],
             ],
         ],
         'beanstalk'=>[
