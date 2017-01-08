@@ -468,9 +468,7 @@ class m161206_134531_site_table_init extends Migration
     public function createPostViewTable()
     {
         $sql = 'CREATE
-                ALGORITHM = UNDEFINED
-                DEFINER = `root`@`localhost`
-                SQL SECURITY DEFINER
+
                 VIEW ' . self::TB_POST_VIEWS . ' AS
                     SELECT
                         `p`.`postid` AS `postid`,
