@@ -5,14 +5,6 @@
  * @license http://www.len168.com/license/
  */
 
-
-//配置 跨域SESSION 和 COOKIE
-define('DOMAIN', 'yii.my');
-define('DOMAIN_HOME', 'www.' . DOMAIN);
-define('DOMAIN_BACKEND', 'admin.' . DOMAIN);
-define('DOMAIN_API', 'api.' . DOMAIN);
-define('DOMAIN_USER_CENTER', 'user.' . DOMAIN);
-define('DOMAIN_LOGIN', 'login.' . DOMAIN);
 return [
     'language'   => 'zh-CN',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
@@ -27,12 +19,6 @@ return [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
             'defaultRoles' => ['admin', 'author'],
-        ],
-        'user' => [
-            'class' => 'yii\web\User',
-            'identityClass' => 'common\models\User',
-            'identityCookie' => ['name' => '_identity', 'httpOnly' => true, 'domain' => '.' . DOMAIN],
-            'enableAutoLogin' => false,
         ],
         'i18n' => [
             'translations' => [

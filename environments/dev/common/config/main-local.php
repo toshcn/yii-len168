@@ -1,4 +1,19 @@
 <?php
+/**
+ * @link http://www.len168.com/
+ * @copyright Copyright (c) 2015 len168.com
+ * @license http://www.len168.com/license/
+ */
+
+
+//配置 跨域SESSION 和 COOKIE
+define('DOMAIN', '');
+define('DOMAIN_HOME', 'www.' . DOMAIN);
+define('DOMAIN_BACKEND', 'admin.' . DOMAIN);
+define('DOMAIN_API', 'api.' . DOMAIN);
+define('DOMAIN_USER_CENTER', 'user.' . DOMAIN);
+define('DOMAIN_LOGIN', 'login.' . DOMAIN);
+
 return [
     'components' => [
         'db' => [
@@ -7,6 +22,12 @@ return [
             'username' => 'root',
             'password' => '123456',
             'charset' => 'utf8',
+        ],
+        'user' => [
+            'class' => 'yii\web\User',
+            'identityClass' => 'common\models\User',
+            'identityCookie' => ['name' => '_identity', 'httpOnly' => true, 'domain' => '.' . DOMAIN],
+            'enableAutoLogin' => false,
         ],
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
