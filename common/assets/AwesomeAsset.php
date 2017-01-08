@@ -15,7 +15,7 @@ class AwesomeAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'public/font/font-awesome/css/font-awesome.css',
+        'public/font/font-awesome/css/font-awesome.min.css',
     ];
     public $js = [
     ];
