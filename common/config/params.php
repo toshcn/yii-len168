@@ -1,7 +1,7 @@
 <?php
 return [
-    'adminEmail' => 'toshcn@toshcn.com',
-    'supportEmail' => 'support@example.com',
+    'adminEmail' => 'len168@len168.com',
+    'supportEmail' => 'toshcn@foxmail.com',
     'siteDomain' => 'len168.com',
     'siteCopyright' => 'Copyright len168.com © 2017',
     'httpProtocol' => 'http',
