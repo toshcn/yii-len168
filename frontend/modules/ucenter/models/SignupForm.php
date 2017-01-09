@@ -160,9 +160,9 @@ class SignupForm extends Model
                 //必需同时写入会员登录表，会员资料表，会员财富表, 关注表才会注册成功
                 if ($invitate->update(false) && $login->save(false) && $userInfo->save(false) && $follower->save(false)) {
                     //头像文件夹
-                    $path = Yii::getAlias('@frontend/web'). Yii::$app->params['image.relativePath'] . $user->id . '/avatar/';
+                    $path = Yii::getAlias(Yii::$app->params['image.basePath']) . Yii::$app->params['image.relativePath'] . $user->id . '/' . Yii::$app->params['avatar.dirName'];
                     if (!is_dir($path)) {
-                        mkdir($path, 0764, true);
+                        @mkdir($path, 0764, true);
                     }
 
                     $transaction->commit();//提交事务

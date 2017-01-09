@@ -13,6 +13,7 @@ use yii\console\Controller;
 use common\models\User;
 use common\models\UserLogin;
 use common\models\UserInfo;
+
 /**
  * Application initialization console controllers to create Administrator and something.
  * 命令行 初始化控制器，初始化创建管理员帐号和一些其它初始化的事情。
@@ -20,8 +21,8 @@ use common\models\UserInfo;
  * @author xiaohao <toshcn@foxmail.com>
  * @since 0.1
  */
- class InitController extends Controller
- {
+class InitController extends Controller
+{
     /**
      * createAdministrator 创建超级管理员帐号
      * @return [type] [description]
@@ -63,7 +64,7 @@ use common\models\UserInfo;
                     //必需同时写入会员登录表，会员资料表，会员财富表才会注册成功
                     if ($login->save(false) && $userInfo->save(false)) {
                         //头像文件夹
-                        $path = Yii::getAlias(Yii::$app->params['image.basePath']) . Yii::$app->params['image.relativePath'] . $user->getId() . '/avatar/';
+                        $path = Yii::getAlias(Yii::$app->params['image.basePath']) . Yii::$app->params['image.relativePath'] . $user->id . '/' . Yii::$app->params['avatar.dirName'];
                         if (!is_dir($path)) {
                             mkdir($path, 0774, true);
                         }
@@ -80,7 +81,6 @@ use common\models\UserInfo;
                     $transaction->rollback();//事务回滚
                     return self::EXIT_CODE_ERROR;
                 }
-
             } catch (Exception $e) {
                 $transaction->rollback();//事务回滚
                 echo "错误：$e\n";
@@ -90,4 +90,4 @@ use common\models\UserInfo;
         echo "已取消 \n";
         return self::EXIT_CODE_NORMAL;
     }
- }
+}
