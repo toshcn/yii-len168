@@ -54,7 +54,7 @@ $this->title = '重置密码';
                     ->passwordInput(['autocomplete' => 'off', 'placeholder' => '确认密码', 'class' => "form-control"]) ?>
 
             <div class="item">
-                <a href="javascript:;" class="item-btn" id="account-submit">重置密码</a>
+                <a href="javascript:;" class="item-btn btn-warning" id="account-submit">重置密码</a>
             </div>
             <?php ActiveForm::end();?>
         </div>
