@@ -262,13 +262,13 @@
     color: #FFFFFF;
 }
 .login-frame .signup-btn {
-    background-color: #fff;
     color: #333!important;
     border-color: #cccccc;
     box-shadow: 0px 1px 1px rgba(0,0,0,0.15);
 }
 .login-frame .signup-btn:hover {
     color: #f7671d;
+    background-color: #fff;
 }
 
 /** message-widget css */
@@ -1424,7 +1424,7 @@ a.slide-control:active {
     padding: 10px 0;
     min-height: 100px;
     color: #FFFFFF;
-    background: #339999;
+    background: #336666;
     overflow: hidden;
     clear: both;
 }
@@ -2335,14 +2335,23 @@ margin: 12px 0 0 -15px;
     font-size: 14px;
 }
 .footer a:hover {
+    color: #3399CC;
+}
+.footer .footer-menu li a:hover {
     color: #FFCC00;
 }
-.footer-menu {
+.footer .footer-menu {
     text-align: center;
 }
-.footer-menu li a {
+.footer .footer-menu li a {
     color: #fff;
     font-size: 16px;
+}
+.login-footer .footer-menu li a {
+    color: #1ab394;
+}
+.login-footer .footer-menu li a:hover {
+    color: #FFCC00;
 }
 /** 不同窗口宽度设置 css */
 

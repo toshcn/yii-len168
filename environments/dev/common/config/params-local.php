@@ -4,6 +4,7 @@ return [
     'supportEmail' => 'support@example.com',
     'siteDomain' => 'len168.com',
     'siteCopyright' => 'Copyright len168.com © 2017',
+    'siteRecordNumber' => '粤ICP备15089474号',
     'httpProtocol' => 'http',
     'siteHost' => [
         'http' => 'http://www.example.com',

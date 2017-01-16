@@ -23,9 +23,23 @@ return [
             'password' => '',
             'charset' => 'utf8',
         ],
+        'cache' => [
+           'class' => 'yii\caching\MemCache',
+           'servers' => [
+               [
+                   'host' => '127.0.0.1',
+                   'port' => 11211,
+                   'weight' => 60,
+               ],
+            ]
+        ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
+            'messageConfig' => [
+                'charset' => 'UTF-8',
+                'from' => ['test@test.com' => 'test'],
+            ],
         ],
         'user' => [
             'class' => 'yii\web\User',

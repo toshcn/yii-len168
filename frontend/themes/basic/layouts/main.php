@@ -93,14 +93,13 @@ $this->params['footerMenus'] = $navMenuObj->getFooterNavMenuItems();
             <div class="top-uinfo pull-right">
                 <ul class="list-inline">
                 <?php
-                    if (Yii::$app->user->isGuest) {
-                        echo '<li>' . Html::a('欢迎进来吐槽 请登录 ', null, ['href' => Url::to(['/ucenter/account/login'],  Yii::$app->params['httpProtocol'])]) . '</li>';
-                        echo '<li>' . Html::a('<i class="fa fa-user-plus"></i> 注册', null, ['href' => Url::to(['/ucenter/account/signup'], Yii::$app->params['httpProtocol'])]) . '</li>';
-
-                    } else {
-                        echo '<li>' . Html::a('<i class="fa fa-user"></i> '.Yii::$app->user->identity->nickname, null, ['href' => Url::to(['/ucenter/user/index'], Yii::$app->params['httpProtocol'])]).'</li>';
-                        echo '<li>' . Html::a('<i class="fa fa-power-off"></i> 退出', null, ['href' => Url::to(['/site/logout'], Yii::$app->params['httpProtocol']), 'data-method' => 'post']). '</li>';
-                    }
+                if (Yii::$app->user->isGuest) {
+                    echo '<li>' . Html::a('欢迎进来吐槽 请登录 ', null, ['href' => Url::to(['/ucenter/account/login'], Yii::$app->params['httpProtocol'])]) . '</li>';
+                    echo '<li>' . Html::a('<i class="fa fa-user-plus"></i> 注册', null, ['href' => Url::to(['/ucenter/account/signup'], Yii::$app->params['httpProtocol'])]) . '</li>';
+                } else {
+                    echo '<li>' . Html::a('<i class="fa fa-user"></i> '.Yii::$app->user->identity->nickname, null, ['href' => Url::to(['/ucenter/user/index'], Yii::$app->params['httpProtocol'])]).'</li>';
+                    echo '<li>' . Html::a('<i class="fa fa-power-off"></i> 退出', null, ['href' => Url::to(['/site/logout'], Yii::$app->params['httpProtocol']), 'data-method' => 'post']). '</li>';
+                }
                 ?>
                 </ul>
             </div>
@@ -131,7 +130,10 @@ $this->params['footerMenus'] = $navMenuObj->getFooterNavMenuItems();
                 </div>
                 <div class="col-sm-12">
                     <div class="site-detail">
-                        <p>Copyright len168.com © 2015-2016 <a href="http://www.miitbeian.gov.cn" target="_blank" rel="nofollow">粤ICP备15089474号</a></p>
+                        <p>
+                            <?= Yii::$app->params['siteCopyright'] ?>
+                            <a href="http://www.miitbeian.gov.cn" target="_blank" rel="nofollow"><?= Yii::$app->params['siteRecordNumber'] ?></a>
+                        </p>
                     </div>
                 </div>
             </div>

@@ -1,8 +1,15 @@
 <?php
+/**
+ * @link http://www.len168.com/
+ * @copyright Copyright (c) 2015 len168.com
+ * @license http://www.len168.com/license/
+ */
 
 use yii\helpers\Html;
 use frontend\assets\AccountAsset;
 use common\widgets\JsBlock;
+use yii\widgets\Menu;
+use common\models\NavMenu;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -10,6 +17,9 @@ use common\widgets\JsBlock;
 $this->params['bodyClass'] = isset($this->params['bodyClass']) ? $this->params['bodyClass'] : 'gray-bg';
 
 AccountAsset::register($this);
+$navMenuObj = new NavMenu(['navMenuId' => 2]);
+$navMenuObj->setNavMenuItems();
+$this->params['footerMenus'] = $navMenuObj->getFooterNavMenuItems();
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -45,22 +55,38 @@ AccountAsset::register($this);
 
     <div class="login-footer">
         <div class="link-area clearfix">
-            <ul class="list-inline">
-                <li>关于本站</li>
-            </ul>
+            <?php
+                echo Menu::widget([
+                    'options' => ['class' => ['list-inline footer-menu']],
+                    'submenuTemplate' => "",
+                    'encodeLabels' => false,
+                    'activateParents' => false,
+                    //'route' => 'article/detail',//$this->params['route'],
+                    'items' => $this->params['footerMenus'],
+                    ]);
+                //var_dump($this->params['footerMenus']);
+            ?>
+            <div class="site-detail">
+                <p>
+                    <?= Yii::$app->params['siteCopyright'] ?>
+                    <a href="http://www.miitbeian.gov.cn" target="_blank" rel="nofollow"><?= Yii::$app->params['siteRecordNumber'] ?></a>
+                </p>
+            </div>
         </div>
     </div>
 
     <?php JsBlock::begin() ?>
     <script>
+        var btn;
         jQuery(function($) {
             $(document).ready(function() {
                 $('#account-submit').on('click.account', submitAccountForm);
+                btn = $('#account-submit').text();
             });
         });
         function submitAccountForm() {
             $('#account-submit').off('click.account');
-            var btn = $('#account-submit').text();
+
             $('#account-submit').html('<i class="fa fa-spinner fa-spin"></i>');
             setTimeout(function() {
                 $('#account-form').submit();
