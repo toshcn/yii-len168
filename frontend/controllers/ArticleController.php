@@ -83,14 +83,17 @@ class ArticleController extends Controller
      */
     public function actionDetail()
     {
+        $uid = Yii::$app->user->getId();
         $postid = Yii::$app->getRequest()->get('id', 0);
         $model = new PostViews();
         $post = $model->getPostViewsByPost($postid)->asArray()->one();
 
         if (!$post) {
-            throw new HttpException(404, '您在访问的文章未发表或非公开!');
+            throw new HttpException(404, '您在访问的文章不存在!');
         }
         if ($post['status'] == Posts::STATUS_DRAFT && $post['user_id'] != Yii::$app->getUser()->getId()) {
+            throw new HttpException(404, '您在访问的文章未发表或非公开!');
+        } else if (!$post['isopen'] && $post['user_id'] != $uid) {
             throw new HttpException(404, '您在访问的文章未发表或非公开!');
         }
 
@@ -101,7 +104,7 @@ class ArticleController extends Controller
         $myComment = [];
         if (!Yii::$app->user->isGuest) {
             $comment = new Comments();
-            $myComment = $comment->getUserComment($postid, Yii::$app->user->getId())->asArray()->one();
+            $myComment = $comment->getUserComment($postid, $uid)->asArray()->one();
             if ($myComment) {
                 $myComment['progress'] = $myComment['hp'] < Comments::DEFAULT_HP ? $myComment['hp'] / Comments::DEFAULT_HP * 100 : 100;
                 $myComment['standStr'] = $comment->transformCommentStand($myComment['stand']);

@@ -94,7 +94,7 @@ class Posts extends \yii\db\ActiveRecord
             'title'         => Yii::t('common/label', 'Post Title'),
             'author'        => Yii::t('common/label', 'Author'),
             'image'         => Yii::t('common/label', 'Post Main Image'),
-            'imageSuffix'  => Yii::t('common/label', 'Post Main Image Suffix'),
+            'imageSuffix'   => Yii::t('common/label', 'Post Main Image Suffix'),
             'categorys'     => Yii::t('common/label', 'Categorys'),
             'content'       => Yii::t('common/label', 'Post Content'),
             'content_len'   => Yii::t('common/label', 'Post Content length'),
@@ -261,8 +261,101 @@ class Posts extends \yii\db\ActiveRecord
         return $status;
     }
 
+    /**
+     * 状态map
+     * @return array
+     */
+    public static function getStatusMap()
+    {
+        return [
+            '' => '请选择',
+            self::STATUS_DELETED => '已删除',
+            self::STATUS_DRAFT => '草稿',
+            self::STATUS_ONLINE => '已发表',
+        ];
+    }
+
+    /**
+     * boolean map yes or no
+     * @return array
+     */
+    public static function getBooleanMap()
+    {
+        return [
+            '' => '请选择',
+            self::YES => '是',
+            self::NO => '否',
+        ];
+    }
+
+    /**
+     * 最近文章
+     * @param  string  $column [description]
+     * @param  integer $limit  [description]
+     * @return [type]          [description]
+     */
     public function getPostRecent($column = '*', $limit = 10)
     {
         return $this->find()->select($column)->where(['status' => Posts::STATUS_ONLINE])->limit(intval($limit))->asArray()->all();
+    }
+
+    /**
+     * 置顶文章
+     * @param  integer $stick 置顶状态0,1
+     * @param  array|integer $id    文章id
+     * @return boolean
+     */
+    public static function stick($stick, $id)
+    {
+        if (!is_array($id)) {
+            $id = [$id];
+        }
+
+        return (boolean) static::updateAll(
+            ['isstick' => (int) $stick],
+            [
+                'postid' => $id
+            ]
+        );
+    }
+
+    /**
+     * 推荐文章
+     * @param  integer $nice 推荐状态0,1
+     * @param  array|integer $id    文章id
+     * @return boolean
+     */
+    public static function nice($nice, $id)
+    {
+        if (!is_array($id)) {
+            $id = [$id];
+        }
+
+        return (boolean) static::updateAll(
+            ['isnice' => (int) $nice],
+            [
+                'postid' => $id
+            ]
+        );
+    }
+
+    /**
+     * 锁定文章
+     * @param  integer $lock 锁定状态0,1
+     * @param  array|integer $id    文章id
+     * @return boolean
+     */
+    public static function lock($lock, $id)
+    {
+        if (!is_array($id)) {
+            $id = [$id];
+        }
+
+        return (boolean) static::updateAll(
+            ['islock' => (int) $lock],
+            [
+                'postid' => $id
+            ]
+        );
     }
 }

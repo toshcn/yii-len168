@@ -3,25 +3,28 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\controllers\MainController;
-use common\models\Users;
-use backend\models\UsersSearch;
-use yii\web\Controller;
+use yii\web\Response;
+use common\models\User;
+use backend\models\UserSearch;
+use backend\controllers\AuthController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends MainController
+class UserController extends AuthController
 {
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -33,11 +36,10 @@ class UserController extends MainController
      */
     public function actionIndex()
     {
-        $searchModel = new UsersSearch();
+        $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'route'     => $this->route,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -51,7 +53,6 @@ class UserController extends MainController
     public function actionView($id)
     {
         return $this->render('view', [
-            'route'     => $this->route,
             'model' => $this->findModel($id),
         ]);
     }
@@ -63,15 +64,12 @@ class UserController extends MainController
      */
     public function actionCreate()
     {
-        $model = new Users();
-        $model->scenario = 'create';
-        //$model->created_at = date('Y-m-d H:i:s');
-        //var_dump($model->load(Yii::$app->request->post()) && $model->load(Yii::$app->request->post()) &&$model->save());die;
+        $model = new User();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->uid]);
         } else {
             return $this->render('create', [
-                'route'     => $this->route,
                 'model' => $model,
             ]);
         }
@@ -91,7 +89,6 @@ class UserController extends MainController
             return $this->redirect(['view', 'id' => $model->uid]);
         } else {
             return $this->render('update', [
-                'route'     => $this->route,
                 'model' => $model,
             ]);
         }
@@ -110,6 +107,23 @@ class UserController extends MainController
         return $this->redirect(['index']);
     }
 
+
+    /**
+     * 更改状态
+     * @return json
+     */
+    public function actionAjaxStatus()
+    {
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
+        $status = Yii::$app->getRequest()->post('status');
+        $id = Yii::$app->getRequest()->post('id', []);
+        if ($id && $status !== null) {
+            return ['ok' => User::status($status, $id)];
+        }
+
+        return ['ok' => 0];
+    }
+
     /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -119,7 +133,7 @@ class UserController extends MainController
      */
     protected function findModel($id)
     {
-        if (($model = Users::findOne($id)) !== null) {
+        if (($model = User::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

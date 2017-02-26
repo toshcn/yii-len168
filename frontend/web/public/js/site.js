@@ -87,12 +87,12 @@
         } else {
             $('#message-at').text($(this).attr('data-at'));
             $('#message-to-user').val($(this).attr('data-user'));
-            showMessageWidget();
+            showMessageWidget('#message-widget');
         }
     });
     //关闭发纸条弹出框
-    $('#message-widget-close').on('click.closeMessageWidget', function() {
-        hideMessageWidget();
+    $('[name="message-widget-close"]').on('click.closeMessageWidget', function() {
+        hideMessageWidget($(this).attr('data-close'));
     });
     $('#send-message-btn').on('click.sendMessage', sendMessage);
     /*var wh = $(window).height(); //浏览器当前窗口可视区域高度
@@ -127,21 +127,21 @@ function hideLoginWidget() {
     $('#fade-layout').hide();
 }
 //显示纸条小部件
-function showMessageWidget() {
+function showMessageWidget(id) {
     var wh = $(window).height(); //浏览器当前窗口可视区域高度
     var dw = $(document).width();//浏览器当前窗口文档对象宽度
-    $('#message-widget').show();
+    $(id).show();
     $('#fade-layout').show();
-    var w = $('#message-widget').width();
-    var h = $('#message-widget').height();
+    var w = $(id).width();
+    var h = $(id).height();
     var top = wh > h ? (wh - h) / 2 : 0;//顶部浮动像素
     var left = dw > w ? (dw - w) / 2 : 0;//左边浮动像素
     console.log([top, left])
-    $('#message-widget').css({"top": top, "left": left});
+    $(id).css({"top": top, "left": left});
 }
 //隐藏纸条小部件
-function hideMessageWidget() {
-    $('#message-widget').hide();
+function hideMessageWidget(id) {
+    $(id).hide();
     $('#fade-layout').hide();
 }
 //设置OS, 浏览器

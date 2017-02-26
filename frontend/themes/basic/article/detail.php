@@ -18,7 +18,7 @@ ArticleAsset::register($this);
 $this->title = Url::to(['/ucenter/account/signup', 'code' => 1], Yii::$app->params['httpProtocol']);
 $this->params['bodyClass'] = 'gray-bg';
 $my = Yii::$app->user->getIdentity();
-
+$canComment = !$post['islock'] && !$post['isdie'] && $post['iscomment'] ? 1 : 0;
 ?>
 <div class="wrapper article-wrapper w-center">
     <div class="row">
@@ -71,66 +71,76 @@ $my = Yii::$app->user->getIdentity();
 
                 <div class="article-content">
                     <!-- 文章内容 -->
-                    <div class="word-content" name="content-md" id="word-content"><?= Html::encode($post['content']) ?></div>
+                    <div class="word-content" name="content-md" id="word-content"><?= $post['islock'] ? '本文已被锁定，暂时无法显示。' : Html::encode($post['content']); ?></div>
                 </div>
 
                 <?php if (!$myComment) { ?>
-                <div class="comment-area">
-                    <h3>我要点评</h3>
-                    <hr>
-                    <?php if (Yii::$app->user->isGuest) { ?>
+                    <?php if ($canComment) {?>
+                    <div class="comment-area">
+                        <h3>我要点评</h3>
+                        <hr>
+                        <?php if (Yii::$app->user->isGuest) { ?>
 
-                    <div class="send-comment-login">
-                        <button type="button" class="btn btn-info" id="send-comment-login">登录后评论</button>
-                    </div>
+                        <div class="send-comment-login">
+                            <button type="button" class="btn btn-info" id="send-comment-login">登录后评论</button>
+                        </div>
 
-                    <?php } else {?>
+                        <?php } else {?>
 
-                    <div class="send-comment-form">
-                        <div class="comment-author author author-widget">
-                            <a class="">
-                                <img class="img-circle" src="<?= Yii::$app->user->getIdentity()->head; ?>" alt="image" width="50" height="50">
-                            </a>
-                            <div class="author-info-box js-uinfo-box animated flipInY" data-author="<?= Yii::$app->user->getId() ?>">
-                                <div class="author-info-loading">
-                                    <div class="sk-spinner sk-spinner-wave">
-                                        <div class="sk-rect1"></div>
-                                        <div class="sk-rect2"></div>
-                                        <div class="sk-rect3"></div>
-                                        <div class="sk-rect4"></div>
-                                        <div class="sk-rect5"></div>
-                                    </div> 加载中
+                        <div class="send-comment-form">
+                            <div class="comment-author author author-widget">
+                                <a class="">
+                                    <img class="img-circle" src="<?= Yii::$app->user->getIdentity()->head; ?>" alt="image" width="50" height="50">
+                                </a>
+                                <div class="author-info-box js-uinfo-box animated flipInY" data-author="<?= Yii::$app->user->getId() ?>">
+                                    <div class="author-info-loading">
+                                        <div class="sk-spinner sk-spinner-wave">
+                                            <div class="sk-rect1"></div>
+                                            <div class="sk-rect2"></div>
+                                            <div class="sk-rect3"></div>
+                                            <div class="sk-rect4"></div>
+                                            <div class="sk-rect5"></div>
+                                        </div> 加载中
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="comment-editer">
-                        <?php $form = ActiveForm::begin([
-                            'id' => 'send-comment-form',
-                        ]);?>
-                            <div class="form-group comment-editer-ibox">
-                                <textarea class="form-control" name="send[comment]" rows="5" placeholder="评论内容不少于五个字！支持Markdown语法"></textarea>
-                                <div class="word-len">
-                                    <span class="pull-left">说说你的看法, 请文明用语，遵守法律法规！</span>
-                                    你已输入<b id="comment-length">0</b>个字，还可以输入<b id="comment-can-length"><?= Comments::TEXT_MAX_LENGHT ?></b>个字！
+                            <div class="comment-editer">
+                            <?php $form = ActiveForm::begin([
+                                'id' => 'send-comment-form',
+                            ]);?>
+                                <div class="form-group comment-editer-ibox">
+                                    <textarea class="form-control" name="send[comment]" rows="5" placeholder="评论内容不少于五个字！支持Markdown语法"></textarea>
+                                    <div class="word-len">
+                                        <span class="pull-left">说说你的看法, 请文明用语，遵守法律法规！</span>
+                                        你已输入<b id="comment-length">0</b>个字，还可以输入<b id="comment-can-length"><?= Comments::TEXT_MAX_LENGHT ?></b>个字！
+                                    </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="radio-inline green">
+                                        <input type="radio" name="send[stand]" value="1" checked>
+                                        <i class="fa fa-thumbs-o-up"></i>点赞
+                                    </label>
+                                    <label class="radio-inline red">
+                                        <input type="radio" name="send[stand]" value="-1">
+                                        <i class="fa fa-thumbs-o-down"></i>吐槽
+                                    </label>
+                                    <button class="btn btn-xs btn-success pull-right" type="button" id="send-comment">发表</button>
+                                </div>
+                            <?php ActiveForm::end(); ?>
                             </div>
-                            <div class="form-group">
-                                <label class="radio-inline green">
-                                    <input type="radio" name="send[stand]" value="1" checked>
-                                    <i class="fa fa-thumbs-o-up"></i>点赞
-                                </label>
-                                <label class="radio-inline red">
-                                    <input type="radio" name="send[stand]" value="-1">
-                                    <i class="fa fa-thumbs-o-down"></i>吐槽
-                                </label>
-                                <button class="btn btn-xs btn-success pull-right" type="button" id="send-comment">发表</button>
-                            </div>
-                        <?php ActiveForm::end(); ?>
+                        </div>
+
+                        <?php } ?>
+                    </div>
+                    <?php } else { ?>
+                    <div class="comment-area">
+                        <h3>我要点评</h3>
+                        <hr>
+                        <div class="send-comment-login">
+                            评论已关闭
                         </div>
                     </div>
-
                     <?php } ?>
-                </div>
                 <?php } else {
                 ?>
                 <div class="my-comment" id="my-comment">
@@ -314,8 +324,33 @@ $my = Yii::$app->user->getIdentity();
         </div>
     </div>
 </div>
+<!-- 无法评论提示弹出层 -->
+<div class="message-widget" id="cannot-comment-widget" style="display:none">
+    <div class="message-widget-box">
+        <div class="message-widget-title">提示</div>
+        <div class="message-widget-close">
+            <a class="close-icon" name="message-widget-close" data-close="#cannot-comment-widget" title="关闭">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+        <div class="message-widget-content" node-type="inner">
+            <div class="message-frame">
+                <div class="form-group">
+                    <label class="text-center">本文评论暂时被关闭。</label>
+                </div>
+            </div>
+        </div>
+        <div class="message-widget-footer">
+            <div class="bottom-right">
+                <button type="button" class="btn btn-sm btn-success" name="message-widget-close" data-close="#cannot-comment-widget">关闭</button>
+            </div>
+        </div>
+    </div>
+
+</div>
 <?php JsBlock::begin() ?>
 <script>
+    var _canConment = "<?= $canComment ?>";
     var _postid = <?= $postid ?>;
     var urlAsc = "<?= Url::to(['/ajax/article-comment', 'id' => $postid, 'sort' => 'asc'], true)?>";
     var urlDesc = "<?= Url::to(['/ajax/article-comment', 'id' => $postid, 'sort' => 'desc'], true)?>";
@@ -393,6 +428,12 @@ $my = Yii::$app->user->getIdentity();
             $('body').on('click.reply', ' [name="reply-btn"]', function() {
                 if (isGuest()) {
                     showLoginWidget();
+                    return false;
+                }
+
+                if (_canConment == "0") {
+                    showMessageWidget('#cannot-comment-widget');
+                    return false;
                 } else {
                     var uid = $(this).attr('reply-to');
                     var cid = $(this).attr('reply-comment');
@@ -432,7 +473,6 @@ $my = Yii::$app->user->getIdentity();
                 $('#sendReplyBtn').off('click.sendReply');
                 var data = $('#sendReplyForm').serialize()+'&pid='+_postid;
                 $.post("<?= Url::to(['/ucenter/article/send-reply']); ?>", data, function(json) {
-                    json = $.parseJSON(json);
                     if (json.ok) {
                         swal({
                             title: "回复成功！",
@@ -457,6 +497,7 @@ $my = Yii::$app->user->getIdentity();
                         swal({
                             title: "回复失败！",
                             type: "error",
+                            text: json.msg ? json.msg : '',
                             showCancelButton: false,
                             confirmButtonText: "确认",
                             closeOnConfirm: false,
@@ -477,7 +518,6 @@ $my = Yii::$app->user->getIdentity();
                 $('#send-comment').off('click.sendComment');
                 var data = $('#send-comment-form').serialize()+'&pid='+_postid;
                 $.post("<?= Url::to(['/ucenter/article/send-comment']); ?>", data , function(json) {
-                    json = $.parseJSON(json);
                     if (json.ok == 1) {
                         var hp = "<?= Yii::$app->params['userWealth']['comment_hp']?>";
                         var gold = "<?= Yii::$app->params['userWealth']['comment_gold']?>";
@@ -494,7 +534,7 @@ $my = Yii::$app->user->getIdentity();
                     } else {
                         swal({
                             title: "评论失败！",
-                            text: "注意，每篇文章只能评论一次！",
+                            text: json.msg ? json.msg : '',
                             type: "error",
                             showCancelButton: false,
                             confirmButtonText: "确认",

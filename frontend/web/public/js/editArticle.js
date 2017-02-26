@@ -177,10 +177,10 @@
                 //var selection = cm.getSelection();  //获取当前选中的文本，同selection参数
                 $('#push-image-to-post').off('click.push-image-to-post');
                 $('#push-image-to-post').on('click.push-image-to-post', function() {
-                    var e = $('#search-image-items').find('li.selected');
-                    if (e.data()) {
-                        var img = _imageRelativePath + e.attr('data-path')+e.attr('data-name') + e.attr('data-suffix');
-                        var title = e.attr('data-title');
+                    var e = $('#search-image-items').find('li.selected').data();
+                    if (e) {
+                        var img = _imageHost + e.path + e.name + e.suffix + '?v=' + e.version;
+                        var title = e.title;
                         // 替换选中文本，如果没有选中文本，则直接插入
                         cm.replaceSelection("!["+title+"](" + selection + img+")");
                         // 如果当前没有选中的文本，将光标移到要输入的位置

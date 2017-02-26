@@ -155,7 +155,7 @@
     position: fixed;
     top: 20%;
     left: 28%;
-    z-index: 9999;
+    z-index: 10000;
 }
 
 .login-widget-box,
@@ -274,8 +274,9 @@
 /** message-widget css */
 .message-widget-title {
     height: 45px;
+    padding-left: 1em;
     font-size: 18px;
-    text-align: center;
+    text-align: left;
     line-height: 45px;
     color: #fa7f40;
 }

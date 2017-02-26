@@ -22,6 +22,7 @@ return [
     'avatar.dirName' => 'avatar',//会员头像目录名称
     'post.defaultHp' => 100,//文章默认生命值
     'post.pageSize' => 20,//文章列表分页数
+    'default.pageSize' => 20,//列表分页数
 
     'image.basePath' => '@frontend/web',//图片上传基本路径别名
     'image.relativePath' => '/upload/img/',//图片上传路径image.basePath路径下
@@ -38,7 +39,7 @@ return [
     'image.waterConfig' => [
         'type' => 'water',//水印类型water, text
         'image' => './public/img/water.png',//水印图片位置, 相对webroot
-        'size' => [130, 20],//水印图片的宽高
+        'size' => [160, 80],//水印图片的宽高
         'text' => 'LEN168.COM',
         'location' => 'rightBottom', //水印位置 center居中 leftTop左上 rightTop右上 leftBottom左下 rightBottom右下
         'padding' => [10, 10],//水印偏离量[x, y]

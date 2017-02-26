@@ -175,8 +175,9 @@ class UserController extends CommonController
         $counts = $query->count();
         $pagination = new Pagination([
             'totalCount' => $counts,'pageSizeParam' => false,
+            'pageSize' => Yii::$app->params['default.pageSize'],
         ]);
-        $pagination->setPageSize(1);
+
         $friends = $query
             ->orderBy(['id' => SORT_DESC])
             ->offset($pagination->offset)

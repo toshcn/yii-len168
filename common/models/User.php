@@ -47,7 +47,10 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_LOCK = 0;//登录锁定
     const STATUS_ACTIVE = 1;//正常
     const STATUS_BAN_COMMENT = 10;//禁止评论
-    const STATUS_BAN_POST = 20;//禁止评论
+    const STATUS_BAN_POST = 20;//禁止发表
+
+    const GROUP_ADMIN = 10;
+    const GROUP_AUTHOR = 20;
 
     const SEX_SECRECY = -1;//性别保密
     const SEX_MAN = 1;//性别男
@@ -109,7 +112,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'id'                 => Yii::t('common', 'User ID'),
+            'uid'                 => Yii::t('common', 'User ID'),
             'group'              => Yii::t('common', 'User Group'),
             'username'           => Yii::t('common', 'User Name'),
             'nickname'           => Yii::t('common', 'Nick Name'),
@@ -135,7 +138,6 @@ class User extends ActiveRecord implements IdentityInterface
             'updated_at'         => Yii::t('common', 'Updated At'),
         ];
     }
-
 
     /**
      * @inheritdoc
@@ -572,6 +574,22 @@ class User extends ActiveRecord implements IdentityInterface
         return $name;
     }
 
+    public static function getGroupName($gid)
+    {
+        switch ($gid) {
+            case self::GROUP_AUTHOR:
+                $text = '作者';
+                break;
+            case self::GROUP_ADMIN:
+                $text = '管理员';
+                break;
+            default:
+                $text = '';
+                break;
+        }
+        return $text;
+    }
+
 
     /**
      * 增加文章发表数量
@@ -663,5 +681,75 @@ class User extends ActiveRecord implements IdentityInterface
             return Yii::$app->db->createCommand('UPDATE '.static::tableName().' SET followers = `followers` - 1 WHERE uid =:user', [':user' => intval($user)])->execute();
         }
         return false;
+    }
+
+    /**
+     * 角色 map
+     * @return array
+     */
+    public static function getGroupMap()
+    {
+        return ['' => '请选择', self::GROUP_ADMIN => '管理员', self::GROUP_AUTHOR => '作者'];
+    }
+
+    /**
+     * 状态 map
+     * @return array
+     */
+    public static function getStatusMap()
+    {
+        return [
+            '' => '请选择',
+            self::STATUS_ACTIVE => '正常',
+            self::STATUS_LOCK => '登录锁定',
+            self::STATUS_BAN_COMMENT => '评论锁定',
+            self::STATUS_BAN_POST => '发表锁定',
+            self::STATUS_DELETE => '被删除'
+        ];
+    }
+
+    /**
+     * 性别 map
+     * @return array
+     */
+    public static function getSexMap()
+    {
+        return ['' => '请选择', self::SEX_SECRECY => '保密', self::SEX_MAN => '男', self::SEX_WOMAN => '女'];
+    }
+
+
+    /**
+     * 更改状态
+     * @param  integer $status 推荐状态0,1
+     * @param  array|integer $id    文章id
+     * @return boolean
+     */
+    public static function status($status, $id)
+    {
+        $map = [
+            self::STATUS_ACTIVE,
+            self::STATUS_LOCK,
+            self::STATUS_BAN_COMMENT,
+            self::STATUS_BAN_POST,
+            self::STATUS_DELETE
+        ];
+
+        if (!in_array($status, $map)) {
+            return false;
+        }
+
+        if (!is_array($id)) {
+            $id = [$id];
+        }
+        $temp = [];
+        foreach ($id as $key => $value) {
+            if ($value > 10000) {
+                $temp[] = (int) $value;
+            }
+        }
+        return (boolean) static::updateAll(
+            ['status' => $status],
+            ['uid' => $temp]
+        );
     }
 }

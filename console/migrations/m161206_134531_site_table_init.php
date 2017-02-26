@@ -68,7 +68,7 @@ class m161206_134531_site_table_init extends Migration
             'mobile' => $this->bigInteger(11)->notNull()->defaultValue(0)->comment('手机'),
             'sex' => $this->boolean()->notNull()->defaultValue(-1)->comment('性别:1男0女-1保密'),
             'auth_key' => $this->string(32)->notNull()->defaultValue('')->comment('认证token'),
-            'password' => $this->string(128)->notNull()->defaultValue('')->comment('登录密码'),
+            'password_hash' => $this->string(128)->notNull()->defaultValue('')->comment('登录密码'),
             'reset_token' => $this->string(64)->notNull()->defaultValue('')->comment('重置密码token'),
             'reset_token_expire' => $this->dateTime()->comment('重置密码token失效时间'),
             'motto' => $this->string(32)->notNull()->defaultValue('')->comment('个人签名'),

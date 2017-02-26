@@ -131,12 +131,11 @@ class AjaxController extends Controller
      * 增加文章浏览量
      * @return [type] [description]
      */
-    public function actionIncreaseViews() {
+    public function actionIncreaseViews()
+    {
         if ($postid = Yii::$app->getRequest()->get('id', 0)) {
             PostAttributes::increaseViews($postid);
         }
         return;
     }
-
-
 }

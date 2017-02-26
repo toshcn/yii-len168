@@ -1,9 +1,15 @@
 <?php
+/**
+ * @link http://www.len168.com/
+ * @copyright Copyright (c) 2015 len168.com
+ * @license http://www.len168.com/license/
+ */
 
 namespace common\models;
 
 use Yii;
 use common\models\User;
+use common\models\Comments;
 use yii\helpers\Html;
 
 /**
@@ -104,5 +110,31 @@ class Replies extends \yii\db\ActiveRecord
             }
         }
         return $result;
+    }
+
+    /**
+     * 检测是否可以发表回复
+     * @param  &array &$reply 回复表单
+     * @return boolean|string true可以回复，string不可以回复的提示文字
+     */
+    public static function canReply(&$reply)
+    {
+        $user = Yii::$app->getUser()->getIdentity();
+        if ($user->status >= User::STATUS_BAN_COMMENT) {
+            return '您被禁止发言!';
+        }
+        $comment = Comments::findOne(['commentid' => (int) $reply['comment']])->with('post');
+        if ($comment->post->islock || !$comment->post->iscomment || $comment->post->isdie) {
+            return '此文章评论暂时被关闭。';
+        }
+        $myComment = Comments::findOne(['post_id' => $comment->post_id, 'user_id' => $user->id]);
+        if (!$myComment) {
+            return '请先点评文章再回复评论。';
+        }
+        if ($myComment->hp <= 0) {
+            return '您已阵亡！无法再回复评论。';
+        }
+
+        return true;
     }
 }
