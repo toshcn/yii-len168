@@ -51,6 +51,7 @@ return [
         ]
     ],
 
+    'replyPageSize' => 2,//评论回复每页显示数量
     'resetTokenExpire' => '20', //重置密码链接有效时间分钟
     'resendResetTokenExpire' => '5', //重发重置密码链接时间间隔分钟
     'inviteReSendTimeOut' => 30, //邀请重发时间间隔秒数
@@ -62,5 +63,4 @@ return [
         'comment_hp' => 1,//评论成功，hp 加1
         'comment_gold' => 2,//评论成功，金币 加2
     ],
-    'replyPageSize' => 2,//评论回复每页显示数量
 ];

@@ -313,9 +313,7 @@ class Posts extends \yii\db\ActiveRecord
 
         return (boolean) static::updateAll(
             ['isstick' => (int) $stick],
-            [
-                'postid' => $id
-            ]
+            ['postid' => $id]
         );
     }
 
@@ -333,9 +331,7 @@ class Posts extends \yii\db\ActiveRecord
 
         return (boolean) static::updateAll(
             ['isnice' => (int) $nice],
-            [
-                'postid' => $id
-            ]
+            ['postid' => $id]
         );
     }
 
@@ -353,9 +349,7 @@ class Posts extends \yii\db\ActiveRecord
 
         return (boolean) static::updateAll(
             ['islock' => (int) $lock],
-            [
-                'postid' => $id
-            ]
+            ['postid' => $id]
         );
     }
 }

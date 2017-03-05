@@ -66,9 +66,13 @@ class InitController extends Controller
                         //头像文件夹
                         $path = Yii::getAlias(Yii::$app->params['image.basePath']) . Yii::$app->params['image.relativePath'] . $user->id . '/' . Yii::$app->params['avatar.dirName'];
                         if (!is_dir($path)) {
-                            mkdir($path, 0774, true);
+                            @mkdir($path, 0764, true);
                         }
                         $transaction->commit();//提交事务
+
+                        $auth = Yii::$app->getAuthManager();
+                        $role = $auth->getRole('admin');
+                        $auth->assign($role, $user->uid);
                         echo "成功创建超级管理员帐号\n";
                         return self::EXIT_CODE_NORMAL;
                     }

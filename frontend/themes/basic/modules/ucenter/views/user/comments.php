@@ -1,7 +1,14 @@
 <?php
+/**
+ * @link http://www.len168.com/
+ * @copyright Copyright (c) 2015 len168.com
+ * @license http://www.len168.com/license/
+ */
+
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
+
 /* @var $this yii\web\View */
 $this->title = '我的评论';
 $this->params['bodyClass'] = 'gray-bg';

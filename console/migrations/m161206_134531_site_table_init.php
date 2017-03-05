@@ -68,7 +68,7 @@ class m161206_134531_site_table_init extends Migration
             'mobile' => $this->bigInteger(11)->notNull()->defaultValue(0)->comment('手机'),
             'sex' => $this->boolean()->notNull()->defaultValue(-1)->comment('性别:1男0女-1保密'),
             'auth_key' => $this->string(32)->notNull()->defaultValue('')->comment('认证token'),
-            'password_hash' => $this->string(128)->notNull()->defaultValue('')->comment('登录密码'),
+            'password' => $this->string(128)->notNull()->defaultValue('')->comment('登录密码'),
             'reset_token' => $this->string(64)->notNull()->defaultValue('')->comment('重置密码token'),
             'reset_token_expire' => $this->dateTime()->comment('重置密码token失效时间'),
             'motto' => $this->string(32)->notNull()->defaultValue('')->comment('个人签名'),
@@ -217,7 +217,7 @@ class m161206_134531_site_table_init extends Migration
             'title' => $this->string(60)->notNull()->defaultValue('')->comment('文章标题'),
             'author' => $this->string(15)->notNull()->defaultValue('')->comment('文章作者'),
             'categorys' => $this->string(32)->notNull()->defaultValue('')->comment('文章分类id列'),
-            'image' => $this->string(128)->notNull()->defaultValue('')->comment('封面图'),
+            'image' => $this->string(255)->notNull()->defaultValue('')->comment('封面图'),
             'image_suffix' => $this->string(20)->notNull()->defaultValue('')->comment('封面图后缀'),
             'content' => $this->text()->comment('文章内容'),
             'content_len' => $this->integer()->notNull()->defaultValue(0)->comment('内容长度'),
@@ -312,6 +312,7 @@ class m161206_134531_site_table_init extends Migration
             'neutrals' => $this->integer()->unsigned()->defaultValue(0)->comment('中立人数'),
             'os'  => $this->string(20)->notNull()->defaultValue('')->comment('操作系统'),
             'brower'  => $this->string(20)->notNull()->defaultValue('')->comment('浏览器'),
+            'status' => $this->boolean()->notNull()->defaultValue(0)->comment('0正常1不显示'),
             'comment_at' => $this->dateTime()->notNull()->comment('评论时间'),
             'updated_at' => $this->dateTime()->comment('更新时间'),
         ], $tableOptions);
@@ -328,6 +329,7 @@ class m161206_134531_site_table_init extends Migration
             'stand' => $this->boolean()->defaultValue(0)->comment('立场 -1反方，1正方，0中立'),
             'os'  => $this->string(20)->notNull()->defaultValue('')->comment('操作系统'),
             'brower'  => $this->string(20)->notNull()->defaultValue('')->comment('浏览器'),
+            'status' => $this->boolean()->notNull()->defaultValue(0)->comment('0正常1不显示'),
             'reply_at' => $this->dateTime()->notNull()->comment('回复时间'),
         ], $tableOptions);
 

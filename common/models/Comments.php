@@ -38,7 +38,7 @@ class Comments extends \yii\db\ActiveRecord
     {
         return [
             [['post_id', 'user_id', 'content', 'comment_at'], 'required'],
-            [['post_id', 'user_id', 'replies', 'stand', 'hp', 'isforever', 'isdie', 'apps', 'opps', 'neutrals'], 'integer'],
+            [['post_id', 'user_id', 'replies', 'stand', 'hp', 'isforever', 'isdie', 'apps', 'opps', 'neutrals', 'status'], 'integer'],
             [['content'], 'string'],
             [['apps', 'opps', 'neutrals'], 'default', 'value' => 0],
             [['stand'], 'in', 'range' => [-1, 0, 1]],
@@ -61,6 +61,7 @@ class Comments extends \yii\db\ActiveRecord
             'content' => Yii::t('common/comment', 'Content'),
             'replies' => Yii::t('common/comment', 'Replies'),
             'stand' => Yii::t('common/comment', 'Stand'),
+            'status' => Yii::t('common/comment', 'Status'),
             'hp' => Yii::t('common/comment', 'HP'),
             'isforever' => Yii::t('common/comment', 'Isforever'),
             'isdie' => Yii::t('common/comment', 'Isdie'),

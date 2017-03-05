@@ -39,7 +39,7 @@ class Replies extends \yii\db\ActiveRecord
     {
         return [
             [['comment_id', 'content', 'user_id', 'reply_to', 'reply_at'], 'required'],
-            [['comment_id', 'user_id', 'reply_to', 'stand'], 'integer'],
+            [['comment_id', 'user_id', 'reply_to', 'stand', 'status'], 'integer'],
             [['content', 'os'], 'string'],
             [['reply_at'], 'safe'],
             [['comment_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comments::className(), 'targetAttribute' => ['comment_id' => 'commentid']],
@@ -60,6 +60,7 @@ class Replies extends \yii\db\ActiveRecord
             'user_id' => Yii::t('common/comment', 'User ID'),
             'reply_to' => Yii::t('common/comment', 'Reply To'),
             'stand' => Yii::t('common/comment', 'Stand'),
+            'status' => Yii::t('common/comment', 'Status'),
             'reply_at' => Yii::t('common/comment', 'Reply At'),
         ];
     }
@@ -123,7 +124,7 @@ class Replies extends \yii\db\ActiveRecord
         if ($user->status >= User::STATUS_BAN_COMMENT) {
             return '您被禁止发言!';
         }
-        $comment = Comments::findOne(['commentid' => (int) $reply['comment']])->with('post');
+        $comment = Comments::find()->where(['commentid' => (int) $reply['comment']])->with('post')->one();
         if ($comment->post->islock || !$comment->post->iscomment || $comment->post->isdie) {
             return '此文章评论暂时被关闭。';
         }

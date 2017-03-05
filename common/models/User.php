@@ -362,6 +362,14 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getMessages()
+    {
+        return $this->hasMany(Messages::className(), ['sendto' => 'uid']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getInvites()
     {
         return $this->hasMany(Invites::className(), ['user_id' => 'uid']);
@@ -389,14 +397,6 @@ class User extends ActiveRecord implements IdentityInterface
     public function getMailboxes()
     {
         return $this->hasMany(Mailbox::className(), ['sendfrom' => 'uid']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMessages()
-    {
-        return $this->hasMany(Message::className(), ['sendfrom' => 'uid']);
     }
 
     /**

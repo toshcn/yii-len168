@@ -52,7 +52,7 @@ class ArticleController extends CommonController
     public function actionSendReply()
     {
         Yii::$app->getResponse()->format = Response::FORMAT_JSON;
-        $reply = Yii::$app->getRequest()->post('reply');
+        $reply = Yii::$app->getRequest()->post('reply', []);
         if (($msg = Replies::canReply($reply)) === true) {
             $model = new Replies();
 

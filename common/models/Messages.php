@@ -11,10 +11,18 @@ use Yii;
 use common\models\User;
 
 /**
- * description
+ * This is the model class for table "{{%messages}}".
  *
- * @author toshcn <toshcn@qq.com>
- * @since 0.1.0
+ * @property integer $id
+ * @property integer $sendfrom
+ * @property integer $sendto
+ * @property string $content
+ * @property integer $isread
+ * @property integer $isforever
+ * @property string $send_at
+ *
+ * @property User $sendfrom0
+ * @property User $sendto0
  */
 class Messages extends \yii\db\ActiveRecord
 {
@@ -32,7 +40,7 @@ class Messages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sendfrom', 'sendto', 'isread'], 'integer'],
+            [['sendfrom', 'sendto', 'isread', 'isforever'], 'integer'],
             [['send_at'], 'required'],
             [['send_at'], 'safe'],
             [['content'], 'string', 'max' => 255],
@@ -47,28 +55,29 @@ class Messages extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'sendfrom' => 'Sendfrom',
-            'sendto' => 'Sendto',
-            'content' => 'Content',
-            'isread' => 'Isread',
-            'send_at' => 'Send At',
+            'id' => Yii::t('common/label', 'ID'),
+            'sendfrom' => Yii::t('common/label', 'Sendfrom'),
+            'sendto' => Yii::t('common/label', 'Sendto'),
+            'content' => Yii::t('common/label', 'Content'),
+            'isread' => Yii::t('common/label', 'Isread'),
+            'isforever' => Yii::t('common/label', 'Isforever'),
+            'send_at' => Yii::t('common/label', 'Send At'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSendfrom0()
+    public function getSendfrom()
     {
-        return $this->hasOne(Users::className(), ['uid' => 'sendfrom']);
+        return $this->hasOne(User::className(), ['uid' => 'sendfrom']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSendto0()
+    public function getSendto()
     {
-        return $this->hasOne(Users::className(), ['uid' => 'sendto']);
+        return $this->hasOne(User::className(), ['uid' => 'sendto']);
     }
 }

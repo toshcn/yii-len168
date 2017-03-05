@@ -193,10 +193,10 @@ $this->params['contentClass'] = 'white-bg';
             <div class="modal-body text-center" id="lock-modal-body">
             <div class="form-controll">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">锁定</label>
+                    <label class="col-md-3 control-label">锁定文章</label>
                     <div class="col-md-9">
-                        <label class="col-md-6 radio"><input type="radio" name="lock" value="1" checked> 是</label>
-                        <label class="col-md-6 radio"><input type="radio" name="lock" value="0"> 否</label>
+                        <label class="col-md-6 radio"><input type="radio" name="lock" value="1" checked> 锁定</label>
+                        <label class="col-md-6 radio"><input type="radio" name="lock" value="0"> 解锁</label>
                     </div>
                 </div>
             </div>
@@ -225,7 +225,7 @@ $this->params['contentClass'] = 'white-bg';
                 $('#error-modal-body').html('<p class="text-danger">请选择操作的文章!</p>');
                 $('#error-modal').modal('show');
             } else {
-                $.post($('#stick-form').prop('action'), {"stick": $('[name="stick"]').val(), "id[]": keys}, function(json) {
+                $.post($('#stick-form').prop('action'), {"stick": $('[name="stick"]:checked').val(), "id[]": keys}, function(json) {
                     if (json.ok) {
                         window.location.reload();
                     } else {
@@ -246,7 +246,7 @@ $this->params['contentClass'] = 'white-bg';
                 $('#error-modal-body').html('<p class="text-danger">请选择操作的文章!</p>');
                 $('#error-modal').modal('show');
             } else {
-                $.post($('#nice-form').prop('action'), {"nice": $('[name="nice"]').val(), "id[]": keys}, function(json) {
+                $.post($('#nice-form').prop('action'), {"nice": $('[name="nice"]:checked').val(), "id[]": keys}, function(json) {
                     if (json.ok) {
                         window.location.reload();
                     } else {
@@ -267,7 +267,7 @@ $this->params['contentClass'] = 'white-bg';
                 $('#error-modal-body').html('<p class="text-danger">请选择操作的文章!</p>');
                 $('#error-modal').modal('show');
             } else {
-                $.post($('#lock-form').prop('action'), {"lock": $('[name="lock"]').val(), "id[]": keys}, function(json) {
+                $.post($('#lock-form').prop('action'), {"lock": $('[name="lock"]:checked').val(), "id[]": keys}, function(json) {
                     if (json.ok) {
                         window.location.reload();
                     } else {

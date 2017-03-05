@@ -85,12 +85,12 @@ use common\models\Comments;
                     <?php }?>
                 </div>
             </div>
-            <?php if ($comm['replies']) { ?>
-                <div class="reply-more">
-                    <a name="js-reply-more" data-page="0" data-comment="<?= $comm['commentid'] ?>" data-where="comment">加载回复</a>
-                </div>
-            <?php }?>
         </div>
+        <?php if ($comm['replies']) { ?>
+            <div class="reply-more">
+                <a name="js-reply-more" data-page="0" data-comment="<?= $comm['commentid'] ?>" data-where="comment">加载更多</a>
+            </div>
+        <?php }?>
     </div>
 </div>
 <?php } ?>

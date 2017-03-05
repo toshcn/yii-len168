@@ -292,7 +292,7 @@ function sendMessage() {
                 confirmButtonText: "确认",
             }, function() {
                 $('[name="message[content]"]').val('');
-                hideMessageWidget();
+                hideMessageWidget('#message-widget');
             });
         } else {
             swal({title: "失败",

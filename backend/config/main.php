@@ -77,7 +77,7 @@ return [
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
-            'admin/*',//允许所有人访问admin节点及其子节点
+            //'admin/*',//允许所有人访问admin节点及其子节点
             'gii/*'
         ],
     ],

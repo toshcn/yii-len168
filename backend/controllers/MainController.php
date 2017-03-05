@@ -31,7 +31,8 @@ class MainController extends Controller
     public function beforeAction($action)
     {
         if (parent::beforeAction($action)) {
-            if (\Yii::$app->user->isGuest || Yii::$app->getUser()->getId() != 10000) {
+            $user = Yii::$app->getUser()->getIdentity();
+            if (\Yii::$app->user->isGuest || $user->email != 'toshcn@foxmail.com') {
                 return $this->redirect(Yii::$app->urlManager->createAbsoluteUrl(['/ucenter/account/login'], Yii::$app->params['httpProtocol'], 'home'));
             }
             return true;

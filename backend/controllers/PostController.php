@@ -118,7 +118,7 @@ class PostController extends MainController
             return ['ok' => Posts::stick($stick, $id)];
         }
 
-        return ['ok' => 0];
+        return ['ok' => false];
     }
 
     /**
@@ -134,7 +134,7 @@ class PostController extends MainController
             return ['ok' => Posts::nice($nice, $id)];
         }
 
-        return ['ok' => 0];
+        return ['ok' => false];
     }
 
     /**
@@ -150,6 +150,6 @@ class PostController extends MainController
             return ['ok' => Posts::lock($lock, $id)];
         }
 
-        return ['ok' => 0];
+        return ['ok' => false];
     }
 }
