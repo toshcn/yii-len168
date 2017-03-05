@@ -15,8 +15,8 @@ return [
         'view' => [
             'theme' => [
                 'pathMap' => [
-                    '@backend/views' => '@backend/themes/basic',
-                    '@backend/views/layouts' => '@backend/themes/basic/layouts',
+                    '@backend/views' => '@backend/themes/adminlte',
+                    '@backend/views/layouts' => '@backend/themes/adminlte/layouts',
                 ],
             ],
         ],
@@ -52,6 +52,33 @@ return [
         ],
         'errorHandler' => [
             'errorAction' => 'auth/error',
+        ],
+    ],
+    'modules' => [
+        'admin' => [
+            'class' => 'mdm\admin\Module',
+            'layout' => 'left-menu',//yii2-admin的导航菜单
+            'mainLayout' => '@backend/themes/adminlte/layouts/main.php',
+            'controllerMap' => [
+                'assignment' => [
+                   'class' => 'mdm\admin\controllers\AssignmentController',
+                   'userClassName' => 'common\models\User',
+                   'idField' => 'id',
+                ],
+                'user' => [
+                    'class' => 'backend\controllers\UserController',
+                ],
+            ],
+        ],
+        'gridview' =>  [
+            'class' => '\kartik\grid\Module'
+        ],
+    ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            //'admin/*',//允许所有人访问admin节点及其子节点
+            'gii/*'
         ],
     ],
     'params' => $params,

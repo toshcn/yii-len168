@@ -33,5 +33,6 @@ class SiteAsset extends AssetBundle
         'frontend\assets\BasicAsset',
         'frontend\assets\TimeagoAsset',
         'frontend\assets\AnimateAsset',
+        'frontend\assets\UAParserAsset',
     ];
 }

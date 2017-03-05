@@ -10,6 +10,7 @@
 namespace frontend\modules\ucenter\controllers;
 
 use Yii;
+use yii\web\Response;
 use common\models\Posts;
 use common\models\Comments;
 use common\models\Replies;
@@ -31,17 +32,18 @@ class ArticleController extends CommonController
      */
     public function actionSendComment()
     {
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
         $postid = Yii::$app->getRequest()->post('pid');
-        if ($postid) {
+        if (($msg = Comments::canComment($postid)) === true) {
             $send = Yii::$app->getRequest()->post('send');
             $send['postid'] = $postid;
             $model = new Comments();
 
             if ($model->addComment($send)) {
-                return json_encode(['ok' => 1]);
+                return ['ok' => 1];
             }
         }
-        return json_encode(['ok' => 0]);
+        return ['ok' => 0, 'msg' => $msg];
     }
     /**
      * 发表评论回复
@@ -49,8 +51,9 @@ class ArticleController extends CommonController
      */
     public function actionSendReply()
     {
-        $reply = Yii::$app->getRequest()->post('reply');
-        if ($reply) {
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
+        $reply = Yii::$app->getRequest()->post('reply', []);
+        if (($msg = Replies::canReply($reply)) === true) {
             $model = new Replies();
 
             if ($model->addReply($reply)) {
@@ -58,15 +61,12 @@ class ArticleController extends CommonController
                 $reply['iscomment'] = $model->iscomment;
                 $reply['hp'] = $model->hp;
                 unset($reply['content']);
-                return json_encode([
+                return [
                     'ok' => 1,
                     'reply' => $reply
-                ]);
+                ];
             }
         }
-        return json_encode(['ok' => 0]);
+        return ['ok' => 0, 'msg' => $msg];
     }
-
-
-
 }

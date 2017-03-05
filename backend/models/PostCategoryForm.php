@@ -55,7 +55,7 @@ class PostCategoryForm extends Model
             $term->parent = $this->parent;
             $term->description = $this->description;
             $term->catetype = $this->_type;
-            return $term->save();
+            return $term->save(false);
         }
     }
     /**
@@ -71,7 +71,7 @@ class PostCategoryForm extends Model
             $term->slug = $this->slug ? $this->slug : $this->title;
             $term->parent = $this->parent;
             $term->description = $this->description;
-            return $term->save();
+            return $term->save(false);
         }
     }
 }

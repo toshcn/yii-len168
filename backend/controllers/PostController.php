@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\controllers\MainController;
+use yii\web\Response;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\PostCategoryForm;
@@ -11,6 +11,7 @@ use backend\models\PostsSearch;
 use backend\models\PostCategorySearch;
 use common\models\Posts;
 use common\models\Terms;
+use backend\controllers\MainController;
 
 /**
  * PostController implements the CRUD actions for TermCates model.
@@ -27,14 +28,14 @@ class PostController extends MainController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
     }
 
     /**
-     * Lists all TermCates models.
+     * 文章列表页
      * @return mixed
      */
     public function actionIndex()
@@ -67,7 +68,10 @@ class PostController extends MainController
             ]);
         }
     }
-
+    /**
+     * 更新分类
+     * @return minx
+     */
     public function actionUpdateCategory()
     {
         $id = intval(Yii::$app->getRequest()->get('id'));
@@ -99,5 +103,53 @@ class PostController extends MainController
             return json_encode($post);
         }
         return json_encode([]);
+    }
+
+    /**
+     * 置顶文章
+     * @return json
+     */
+    public function actionAjaxStick()
+    {
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
+        $stick = (int) Yii::$app->getRequest()->post('stick', 0);
+        $id = (array) Yii::$app->getRequest()->post('id', []);
+        if ($id) {
+            return ['ok' => Posts::stick($stick, $id)];
+        }
+
+        return ['ok' => false];
+    }
+
+    /**
+     * 推荐文章
+     * @return json
+     */
+    public function actionAjaxNice()
+    {
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
+        $nice = (int) Yii::$app->getRequest()->post('nice', 0);
+        $id = (array) Yii::$app->getRequest()->post('id', []);
+        if ($id) {
+            return ['ok' => Posts::nice($nice, $id)];
+        }
+
+        return ['ok' => false];
+    }
+
+    /**
+     * 锁定文章
+     * @return json
+     */
+    public function actionAjaxLock()
+    {
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
+        $lock = (int) Yii::$app->getRequest()->post('lock', 0);
+        $id = Yii::$app->getRequest()->post('id', []);
+        if ($id) {
+            return ['ok' => Posts::lock($lock, $id)];
+        }
+
+        return ['ok' => false];
     }
 }

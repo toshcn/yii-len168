@@ -114,8 +114,6 @@ class UserController extends CommonController
     public function actionComments()
     {
         $user = Yii::$app->getUser()->getIdentity();
-        $uid = $user->getId();
-        $userDetail = User::getUserDetail($uid);
         $query = $user->getComments()
             ->select(['commentid', 'post_id', 'apps', 'opps', 'comment_at'])
             ->joinWith([
@@ -123,22 +121,53 @@ class UserController extends CommonController
                     return $query->select(['title']);
                 }
             ]);
-        $count = $query->count();
         $pagination = new Pagination([
-            'totalCount' => $count,'pageSizeParam' => false,
+            'totalCount' => $query->count(),
+            'pageSizeParam' => false,
         ]);
-        $pagination->setPageSize(1);
-        $comments = $query
-            ->orderBy(['commentid' => SORT_DESC])
+
+        $comments = $query->orderBy(['commentid' => SORT_DESC])
             ->offset($pagination->offset)
             ->limit($pagination->limit)
             ->asArray()
             ->all();
 
         return $this->render('comments', [
-            'uid' => $uid,
-            'userDetail' => $userDetail,
+            'uid' => $user->getId(),
+            'userDetail' => User::getUserDetail($user->getId()),
             'comments' => $comments,
+            'pagination' => $pagination
+        ]);
+    }
+
+    /**
+     * 我的私信
+     * @return [type] [description]
+     */
+    public function actionMessages()
+    {
+        $user = Yii::$app->getUser()->getIdentity();
+        $query = $user->getMessages()
+            ->with([
+                'sendfrom' => function ($query) {
+                    return $query->select(['uid', 'head', 'sex', 'nickname']);
+                }
+            ]);
+        $pagination = new Pagination([
+            'totalCount' => $query->count(),
+            'pageSizeParam' => false,
+        ]);
+
+        $messages = $query->orderBy(['id' => SORT_DESC])
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->asArray()
+            ->all();
+
+        return $this->render('messages', [
+            'uid' => $user->getId(),
+            'userDetail' => User::getUserDetail($user->getId()),
+            'messages' => $messages,
             'pagination' => $pagination
         ]);
     }
@@ -155,15 +184,14 @@ class UserController extends CommonController
         if (!$uid) {
             return $this->redirect('/site/error');
         }
+        $userDetail = User::getUserDetail($uid);
 
         if ($uid === $me) {
             $view = 'selfFriends';
             $user = Yii::$app->getUser()->getIdentity();
-            $userDetail = User::getUserDetail($uid);
         } else {
             $view = 'friends';
             $user = User::findOne($uid);
-            $userDetail = User::getUserDetail($uid);
             $userDetail['isfollower'] = Followers::getFollowerStatus([$uid, $me]);
         }
         $query = $user->getFriends()
@@ -175,10 +203,10 @@ class UserController extends CommonController
         $counts = $query->count();
         $pagination = new Pagination([
             'totalCount' => $counts,'pageSizeParam' => false,
+            'pageSize' => Yii::$app->params['default.pageSize'],
         ]);
-        $pagination->setPageSize(1);
-        $friends = $query
-            ->orderBy(['id' => SORT_DESC])
+
+        $friends = $query->orderBy(['id' => SORT_DESC])
             ->offset($pagination->offset)
             ->limit($pagination->limit)
             ->asArray()

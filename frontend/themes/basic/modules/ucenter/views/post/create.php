@@ -127,7 +127,8 @@ $post['title'] = Html::encode($post['title']);
                             <div class="form-group col-md-6" style="position: relative;">
                                 <input class="form-control post-tag-input" id="edit-post-tag" name="" type="text">
                                 <div class="selected-tag" id="selected-tag">
-                                <?php if ($postid) {
+                                <?php
+                                if ($postid) {
                                     $currentTags = [];
                                     foreach ($postTags as $key => $tag) {
                                         $currentTags[] = $tag['termid'];
@@ -135,7 +136,7 @@ $post['title'] = Html::encode($post['title']);
                                         <label class="label label-sm label-warning post-tag-seleted" data-tag="<?= $tag['termid'];?>" title="点击删除">
                                             <input type="hidden" name="PostForm[tags][]" value="<?= $tag['title'];?>"><?= $tag['title'];?>
                                         </label>
-                                    <?php } ?>
+                                <?php } ?>
                                 <?php } ?>
                                 </div>
                                 <label class="post-tag-label" for="">在此输入标签</label>
@@ -362,10 +363,7 @@ $post['title'] = Html::encode($post['title']);
             $('#search-images-btn').trigger('click');
             $('#push-image-to-post').hide();
         });
-        /*//触发加载图片
-        $('#post-images').on('show.bs.modal', function() {
-            $('#search-images-btn').trigger('click');
-        });*/
+
         //加载更多图片---加载下一页
         $('#search-image-items').on('click', '#loading-more-images', function() {
             var cate = $(this).attr('data-cate');
@@ -691,7 +689,7 @@ $post['title'] = Html::encode($post['title']);
             } else {
                 clearInterval(autoSave);
             }
-        }, 1000*10);
+        }, 1000*10*60);
     }
     <?php }?>
     //发表文章

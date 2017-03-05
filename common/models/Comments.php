@@ -38,7 +38,7 @@ class Comments extends \yii\db\ActiveRecord
     {
         return [
             [['post_id', 'user_id', 'content', 'comment_at'], 'required'],
-            [['post_id', 'user_id', 'replies', 'stand', 'hp', 'isforever', 'isdie', 'apps', 'opps', 'neutrals'], 'integer'],
+            [['post_id', 'user_id', 'replies', 'stand', 'hp', 'isforever', 'isdie', 'apps', 'opps', 'neutrals', 'status'], 'integer'],
             [['content'], 'string'],
             [['apps', 'opps', 'neutrals'], 'default', 'value' => 0],
             [['stand'], 'in', 'range' => [-1, 0, 1]],
@@ -61,6 +61,7 @@ class Comments extends \yii\db\ActiveRecord
             'content' => Yii::t('common/comment', 'Content'),
             'replies' => Yii::t('common/comment', 'Replies'),
             'stand' => Yii::t('common/comment', 'Stand'),
+            'status' => Yii::t('common/comment', 'Status'),
             'hp' => Yii::t('common/comment', 'HP'),
             'isforever' => Yii::t('common/comment', 'Isforever'),
             'isdie' => Yii::t('common/comment', 'Isdie'),
@@ -95,14 +96,14 @@ class Comments extends \yii\db\ActiveRecord
     public function getReplies()
     {
         return $this->hasMany(Replies::className(), ['comment_id' => 'commentid'])
-                ->with([
-                    'user' => function($query) {
-                        $query->select(['uid', 'nickname', 'head', 'sex', 'isauth']);
-                    },
-                    'replyTo' => function($query) {
-                        $query->select(['uid', 'nickname']);
-                    },
-                ]);
+        ->with([
+            'user' => function ($query) {
+                $query->select(['uid', 'nickname', 'head', 'sex', 'isauth']);
+            },
+            'replyTo' => function ($query) {
+                $query->select(['uid', 'nickname']);
+            },
+        ]);
     }
 
 
@@ -124,7 +125,7 @@ class Comments extends \yii\db\ActiveRecord
      */
     public function transformCommentStand($stand)
     {
-        switch($stand) {
+        switch ($stand) {
             case 1:
                 $str = '点赞';
                 break;
@@ -202,5 +203,31 @@ class Comments extends \yii\db\ActiveRecord
             return Yii::$app->db->createCommand('UPDATE '.static::tableName().' SET hp = `hp` + ' .intval($hp). ' WHERE commentid =:commentid', [':commentid' => intval($commentid)])->execute();
         }
         return false;
+    }
+
+    /**
+     * 检测是否可以发表点评
+     * @param  integer $postid 文章id
+     * @return boolean|string true可以回复，string不可以回复的提示文字
+     */
+    public static function canComment($postid)
+    {
+        $user = Yii::$app->getUser()->getIdentity();
+        if ($user->status >= User::STATUS_BAN_COMMENT) {
+            return '您被禁止发言!';
+        }
+        $post = Posts::findOne(['postid' => (int) $postid, 'static' => Posts::STATUS_ONLINE]);
+        if (!$post) {
+            return '此文章不存在或未发表。';
+        }
+        if ($post->islock || !$post->iscomment || $post->isdie) {
+            return '此文章评论暂时被关闭。';
+        }
+        $myComment = Comments::findOne(['post_id' => $post->postid, 'user_id' => $user->id]);
+        if ($myComment) {
+            return '您已点评过此文章了。';
+        }
+
+        return true;
     }
 }

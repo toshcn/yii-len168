@@ -27,6 +27,6 @@ class BackendAsset extends AssetBundle
         'js/site.js',
     ];
     public $depends = [
-        'common\assets\yuntheme\YunthemeAsset',
+        'common\assets\yuntheme\YunNestableAsset',
     ];
 }

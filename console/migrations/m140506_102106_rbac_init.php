@@ -75,12 +75,17 @@ class m140506_102106_rbac_init extends \yii\db\Migration
         $auth->add($author);
         $auth->addChild($author, $createPost);
 
+        // 添加 "/*" 路由
+        $allRoute = $auth->createPermission('/*');
+        $auth->add($allRoute);
+
         // 添加 "admin" 角色并赋予 "updatePost" 和 "author" 角色权限 并关联用户组规则
         $admin = $auth->createRole('admin');
         $admin->ruleName = $userGroupRule->name;
         $auth->add($admin);
         $auth->addChild($admin, $updatePost);
         $auth->addChild($admin, $author);
+        $auth->addChild($admin, $allRoute);
 
         // 允许 "author" 更新自己的文章
         $auth->addChild($author, $updateOwnPost);

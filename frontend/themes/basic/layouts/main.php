@@ -215,7 +215,7 @@ $this->params['footerMenus'] = $navMenuObj->getFooterNavMenuItems();
             ]); ?>
                 <div class="message-widget-title">给<b id="message-at"></b>发纸条</div>
                 <div class="message-widget-close">
-                    <a class="close-icon" id="message-widget-close" title="关闭">
+                    <a class="close-icon" name="message-widget-close" title="关闭" data-close="#message-widget">
                         <i class="fa fa-times"></i>
                     </a>
                 </div>
