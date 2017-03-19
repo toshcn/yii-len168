@@ -531,10 +531,6 @@ input[type=checkbox]:checked:before {
     line-height: 30px;
 }
 
-.ibox-content {
-  clear: both;
-  overflow: hidden;
-}
 .ibox-heading {
   background-color: #f3f6fb;
   border-bottom: none;

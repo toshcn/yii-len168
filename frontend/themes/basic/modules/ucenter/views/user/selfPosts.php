@@ -36,8 +36,8 @@ $this->params['bodyClass'] = 'gray-bg';
                             </a>
                         </div>
                     </div>
-                    <div class="ibox-content">
-                        <div class="col-md-12 center-post-list">
+                    <div class="ibox-content center-post-list">
+                        <div class="col-md-12">
                             <table class="table">
                                 <col width="45%" />
                                 <col width="20%" />

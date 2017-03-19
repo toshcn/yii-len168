@@ -1,7 +1,7 @@
 <?php
     return [
         'ID'           => 'ID',
-        'Uid'          => '会员帐号',
+        'Uid'          => '会员账号',
         'Counts'       => '登录次数',
         'Fails'        => '登录错误次数',
         'Interval'     => '登录间隔',

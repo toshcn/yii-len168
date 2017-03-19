@@ -64,10 +64,10 @@ class InitController extends Controller
                     //必需同时写入会员登录表，会员资料表，会员财富表才会注册成功
                     if ($login->save(false) && $userInfo->save(false)) {
                         //头像文件夹
-                        $path = Yii::getAlias(Yii::$app->params['image.basePath']) . Yii::$app->params['image.relativePath'] . $user->id . '/' . Yii::$app->params['avatar.dirName'];
+                        /*$path = Yii::getAlias(Yii::$app->params['image.basePath']) . Yii::$app->params['image.relativePath'] . $user->id . '/' . Yii::$app->params['avatar.dirName'];
                         if (!is_dir($path)) {
                             @mkdir($path, 0764, true);
-                        }
+                        }*/
                         $transaction->commit();//提交事务
 
                         $auth = Yii::$app->getAuthManager();

@@ -76,8 +76,12 @@ class LoginForm extends Model
             $this->_user = User::findByUsername($this->$attribute);
 
             if (!$this->_user) {
-                $this->addError('username', Yii::t('common/sentence', 'Incorrect username or password.'));
+                $this->addError('username', Yii::t('common/sentence', 'Account does not exist.'));
             } else {
+                if ($this->_user->status == User::STATUS_LOCK) {
+                    $this->addError('username', Yii::t('common/sentence', 'Account has been locked.'));
+                }
+
                 $this->_login = UserLogin::findOne(['user_id' => $this->_user->getId()]);
                 $this->validateInterval();
             }
@@ -149,6 +153,7 @@ class LoginForm extends Model
                         'expire' => time() + 3600*24*30,
                     ]));
                 }
+
                 if (Yii::$app->getUser()->login($this->getUser())) {
                     $this->trigger(self::EVENT_LOGIN_SUCCESS, new LoginEvent());
                     return true;

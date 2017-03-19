@@ -30,8 +30,7 @@ $this->params['bodyClass'] = 'gray-bg';
                     <div class="ibox-title">
                         <h5>我的关注<b class="red">(<?= $pagination->totalCount ?>)</b></h5>
                     </div>
-                    <div class="ibox-content">
-                        <div class="center-friend-list">
+                    <div class="ibox-content center-friend-list">
                         <?php foreach ($friends as $key => $friend) {?>
                             <div class="friend-box">
                                 <a href="<?= Url::to(['/ucenter/user/detail', 'uid' => $friend['friend']['uid']], true); ?>" title="Ta的主页">
@@ -68,7 +67,6 @@ $this->params['bodyClass'] = 'gray-bg';
                                 </a>
                             </div>
                         <?php } ?>
-                        </div>
                         <div class="row">
                             <div class="col-md-12 align-center">
                                 <?php echo LinkPager::widget([

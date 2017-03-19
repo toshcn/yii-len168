@@ -41,7 +41,7 @@ class PostController extends CommonController
                     $tags = $model->isdraft ? Posts::findOne($model->postid)->getTags()->asArray()->all() : [];
                     return json_encode([
                         'ok' => 1,
-                        'id' => $model->postid,
+                        'id' => (int) $model->postid,
                         'tags' => $tags,
                         't' => date('Y-m-d H:i:s')
                     ]);
@@ -53,7 +53,7 @@ class PostController extends CommonController
             }
             return json_encode([
                 'ok' => 0,
-                'id' => $model->postid,
+                'id' => (int) $model->postid,
                 'error' => implode(', ', $errors),
                 't' => date('Y-m-d H:i:s')
             ]);
@@ -99,6 +99,7 @@ class PostController extends CommonController
             }
             return json_encode([
                 'ok' => 0,
+                'id' => (int) $model->postid,
                 'error' => implode(', ', $errors),
                 't' => date('Y-m-d H:i:s')
             ]);
@@ -113,7 +114,7 @@ class PostController extends CommonController
 
         $term = new Terms();
         $recode = $post->attributes;
-        if ($recode['image']) {
+        if ($recode['image'] && $recode['image_suffix']) {
             $recode['image'] = $recode['image'] . '_326x195' . $recode['image_suffix'];
         }
 
@@ -128,42 +129,6 @@ class PostController extends CommonController
         ]);
     }
 
-    /**
-     * 创建草稿
-     */
-    public function actionNewDraft()
-    {
-        if (Yii::$app->getRequest()->getIsPost()) {
-            $model = new PostForm();
-            if ($model->load(Yii::$app->getRequest()->post()) && $model->createDraft()) {
-                echo json_encode(array('ok' => 1, 'pid' => $model->postid, 't' => date('Y-m-d H:i:s')));
-            } else {
-                echo json_encode(array('ok' => 0));
-            }
-        }
-    }
-
-    /**
-     * 编辑草稿
-     */
-    public function actionEditDraft()
-    {
-        if (Yii::$app->getRequest()->getIsPost()) {
-            $model = new PostForm();
-            if ($model->load(Yii::$app->getRequest()->post()) && $model->updateDraft()) {
-                $post = Posts::findOne($model->postid);
-
-                return json_encode(array('ok' => 1, 'pid' => $model->postid, 'tags' => $post->getTags()->asArray()->all(), 't' => date('Y-m-d H:i:s')));
-            } else {
-                return json_encode(array('ok' => 0));
-            }
-        } else {
-            $term = new Terms();
-            return $this->render('newPost', [
-                'categorys' => $term->getTermChildrens(0, Terms::CATEGORY_CATE),
-            ]);
-        }
-    }
     /**
      * 获取子分类
      * @return array|null serialize
@@ -343,19 +308,6 @@ class PostController extends CommonController
             $imageManager->thumbPath = $imageBasePath . $image->thumb_path;
             $imageManager->setExtension($image->img_suffix);
             $imageManager->imageName = $image->img_name;
-            $imageManager->quality        = Yii::$app->params['image.quality'];
-            $imageManager->makeWater      = Yii::$app->params['image.makeWater'];
-            $imageManager->waterType      = Yii::$app->params['image.waterConfig']['type'];
-            $imageManager->waterLocation  = Yii::$app->params['image.waterConfig']['location'];
-            $imageManager->waterPadding   = Yii::$app->params['image.waterConfig']['padding'];
-            $imageManager->waterImage     = Yii::$app->params['image.waterConfig']['image'];
-            $imageManager->waterImageSize = Yii::$app->params['image.waterConfig']['size'];
-            $imageManager->waterText      = Yii::$app->params['image.waterConfig']['text'];
-            $imageManager->fontFile       = Yii::$app->params['image.waterConfig']['fontFile'];
-            $imageManager->fontOptions    = Yii::$app->params['image.waterConfig']['fontOptions'];
-            if (!in_array($imageManager->waterType, ['water', 'text'])) {
-                $imageManager->makeWater = false;
-            }
 
             if ($imageManager->edit($cropper['width'], $cropper['height'], [$cropper['x'], $cropper['y']])) {
                 $image->img_version += 1;

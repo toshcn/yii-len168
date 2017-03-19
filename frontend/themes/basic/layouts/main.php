@@ -1,4 +1,9 @@
 <?php
+/**
+ * @link http://www.len168.com/
+ * @copyright Copyright (c) 2015 len168.com
+ * @license http://www.len168.com/license/
+ */
 
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -80,7 +85,7 @@ $this->params['footerMenus'] = $navMenuObj->getFooterNavMenuItems();
                     ]);
                 ?>
             </nav>
-            <div class="top-search hidden-xs hidden-sm">
+            <div class="top-search hidden-xs hidden-sm hide">
                 <form action="" method="post">
                     <div class="input-group">
                         <input class="form-control" type="text" name="keyword" value="" placeholder="搜索您感兴趣的……">

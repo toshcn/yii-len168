@@ -121,7 +121,7 @@ class Replies extends \yii\db\ActiveRecord
     public static function canReply(&$reply)
     {
         $user = Yii::$app->getUser()->getIdentity();
-        if ($user->status >= User::STATUS_BAN_COMMENT) {
+        if ($user->status >= User::STATUS_BAN_POST) {
             return '您被禁止发言!';
         }
         $comment = Comments::find()->where(['commentid' => (int) $reply['comment']])->with('post')->one();

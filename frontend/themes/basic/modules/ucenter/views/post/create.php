@@ -19,6 +19,9 @@ EditArticleAsset::register($this);
 $this->title = '发表文章';
 $this->params['bodyClass'] = 'gray-bg';
 $post['title'] = Html::encode($post['title']);
+if ($parentPost) {
+    $parentPost['title'] = Html::encode($parentPost['title']);
+}
 ?>
 <div class="wrapper user-wrapper w-center">
     <div class="row">
@@ -111,7 +114,7 @@ $post['title'] = Html::encode($post['title']);
                             </div>
 
                             <div class="form-group col-md-10">
-                                <img class="" id="privew-main-image" src="<?= $post['image'];?>" alt="" width="326" height="195">
+                                <img class="" id="privew-main-image" src="<?= Html::encode($post['image']);?>" alt="" width="326" height="195">
                             </div>
                         </div>
                     </div>
@@ -234,7 +237,7 @@ $post['title'] = Html::encode($post['title']);
 
 <?php JsBlock::begin() ?>
 <script>
-    var postid = <?= $postid; ?>;//文章id 存在为草稿
+    var postid = parseInt('<?= $postid; ?>');//文章id
     var _cateCatch = new Array();//分类缓存
     var _postCatch = new Array();//文章缓存
 
@@ -511,7 +514,7 @@ $post['title'] = Html::encode($post['title']);
             savePost(0);
         });
         // 保存草稿
-        $('#subDraftForm').on('click.subPostForm', function() {
+        $('#subDraftForm').on('click.subDraftForm', function() {
             savePost(1);
         });
         $('#original-url').change(function() {
@@ -705,6 +708,13 @@ $post['title'] = Html::encode($post['title']);
             $.post(url, data, function(json) {
                 json = $.parseJSON(json);
                 if (json.ok) {
+                    if (!postid && json.id) {
+                        postid = json.id;
+                    }
+                    if (!drfat) {
+                        $('#subDraftForm').off('click.subDraftForm');
+                        $('#subDraftForm').hide();
+                    }
                     swal({title: '提示', text: '已成功保存！', type: "success", confirmButtonText: "返回文章列表", showCancelButton: true, cancelButtonText: "关闭"}, function() {
                         window.location.href = "<?= Url::to(['/ucenter/user/posts'], true); ?>";
                     });

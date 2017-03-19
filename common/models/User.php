@@ -89,11 +89,13 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['group', 'username', 'nickname', 'email', 'auth_key', 'password', 'created_at'], 'required'],
-            [['group', 'mobile', 'sex', 'reset_token_expire', 'hp', 'golds', 'crystal', 'posts', 'comments', 'friends', 'followers', 'isauth', 'status', 'safe_level'], 'integer'],
+            [['golds', 'crystal', 'posts', 'comments', 'friends', 'followers', 'isauth', 'safe_level'], 'default', 'value' => 0],
+            [['group', 'mobile', 'sex', 'hp', 'golds', 'crystal', 'posts', 'comments', 'friends', 'followers', 'isauth', 'status', 'safe_level'], 'integer'],
             [['username', 'nickname'], 'string', 'max' => 15],
             [['email', 'reset_token'], 'string', 'max' => 64],
             [['auth_key', 'motto'], 'string', 'max' => 32],
             [['password'], 'string', 'max' => 128],
+            [['head', 'pay_qrcode'], 'string', 'max' => 255],
 
             [['username'], 'unique', 'skipOnError' => true, 'targetClass' => '\common\models\User', 'targetAttribute' => 'username', 'message' => Yii::t('common', 'This username has already been taken.')],
 
@@ -101,7 +103,6 @@ class User extends ActiveRecord implements IdentityInterface
 
             [['email'], 'unique', 'skipOnError' => true, 'targetClass' => '\common\models\User', 'targetAttribute' => 'email', 'message' => Yii::t('common', 'This email has already been taken.')],
 
-            [['created_at', 'updated_at'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -126,7 +127,7 @@ class User extends ActiveRecord implements IdentityInterface
             'motto'              => Yii::t('common', 'Motto'),
             'hp'                 => Yii::t('common', 'Hp'),
             'golds'              => Yii::t('common', 'Golds'),
-            'crystal'           => Yii::t('common', 'Crystal'),
+            'crystal'            => Yii::t('common', 'Crystal'),
             'posts'              => Yii::t('common', 'Posts'),
             'comments'           => Yii::t('common', 'Comments'),
             'friends'            => Yii::t('common', 'Friends'),
@@ -209,7 +210,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        return $this->getAuthKey() === $authKey;
+        return $this->getAuthKey() === (string) $authKey;
     }
 
     /**
@@ -360,9 +361,19 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * 获得会员发送的信息
      * @return \yii\db\ActiveQuery
      */
-    public function getMessages()
+    public function getMessagesSendFrom()
+    {
+        return $this->hasMany(Messages::className(), ['sendfrom' => 'uid']);
+    }
+
+    /**
+     * 获得会员收到的信息
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMessagesSendTo()
     {
         return $this->hasMany(Messages::className(), ['sendto' => 'uid']);
     }
@@ -523,7 +534,7 @@ class User extends ActiveRecord implements IdentityInterface
         return static::find()->where(['uid' => $id])
             ->andWhere(['not in', 'status', [self::STATUS_DELETE]])
             ->select([
-                'uid', 'username', 'nickname', 'email', 'sex', 'motto', 'head', 'hp', 'golds', 'crystal', 'posts', 'comments', 'friends', 'followers', 'isauth', 'safe_level', '{{%user}}.created_at'
+                'uid', 'username', 'nickname', 'email', 'sex', 'motto', 'head', 'pay_qrcode', 'hp', 'golds', 'crystal', 'posts', 'comments', 'friends', 'followers', 'isauth', 'safe_level', '{{%user}}.created_at'
             ])
             ->joinWith([
                 'userLogin' => function ($query) {
@@ -743,9 +754,7 @@ class User extends ActiveRecord implements IdentityInterface
         }
         $temp = [];
         foreach ($id as $key => $value) {
-            if ($value > 10000) {
-                $temp[] = (int) $value;
-            }
+            $temp[] = (int) $value;
         }
         return (boolean) static::updateAll(
             ['status' => $status],

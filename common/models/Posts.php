@@ -53,9 +53,10 @@ class Posts extends \yii\db\ActiveRecord
         return [
             ['postid', 'required', 'on' => 'update'],
 
-            [['title', 'author', 'categorys', 'content', 'image', 'original_link', 'description'], 'trim'],
+            [['title', 'author', 'categorys', 'content', 'image', 'original_url', 'description'], 'trim'],
             [['title', 'author', 'content'], 'required'],
             ['title', 'string', 'max' => 60],
+            ['author', 'string', 'max' => 10],
             ['image_suffix', 'string', 'max' => 20],
 
             [['iscomment', 'isopen'], 'default', 'value' => self::YES],
@@ -63,8 +64,8 @@ class Posts extends \yii\db\ActiveRecord
 
             [['content_len', 'spend', 'parent', 'status'], 'integer'],
 
-            ['original_link', 'url'],
-            ['original_link', 'string', 'max' => 255],
+            ['original_url', 'url'],
+            ['original_url', 'string', 'max' => 255],
             [['image', 'description'], 'string', 'max' => 128],
 
             ['copyright', 'default', 'value' => self::COPYRIGHT_INDICATE_THE_SOURCE],
@@ -99,7 +100,7 @@ class Posts extends \yii\db\ActiveRecord
             'content'       => Yii::t('common/label', 'Post Content'),
             'content_len'   => Yii::t('common/label', 'Post Content length'),
             'description'   => Yii::t('common/label', 'Post Description'),
-            'original_link' => Yii::t('common/label', 'Original Link'),
+            'original_url' => Yii::t('common/label', 'Original Link'),
             'copyright'     => Yii::t('common/label', 'Copyright'),
             'spend'         => Yii::t('common/label', 'Spend For Read'),
             'paytype'       => Yii::t('common/label', 'Spend Type'),
@@ -124,8 +125,8 @@ class Posts extends \yii\db\ActiveRecord
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios['create'] = ['user_id', 'title', 'author', 'image', 'image_suffix', 'categorys', 'content', 'content_len', 'description', 'original_link', 'copyright', 'spend', 'paytype', 'posttype', 'parent', 'islock', 'iscomment', 'isopen', 'ispay', 'status', 'os', 'browser', 'created_at'];
-        $scenarios['update'] = ['postid', 'user_id', 'title', 'author', 'image', 'image_suffix', 'categorys', 'content', 'content_len', 'description', 'original_link', 'copyright', 'spend', 'paytype', 'posttype', 'parent', 'islock', 'iscomment', 'isstick', 'isnice', 'isopen', 'ispay', 'isforever', 'isdie', 'status', 'updated_at'];
+        $scenarios['create'] = ['user_id', 'title', 'author', 'image', 'image_suffix', 'categorys', 'content', 'content_len', 'description', 'original_url', 'copyright', 'spend', 'paytype', 'posttype', 'parent', 'islock', 'iscomment', 'isopen', 'ispay', 'status', 'os', 'browser', 'created_at'];
+        $scenarios['update'] = ['postid', 'user_id', 'title', 'author', 'image', 'image_suffix', 'categorys', 'content', 'content_len', 'description', 'original_url', 'copyright', 'spend', 'paytype', 'posttype', 'parent', 'islock', 'iscomment', 'isstick', 'isnice', 'isopen', 'ispay', 'isforever', 'isdie', 'status', 'updated_at'];
         return $scenarios;
     }
 

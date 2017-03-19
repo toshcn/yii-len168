@@ -128,8 +128,6 @@ AvatarAsset::register($this);
                 swal({title: '提示', text: '请选择一张图片!', type: "warning", confirmButtonText: "确定"});
             }
             $.post("<?= Url::to(['/ucenter/user/ajax-upload-head']) ?>", {"img": $headcrop.cropper('getCroppedCanvas').toDataURL()}, function(json) {
-
-                json = $.parseJSON(json);
                 if (json.ok == 1) {
                     swal({title: '提示', text: '已上传成功', type: "success", confirmButtonText: "确定"}, function() {
                         window.location.reload();

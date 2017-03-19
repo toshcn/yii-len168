@@ -8,6 +8,7 @@
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use common\widgets\JsBlock;
+
 /* @var $this yii\web\View */
 
 $this->title = '邀请码-会员中心';
@@ -31,7 +32,7 @@ $this->params['bodyClass'] = 'gray-bg';
                     <div class="ibox-title">
                         <h5>邀请码</h5>
                     </div>
-                    <div class="ibox-content">
+                    <div class="ibox-content center-post-list">
                         <div class="row m-b-sm btn-sm">
                             <div class="col-md-2">
                                 <button class="btn btn-default btn-sm" id="reload-invite-list" type="button">

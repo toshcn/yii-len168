@@ -29,9 +29,6 @@ $imageHost = Yii::$app->params['image.host'];
         </div>
         <div class="post-list">
             <?php foreach ($posts as $key => $post) {
-                $post['head'] = Html::encode($post['head']);
-                $post['image'] = Html::encode($post['image']);
-                $post['image_suffix'] = Html::encode($post['image_suffix']);
                 $post['title'] = Html::encode($post['title']);
                 $post['author'] = Html::encode($post['author']);
             ?>
@@ -40,10 +37,10 @@ $imageHost = Yii::$app->params['image.host'];
                         <div class="post-thumb">
                             <div class="overflash">
                                 <a href="<?= Url::to(['/article/detail', 'id' => $post['postid']]) ?>" title="<?= $post['title'] ?>" target="_blank" rel="bookmark">
-                                    <img src="<?= $post['head']  ?>" alt="" width="100%" >
+                                    <img src="/public/img/view.png" alt="" width="100%" >
                                 </a>
                             </div>
-                            <img class="post-thumb-img" src="<?= $post['image'] ? $post['image'] . '_326x195'  . $post['image_suffix'] : ''; ?>" width="280" alt="<?= $post['title'] ?>">
+                            <img class="post-thumb-img" src="<?= $post['image'] ? $post['image'] . '_326x195'  . $post['image_suffix'] : Yii::$app->params['post.header.image']; ?>" width="280" alt="<?= $post['title'] ?>">
                         </div>
                     </div>
                     <div class="item-right">
