@@ -118,7 +118,7 @@ class UserController extends AuthController
         $status = Yii::$app->getRequest()->post('status');
         $id = Yii::$app->getRequest()->post('id', []);
         if ($id && $status !== null) {
-            return ['ok' => User::status($status, $id)];
+            return ['ok' => User::updateStatus($status, $id)];
         }
 
         return ['ok' => 0];

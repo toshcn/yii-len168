@@ -735,7 +735,7 @@ class User extends ActiveRecord implements IdentityInterface
      * @param  array|integer $id    文章id
      * @return boolean
      */
-    public static function status($status, $id)
+    public static function updateStatus($status, $id)
     {
         $map = [
             self::STATUS_ACTIVE,
@@ -758,7 +758,7 @@ class User extends ActiveRecord implements IdentityInterface
         }
         return (boolean) static::updateAll(
             ['status' => $status],
-            ['uid' => $temp]
+            ['uid' => $temp, 'group' => [self::GROUP_AUTHOR]]
         );
     }
 }

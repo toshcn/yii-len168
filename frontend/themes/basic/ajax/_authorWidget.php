@@ -29,9 +29,9 @@ $author['nickname'] = Html::encode($author['nickname']);
         }?>
         <?= $author['nickname'] ?>
         <?php if ($author['isauth']) { ?>
-            <span class="auth gray" title="未认证"><i class="fa fa-shield"></i></span>
-        <?php } else { ?>
             <span class="auth green" title="已认证"><i class="fa fa-shield"></i></span>
+        <?php } else { ?>
+            <span class="auth gray" title="未认证"><i class="fa fa-shield"></i></span>
         <?php } ?>
      </h4>
     <h5 class="gray"><?= Html::encode($author['motto']) ?></h5>

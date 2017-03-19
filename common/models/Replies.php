@@ -93,7 +93,7 @@ class Replies extends \yii\db\ActiveRecord
     {
         $this->user_id      = Yii::$app->user->getId();
         $this->comment_id   = $reply['comment'];
-        $this->content   = $reply['content'];
+        $this->content   = str_ireplace(Yii::$app->params['word.validate'], Yii::$app->params['word.validate.replace'], $reply['content']);
         $this->stand     = $reply['stand'];
         $this->os        = Yii::$app->session->get('loginOS');
         $this->reply_to  = $reply['to'];

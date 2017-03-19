@@ -344,6 +344,7 @@ class UserController extends CommonController
      */
     public function actionInvite()
     {
+        return $this->redirect(['/site/error']);
         $user = Yii::$app->getUser()->getIdentity();
         $uid = $user->getId();
         $userDetail = User::getUserDetail($uid);
