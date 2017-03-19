@@ -513,7 +513,8 @@ class m161206_134531_site_table_init extends Migration
                         `u`.`head` AS `head`,
                         `u`.`pay_qrcode` AS `pay_qrcode`,
                         `u`.`nickname` AS `nickname`,
-                        `u`.`motto` AS `motto`
+                        `u`.`motto` AS `motto`,
+                        `u`.`updated_at` AS `user_updated_at`
                     FROM
                         ((' .self::TB_POSTS.' `p`
                         JOIN ' .self::TB_POST_ATTRIBUTES. ' `pa`)
