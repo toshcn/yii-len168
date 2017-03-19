@@ -5,11 +5,6 @@ return [
     'siteDomain' => 'len168.com',
     'siteCopyright' => 'Copyright len168.com © 2017',
     'siteRecordNumber' => '粤ICP备15089474号',
-    'httpProtocol' => 'http',
-    'siteHost' => [
-        'http' => 'http://www.yii.my',
-        'https' => 'https://www.yii.my',
-    ],
     'user.administratorRoleGroupId' => 10,//默认管理员组id:10管理员
     'user.defaultRoleGroupId' => 20,//默认会员组id:20作者
     'user.passwordResetTokenExpire' => 3600,

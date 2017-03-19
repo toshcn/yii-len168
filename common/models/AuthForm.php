@@ -160,12 +160,6 @@ class AuthForm extends Model
                 $auth->created_at = $user->created_at;
 
                 if ($login->save(false) && $userInfo->save(false) && $auth->save()) {
-                    //头像文件夹
-                    $headImgPath = Yii::getAlias(Yii::$app->params['image.basePath']) . Yii::$app->params['image.relativePath'] . $user->uid . '/' . Yii::$app->params['avatar.dirName'];
-                    if (!is_dir($headImgPath)) {
-                        mkdir($headImgPath);
-                    }
-
                     $transaction->commit(); //提交事务
                     return $user;
                 } else {

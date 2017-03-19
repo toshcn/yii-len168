@@ -543,7 +543,7 @@ class UserController extends CommonController
                 $avatarName = $headImgPath . $md5 . Yii::$app->params['avatar.defaultSuffix'];
 
                 if (!is_dir($basePath . $headImgPath)) {
-                    @mkdir($basePath . $headImgPath);
+                    @mkdir($basePath . $headImgPath, 0764, true);
                 }
                 if (file_put_contents($uploadFile, base64_decode(str_replace($result[1], '', $base64Img)))) {
                     //按设定头像大小等比裁剪图片
@@ -584,7 +584,7 @@ class UserController extends CommonController
                 $payQrcodeName = $imgPath . Yii::$app->params['payQrcode.defaultSuffix'];
 
                 if (!is_dir(dirname($uploadFile))) {
-                    @mkdir(dirname($uploadFile));
+                    @mkdir(dirname($uploadFile), 0764, true);
                 }
                 if (file_put_contents($uploadFile, base64_decode(str_replace($result[1], '', $base64Img)))) {
                     //按设定大小等比裁剪图片
