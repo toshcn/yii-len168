@@ -145,7 +145,7 @@ class Comments extends \yii\db\ActiveRecord
     {
         $this->post_id    = (int) $content['postid'];
         $this->user_id    = Yii::$app->user->getId();
-        $this->content    = $content['comment'];
+        $this->content    = str_ireplace(Yii::$app->params['word.validate'], Yii::$app->params['word.validate.replace'], $content['comment']);
         $this->stand      = (int) $content['stand'];
         $this->os         = Yii::$app->getSession()->get('loginOS');
         $this->comment_at = date('Y-m-d H:i:s');

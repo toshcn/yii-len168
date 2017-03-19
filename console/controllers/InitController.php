@@ -30,16 +30,18 @@ class InitController extends Controller
     public function actionCreateAdministrator()
     {
         echo "Create an administrator ...\n"; // comment 提示当前操作
+        $uid = (int) $this->prompt('Administrator userid:'); // 接收用户id
         $username = $this->prompt('Administrator username:'); // 接收用户名
         do {
             $email = $this->prompt('Administrator email:'); // 接收Email
         } while (!filter_var($email, FILTER_VALIDATE_EMAIL));
         $password = trim($this->prompt('Administrator password:')); // 接收密码
-        if ($this->confirm("Are your sure to create an Administrator？")) {
+        if ($uid && $this->confirm("Are your sure to create an Administrator?")) {
             //启用事务
             $transaction = Yii::$app->db->beginTransaction();
             try {
                 $user = new User(['scenario' => 'signup']);
+                $user->uid = $uid;
                 $user->username = $username;
                 $user->nickname = $username;
                 $user->group    = Yii::$app->params['user.administratorRoleGroupId'];
@@ -63,16 +65,12 @@ class InitController extends Controller
                     $userInfo->updated_at = $user->created_at;
                     //必需同时写入会员登录表，会员资料表，会员财富表才会注册成功
                     if ($login->save(false) && $userInfo->save(false)) {
-                        //头像文件夹
-                        /*$path = Yii::getAlias(Yii::$app->params['image.basePath']) . Yii::$app->params['image.relativePath'] . $user->id . '/' . Yii::$app->params['avatar.dirName'];
-                        if (!is_dir($path)) {
-                            @mkdir($path, 0764, true);
-                        }*/
-                        $transaction->commit();//提交事务
-
                         $auth = Yii::$app->getAuthManager();
-                        $role = $auth->getRole('admin');
-                        $auth->assign($role, $user->uid);
+                        if ($auth->getAssignment('admin', $user->uid) === null) {
+                            $role = $auth->getRole('admin');
+                            $auth->assign($role, $user->uid);
+                        }
+                        $transaction->commit();//提交事务
                         echo "成功创建超级管理员帐号\n";
                         return self::EXIT_CODE_NORMAL;
                     }
@@ -86,8 +84,8 @@ class InitController extends Controller
                     return self::EXIT_CODE_ERROR;
                 }
             } catch (Exception $e) {
-                $transaction->rollback();//事务回滚
                 echo "错误：$e\n";
+                $transaction->rollback();//事务回滚
                 return self::EXIT_CODE_ERROR;
             }
         }

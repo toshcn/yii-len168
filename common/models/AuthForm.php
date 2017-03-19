@@ -76,6 +76,7 @@ class AuthForm extends Model
             [['os', 'browser'], 'safe'],
             ['captcha', 'captcha', 'captchaAction' => 'ucenter/auth/captcha'],
             ['agreement', 'compare', 'compareValue' => self::YES, 'message' => Yii::t('common/sentence', 'Must agree to the membership agreement.')],
+            ['nickname', 'validateNickname'],
 
             ['username', 'unique', 'skipOnError' => true, 'targetClass' => '\common\models\User', 'targetAttribute' => 'username', 'message' => Yii::t('common/sentence', 'This username has already been taken.')],
 
@@ -84,6 +85,26 @@ class AuthForm extends Model
             ['email', 'unique', 'skipOnError' => true, 'targetClass' => '\common\models\User', 'targetAttribute' => 'email', 'message' => Yii::t('common/sentence', 'This email has already been taken.')],
 
         ];
+    }
+
+
+    /**
+     * 验证会员昵称
+     * This method serves as the inline validation for nickname.
+     *
+     * @param string $attribute 需要验证的属性
+     * @param array $params the additional name-value pairs given in the rule
+     * @return boolean
+     */
+    public function validateNickname($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $replace = str_ireplace(Yii::$app->params['username.validate'], '', $this->$attribute);
+            if (mb_strlen($this->$attribute) != mb_strlen($replace)) {
+                $this->addError('nickname', Yii::t('common/sentence', 'This nickname has already been taken.'));
+            }
+        }
+        return false;
     }
 
     /**
@@ -104,7 +125,7 @@ class AuthForm extends Model
             try {
                 //创建会员模型对象
                 $user = new User(['scenario' => 'signup']);
-                $user->username = substr(Html::encode($this->username), 0, 20);
+                $user->username = $this->username;
                 $user->nickname = $user->username;
                 $user->email = $this->email;
                 $user->group = Yii::$app->params['user.defaultRoleGroupId'];

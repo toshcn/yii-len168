@@ -73,14 +73,14 @@ class AuthController extends Controller
         $attributes = Yii::$app->getSession()->get('AUTH_CLIENT_USERINFO');
         if ($attributes) {
             $model = new AuthForm();
-            $model->username = $attributes['username'];
-            $model->nickname = $attributes['username'];
+            $model->username = (string) $attributes['username'];
+            $model->nickname = (string) $attributes['username'];
             $model->password = '';
             $model->repassword = '';
-            $model->email = $attributes['email'];
+            $model->email = (string) $attributes['email'];
             $model->avatar = $attributes['avatar'];
             $model->source = $attributes['source'];
-            $model->source_id = (string)$attributes['source_id'];
+            $model->source_id = (string) $attributes['source_id'];
 
             if ($model->load(Yii::$app->getRequest()->post()) && ($user = $model->signup())) {
                 if (Yii::$app->user->login($user)) {

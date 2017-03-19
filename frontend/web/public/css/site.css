@@ -2369,7 +2369,6 @@ margin: 12px 0 0 -15px;
     line-height: 1;
     font-size: 5.5em;
     background: url(/public/img/smg-logo.png) no-repeat;
-    background-size: contain;
 }
 
 .login-box .login-frame,

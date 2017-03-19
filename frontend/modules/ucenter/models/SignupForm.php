@@ -74,12 +74,53 @@ class SignupForm extends Model
 
             ['agreement', 'compare', 'compareValue' => self::YES, 'message' => Yii::t('common/sentence', 'Must agree to the membership agreement.')],
 
+            ['username', 'validateUsername'],
+            ['nickname', 'validateNickname'],
+
             ['username', 'unique', 'skipOnError' => true, 'targetClass' => '\common\models\User', 'targetAttribute' => 'username', 'message' => Yii::t('common/sentence', 'This username has already been taken.')],
             ['nickname', 'unique', 'skipOnError' => true, 'targetClass' => '\common\models\User', 'targetAttribute' => 'nickname', 'message' => Yii::t('common/sentence', 'This nickname has already been taken.')],
 
             ['inviteCode', 'exist', 'skipOnError' => true, 'targetClass' => '\common\models\Invites', 'targetAttribute' => 'code', 'filter' => ['isuse' => self::NO], 'message' => Yii::t('common/sentence', 'This invitation code has already been taken.')],
             [['os', 'browser'], 'string'],
         ];
+    }
+
+    /**
+     * 验证会员名称
+     * This method serves as the inline validation for username.
+     *
+     * @param string $attribute 需要验证的属性
+     * @param array $params the additional name-value pairs given in the rule
+     * @return boolean
+     */
+    public function validateUsername($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $replace = str_ireplace(Yii::$app->params['username.validate'], '', $this->$attribute);
+            if (mb_strlen($this->$attribute) != mb_strlen($replace)) {
+                $this->addError('username', Yii::t('common/sentence', 'This username has already been taken.'));
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 验证会员昵称
+     * This method serves as the inline validation for nickname.
+     *
+     * @param string $attribute 需要验证的属性
+     * @param array $params the additional name-value pairs given in the rule
+     * @return boolean
+     */
+    public function validateNickname($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $replace = str_ireplace(Yii::$app->params['username.validate'], '', $this->$attribute);
+            if (mb_strlen($this->$attribute) != mb_strlen($replace)) {
+                $this->addError('nickname', Yii::t('common/sentence', 'This nickname has already been taken.'));
+            }
+        }
+        return false;
     }
 
     /**
