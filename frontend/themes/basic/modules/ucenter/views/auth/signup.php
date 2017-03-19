@@ -23,10 +23,6 @@ $this->title = '补全帐号信息';
                     'class' => 'auth-form'
                 ],
             ]); ?>
-
-                <?= $form->field($model, 'username', [
-                    'template' => '{label}<div class="input-item input-txt input-txt-right">{input}<span class="smg-txt">{error}</span></div>'])
-                    ->input('text', ['placeholder' => Yii::t('common/label', 'User Name'), 'class' => "form-control login-input"]) ?>
                 <?= $form->field($model, 'nickname', [
                     'template' => '{label}<div class="input-item input-txt input-txt-right">{input}<span class="smg-txt">{error}</span></div>'])
                     ->input('text', ['placeholder' => Yii::t('common/label', 'Nick Name'), 'class' => "form-control login-input"]) ?>

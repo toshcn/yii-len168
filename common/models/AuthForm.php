@@ -104,7 +104,7 @@ class AuthForm extends Model
             try {
                 //创建会员模型对象
                 $user = new User(['scenario' => 'signup']);
-                $user->username = substr(Html::encode($this->username), 0, 20);
+                $user->username = $this->username;
                 $user->nickname = $user->username;
                 $user->email = $this->email;
                 $user->group = Yii::$app->params['user.defaultRoleGroupId'];
