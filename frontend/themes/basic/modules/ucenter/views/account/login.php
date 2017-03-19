@@ -114,8 +114,6 @@ $this->title = '登录';
             var parser = new UAParser();
             var o = parser.getOS();
             var b = parser.getBrowser();
-            console.log(os);
-            console.log(browser);
             $(os).val(o.name);
             $(browser).val(b.name +','+ b.major);
         }

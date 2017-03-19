@@ -283,7 +283,6 @@ function sendMessage() {
     $('#send-message-btn').off('click.sendMessage');
     $('#send-message-btn').html('<i class="fa fa-spinner fa-spin"></i>发送中');
     $.post($('#message-widget-form').prop('action'), $('#message-widget-form').serialize(), function(json) {
-        json = $.parseJSON(json);
         if (json.ok) {
             swal({title: "成功",
                 text: "信息已发送成功！",

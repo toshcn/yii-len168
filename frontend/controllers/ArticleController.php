@@ -28,6 +28,23 @@ use common\models\Terms;
  */
 class ArticleController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => 'yii\filters\PageCache',
+                'only' => ['lists'],
+                'duration' => 300,
+                'variations' => [
+                    \Yii::$app->language,
+                ]
+            ],
+        ];
+    }
+
 
     /**
      * 独立控制器
@@ -83,11 +100,16 @@ class ArticleController extends Controller
      */
     public function actionDetail()
     {
+        $cache = Yii::$app->cache;
         $uid = Yii::$app->user->getId();
-        $postid = Yii::$app->getRequest()->get('id', 0);
+        $postid = (int) Yii::$app->getRequest()->get('id', 0);
         $model = new PostViews();
-        $post = $model->getPostViewsByPost($postid)->asArray()->one();
-
+        // 当数据库字段发生变化时，该缓存失效
+        $dependency = new \yii\caching\DbDependency(
+            ['sql' => 'SELECT MAX(updated_at) FROM {{%posts}} WHERE postid=' . $postid]
+        );
+        $cache->add('getPostViewsByPostCache', $model->getPostViewsByPost($postid)->asArray()->one(), 3000, $dependency);
+        $post = $cache->get('getPostViewsByPostCache');
         if (!$post) {
             throw new HttpException(404, '您在访问的文章不存在!');
         }
@@ -103,18 +125,21 @@ class ArticleController extends Controller
 
         $myComment = [];
         if (!Yii::$app->user->isGuest) {
-            $comment = new Comments();
-            $myComment = $comment->getUserComment($postid, $uid)->asArray()->one();
-            if ($myComment) {
-                $myComment['progress'] = $myComment['hp'] < Comments::DEFAULT_HP ? $myComment['hp'] / Comments::DEFAULT_HP * 100 : 100;
-                $myComment['standStr'] = $comment->transformCommentStand($myComment['stand']);
-                $u = Yii::$app->user->identity->attributes;
-                $myComment['user'] = array();
-                $myComment['user']['uid'] = $u['uid'];
-                $myComment['user']['nickname'] = $u['nickname'];
-                $myComment['user']['sex'] = $u['sex'];
-                $myComment['user']['head'] = $u['head'];
-                $myComment['user']['isauth'] = $u['isauth'];
+            if (!($myComment = $cache->get('getUserComment-'.$postid.$uid))) {
+                $comment = new Comments();
+                $myComment = $comment->getUserComment($postid, $uid)->asArray()->one();
+                if ($myComment) {
+                    $myComment['progress'] = $myComment['hp'] < Comments::DEFAULT_HP ? $myComment['hp'] / Comments::DEFAULT_HP * 100 : 100;
+                    $myComment['standStr'] = $comment->transformCommentStand($myComment['stand']);
+                    $u = Yii::$app->user->identity->attributes;
+                    $myComment['user'] = array();
+                    $myComment['user']['uid'] = $u['uid'];
+                    $myComment['user']['nickname'] = $u['nickname'];
+                    $myComment['user']['sex'] = $u['sex'];
+                    $myComment['user']['head'] = $u['head'];
+                    $myComment['user']['isauth'] = $u['isauth'];
+                }
+                $cache->add('getUserComment-'.$postid.$uid, $myComment, 300);
             }
         }
         //var_dump($postModel->getComments()->joinWith('replies')->asArray()->all());die;

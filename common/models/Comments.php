@@ -216,7 +216,7 @@ class Comments extends \yii\db\ActiveRecord
         if ($user->status >= User::STATUS_BAN_COMMENT) {
             return '您被禁止发言!';
         }
-        $post = Posts::findOne(['postid' => (int) $postid, 'static' => Posts::STATUS_ONLINE]);
+        $post = Posts::findOne(['postid' => (int) $postid, 'status' => Posts::STATUS_ONLINE]);
         if (!$post) {
             return '此文章不存在或未发表。';
         }

@@ -26,7 +26,7 @@ class MyUser extends User
         if ($this->beforeLogin($identity, false, $duration)) {
             $this->switchIdentity($identity, $duration);
             $id = $identity->getId();
-            $ip = Yii::$app->getRequest()->getUserIP();
+            $ip = (string) Yii::$app->getRequest()->getUserIP();
             if ($this->enableSession) {
                 $log = "User '$id' logged in from $ip with duration $duration.";
             } else {
@@ -34,8 +34,8 @@ class MyUser extends User
             }
             Yii::info($log, __METHOD__);
 
-            $identity->auth_key = Yii::$app->getSecurity()->generateRandomString();
-            $identity->save();
+            $identity->generateAuthKey();
+            $identity->save(false);
 
             Yii::$app->getSession()->set('USER_AUTH_KEY', $identity->auth_key);
 

@@ -19,13 +19,21 @@ use common\models\Terms;
  */
 class SiteController extends Controller
 {
-    //public $layout = 'layout';
     /**
      * @inheritdoc
      */
     public function behaviors()
     {
-        return [];
+        return [
+            [
+                'class' => 'yii\filters\PageCache',
+                'only' => ['index'],
+                'duration' => 300,
+                'variations' => [
+                    \Yii::$app->language,
+                ]
+            ],
+        ];
     }
 
     /**

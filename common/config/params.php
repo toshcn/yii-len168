@@ -20,9 +20,15 @@ return [
     'avatar.maxCutValue' => 150,//上传保存头像最大高宽px
     'avatar.defaultSuffix' => '.jpg',//上传保存头像的类型
     'avatar.dirName' => 'avatar',//会员头像目录名称
+
+    'payQrcode.maxCutValueW' => 600,//收款二维码图最大宽px
+    'payQrcode.maxCutValueH' => 350,//收款二维码图最大高px
+    'payQrcode.defaultSuffix' => '.jpg',//收款二维码图的类型
+    'payQrcode.imageName' => 'pay_qrcode/pay',//收款二维码图目录名
     'post.defaultHp' => 100,//文章默认生命值
     'post.pageSize' => 20,//文章列表分页数
     'default.pageSize' => 20,//列表分页数
+    'post.header.image' => '/post-nohead.jpg',
 
     'image.basePath' => '@frontend/web',//图片上传基本路径别名
     'image.relativePath' => '/upload/img/',//图片上传路径image.basePath路径下

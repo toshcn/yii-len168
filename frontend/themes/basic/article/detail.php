@@ -13,8 +13,10 @@ use common\models\Posts;
 use common\models\Comments;
 use common\widgets\JsBlock;
 use frontend\assets\ArticleAsset;
+use frontend\assets\JqueryBlueimpAsset;
 
 ArticleAsset::register($this);
+JqueryBlueimpAsset::register($this);
 
 $post['title'] = Html::encode($post['title']);
 
@@ -25,6 +27,7 @@ $canComment = !$post['islock'] && !$post['isdie'] && $post['iscomment'] ? 1 : 0;
 ?>
 <div class="wrapper article-wrapper w-center">
     <div class="row">
+
         <div class="col-md-9" id="article-content">
             <div class="article-ibox">
                 <div class="article-head">
@@ -77,7 +80,32 @@ $canComment = !$post['islock'] && !$post['isdie'] && $post['iscomment'] ? 1 : 0;
                     <div class="word-content" name="content-md" id="word-content"><?= $post['islock'] ? '本文已被锁定，暂时无法显示。' : Html::encode($post['content']); ?></div>
                 </div>
 
+                <div class="article-footer">
+                    <div class="author">
+                        本文由：<?= Html::encode($post['nickname']) ?>
+                        <?= $post['typeStr'] ?>
+                    </div>
+                    <div class="copyright" title="<?= $post['copyrightStr'] ?>">
+                         © 著作权归作者所有 <?= $post['copyrightStr'] ?>
+                        <?php if ($post['posttype'] == Posts::POST_TYPE_REPRINT) {?>
+                            <a href="<?= Html::encode($post['original_link']) ?>" rel=nofollow>原文链接</a>
+                        <?php } ?>
+                        <a href="<?= Url::to(['/article/detail', 'id' => $post['postid']])?>" rel=nofollow>本文链接</a>
+                    </div>
+                    <?php if ($post['pay_qrcode']) {?>
+                    <div class="article-donate text-center">
+                        <div class="article-donate-header">如果本文章让您的技术有所提升，请随意打赏。分享技术，快乐共享！</div>
+                        <div class="article-donate-content">
+                            <a href="<?= Html::encode($post['pay_qrcode']) ?>" data-gallery>
+                                <button type="button" class="btn btn-warning">支持作者</button>
+                            </a>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
+
                 <!-- 我的点评 视图-->
+
                 <?= $this->render('_myComment', [
                     'myComment' => $myComment,
                     'canComment' => $canComment
@@ -97,6 +125,7 @@ $canComment = !$post['islock'] && !$post['isdie'] && $post['iscomment'] ? 1 : 0;
 
         </div>
         <!-- 文章页右边作者资料展示框 begin -->
+        <?php if ($this->beginCache('article-author-cache')) { ?>
         <div class="col-md-3">
             <div class="article-wrapper-right">
                 <div class="article-right-head">
@@ -111,9 +140,25 @@ $canComment = !$post['islock'] && !$post['isdie'] && $post['iscomment'] ? 1 : 0;
                             </div> 加载中
                         </div>
                     </div>
+                </div><!-- 文章页右边作者资料展示框 end -->
+                <?php if ($post['pay_qrcode']) {?>
+                <div class="article-donate text-center">
+                    <div class="article-donate-header">如果本文对你有帮助</div>
+                    <div class="article-donate-content">
+                        <a href="<?= Html::encode($post['pay_qrcode']) ?>" data-gallery>
+                            <button type="button" class="btn btn-warning">支持作者</button>
+                        </a>
+                    </div>
                 </div>
+                <?php } ?>
             </div>
-        </div><!-- 文章页右边作者资料展示框 end -->
+
+            <div id="blueimp-gallery" class="blueimp-gallery">
+                <div class="slides"></div>
+            </div>
+        </div>
+        <?php } ?>
+
     </div>
     <div class="hide" id="reply-template">
     <?php if (! \Yii::$app->user->isGuest) { ?>

@@ -156,16 +156,16 @@ class PostForm extends Model
     {
         if ($this->validate()) {
             $post = new Posts(['scenario' => 'create']);
-            $post->title = $this->title;
+            $post->title = Html::encode($this->title);
             $post->user_id = Yii::$app->getUser()->getId();
-            $post->author = $this->author;
+            $post->author = Html::encode($this->author);
             $post->categorys = implode(',', $this->categorys);//新分类
-            $post->image = $this->image;
-            $post->image_suffix = $this->imageSuffix;
-            $post->content = $this->content;
+            $post->image = Html::encode($this->image);
+            $post->image_suffix = Html::encode($this->imageSuffix);
+            $post->content = Html::encode($this->content);
             $post->content_len = mb_strlen($this->content);
-            $post->description = $this->description;
-            $post->original_url = $this->originalUrl;
+            $post->description = Html::encode($this->description);
+            $post->original_url = Html::encode($this->originalUrl);
             $post->copyright = $this->copyright;
             $post->spend = $this->spend;
             $post->paytype = $this->paytype;
@@ -182,21 +182,22 @@ class PostForm extends Model
 
             $post->created_at = date('Y-m-d H:i:s');
             $post->content_len = mb_strlen($this->content);
-            $post->save(false);
-            //添加文章属性
-            $attr = new PostAttributes();
-            $attr->post_id = $post->postid;
-            $attr->hp = Yii::$app->params['post.defaultHp'];
-            if ($attr->save(false)) {
-                $this->postid = $post->postid;
-                $this->updatePostTag($post);
-                $this->updatePostCategory($post);
-                User::increasePost($post->user_id);//增加发表量
-                return true;
-            } else {
+            if ($post->save()) {
+                //添加文章属性
+                $attr = new PostAttributes();
+                $attr->post_id = $post->postid;
+                $attr->hp = Yii::$app->params['post.defaultHp'];
+                if ($attr->save(false)) {
+                    $this->postid = $post->postid;
+                    $this->updatePostTag($post);
+                    $this->updatePostCategory($post);
+                    User::increasePost($post->user_id);//增加发表量
+                    return true;
+                }
                 $post->delete();
             }
         }
+
         return false;
     }
 
@@ -207,15 +208,15 @@ class PostForm extends Model
             $post = $post->findOne($this->postid);
 
             $this->_oldCategorys = $post->categorys;//记录旧的分类
-            $post->title = $this->title;
-            $post->author = $this->author;
+            $post->title = Html::encode($this->title);
+            $post->author = Html::encode($this->author);
             $post->categorys = implode(',', $this->categorys);//新分类
-            $post->image = $this->image;
-            $post->image_suffix = $this->imageSuffix;
-            $post->content = $this->content;
+            $post->image = Html::encode($this->image);
+            $post->image_suffix = Html::encode($this->imageSuffix);
+            $post->content = Html::encode($this->content);
             $post->content_len = strlen($this->content);
-            $post->description = $this->description;
-            $post->original_url = $this->originalUrl;
+            $post->description = Html::encode($this->description);
+            $post->original_url = Html::encode($this->originalUrl);
             $post->copyright = $this->copyright;
             $post->spend = $this->spend;
             $post->paytype = $this->paytype;
@@ -227,7 +228,7 @@ class PostForm extends Model
             $post->ispay = $post->spend && $post->paytype ? Posts::YES : Posts::NO;
             $post->status = ($post->status != Posts::STATUS_ONLINE) && $this->isdraft ? Posts::STATUS_DRAFT : Posts::STATUS_ONLINE;
             $post->updated_at = date('Y-m-d H:i:s');
-            if ($post->save(false)) {
+            if ($post->save()) {
                 $this->updatePostTag($post);
                 $this->updatePostCategory($post);
                 return true;
@@ -266,8 +267,6 @@ class PostForm extends Model
                 try {
                     Terms::findOne($term)->updateCounters(['counts' => -1]);
                     $relation->find()->where(['objectid' => $this->postid, 'term' => $term])->one()->delete();
-
-                    //unset($oldTags[$i]);
                     $dbTrans->commit();
                 } catch (Exception $e) {
                     $dbTrans->rollback();
@@ -295,6 +294,7 @@ class PostForm extends Model
             if ($row) {
                 $temp[] = $row['termid'];
             } else {
+                $tag = Html::encode($tag);
                 $term->title = $tag;
                 $term->slug = $tag;
                 $term->catetype = Terms::CATEGORY_TAG;
@@ -320,6 +320,7 @@ class PostForm extends Model
         $relation->type = TermRelations::OBJECT_TYPE_POST;
         //绑定新标签
         foreach ($tags as $key => $tag) {
+            $tag = Html::encode($tag);
             if (!$relation->getExistRelation($this->postid, $tag)) {
                 $dbTrans= Yii::$app->db->beginTransaction();
                 try {

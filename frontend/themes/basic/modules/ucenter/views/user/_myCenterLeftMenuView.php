@@ -43,7 +43,7 @@ $this->params['route'] = $this->context->route;
                 <a href="<?= Url::to(['/ucenter/user/followers'], true); ?>">我的粉丝</a>
                 <div class="col-md-12 nav-span no-p-l"><span></span></div>
             </li>
-            <li class="<?= $this->params['route'] == 'ucenter/user/invite' ? 'cur' : ''; ?>">
+            <li class="hide <?= $this->params['route'] == 'ucenter/user/invite' ? 'cur' : ''; ?>">
                 <a href="<?= Url::to(['/ucenter/user/invite'], true); ?>">邀请注册</a>
                 <div class="col-md-12 nav-span no-p-l"><span></span></div>
             </li>
@@ -57,6 +57,11 @@ $this->params['route'] = $this->context->route;
             </li>
             <li class="<?= $this->params['route'] == 'ucenter/user/avatar' ? 'cur' : ''; ?>">
                 <a href="<?= Url::to(['/ucenter/user/avatar'], true); ?>">上传头像</a>
+                <div class="col-md-12 nav-span no-p-l"><span></span></div>
+            </li>
+
+            <li class="<?= $this->params['route'] == 'ucenter/user/pay-qrcode' ? 'cur' : ''; ?>">
+                <a href="<?= Url::to(['/ucenter/user/pay-qrcode'], true); ?>">收款二维码</a>
                 <div class="col-md-12 nav-span no-p-l"><span></span></div>
             </li>
         </ul>

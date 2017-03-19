@@ -10,6 +10,7 @@ namespace frontend\modules\ucenter\controllers;
 use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\web\Response;
 use yii\data\Pagination;
 use common\models\Terms;
 use common\models\PostViews;
@@ -147,15 +148,26 @@ class UserController extends CommonController
     public function actionMessages()
     {
         $user = Yii::$app->getUser()->getIdentity();
-        $query = $user->getMessages()
-            ->with([
-                'sendfrom' => function ($query) {
-                    return $query->select(['uid', 'head', 'sex', 'nickname']);
-                }
-            ]);
+        $search = Yii::$app->getRequest()->get('s', 'to');
+        if ($search == 'to') {
+            $query = $user->getMessagesSendTo()
+                ->with([
+                    'sendfrom' => function ($query) {
+                        return $query->select(['uid', 'head', 'sex', 'nickname']);
+                    }
+                ]);
+        } else {
+            $query = $user->getMessagesSendFrom()
+                ->with([
+                    'sendto' => function ($query) {
+                        return $query->select(['uid', 'head', 'sex', 'nickname']);
+                    }
+                ]);
+        }
+
         $pagination = new Pagination([
             'totalCount' => $query->count(),
-            'pageSizeParam' => false,
+            'pageSizeParam' => false
         ]);
 
         $messages = $query->orderBy(['id' => SORT_DESC])
@@ -166,6 +178,7 @@ class UserController extends CommonController
 
         return $this->render('messages', [
             'uid' => $user->getId(),
+            'search' => $search,
             'userDetail' => User::getUserDetail($user->getId()),
             'messages' => $messages,
             'pagination' => $pagination
@@ -326,18 +339,6 @@ class UserController extends CommonController
     }
 
     /**
-     * 修改个人头像
-     * @return [type] [description]
-     */
-    public function actionAvatar()
-    {
-        $uid = Yii::$app->getUser()->getId();
-        $userDetail = User::getUserDetail($uid);
-        return $this->render('avatar', [
-            'userDetail' => $userDetail
-        ]);
-    }
-    /**
      * 邀请注册页
      * @return [type] [description]
      */
@@ -377,6 +378,34 @@ class UserController extends CommonController
         }
         return json_encode(['error' => 1, 'msg' => '非法提交！']);
     }
+
+    /**
+     * 修改个人头像
+     * @return [type] [description]
+     */
+    public function actionAvatar()
+    {
+        $uid = Yii::$app->getUser()->getId();
+        $userDetail = User::getUserDetail($uid);
+        return $this->render('avatar', [
+            'userDetail' => $userDetail
+        ]);
+    }
+
+
+    /**
+     * 修改收款二维码
+     * @return [type] [description]
+     */
+    public function actionPayQrcode()
+    {
+        $uid = Yii::$app->getUser()->getId();
+        $userDetail = User::getUserDetail($uid);
+        return $this->render('pay-qrcode', [
+            'userDetail' => $userDetail
+        ]);
+    }
+
     /**
      * 重新发送邀请码
      * @return [type] [description]
@@ -478,6 +507,7 @@ class UserController extends CommonController
     public function actionAjaxSendMessage()
     {
         $message = Yii::$app->getRequest()->post('message');
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
         $myself = Yii::$app->getUser()->getId();
         if ($message['content'] && $message['user'] != $myself) {
             $model = new Messages();
@@ -486,11 +516,11 @@ class UserController extends CommonController
             $model->content = Html::encode($message['content']);
             $model->send_at = date('Y-m-d H:i:s');
             if ($model->validate() && $model->save(false)) {
-                return json_encode(['ok' => 1]);
+                return ['ok' => 1];
             }
         }
 
-        return json_encode(['ok' => 0]);
+        return ['ok' => 0];
     }
 
     /**
@@ -512,7 +542,7 @@ class UserController extends CommonController
                 $avatarName = $headImgPath . $md5 . Yii::$app->params['avatar.defaultSuffix'];
 
                 if (!is_dir($basePath . $headImgPath)) {
-                    @mkdir($basePath . $headImgPath, 0764, true);
+                    @mkdir($basePath . $headImgPath);
                 }
                 if (file_put_contents($uploadFile, base64_decode(str_replace($result[1], '', $base64Img)))) {
                     //按设定头像大小等比裁剪图片
@@ -523,13 +553,56 @@ class UserController extends CommonController
                     if (is_file($thumbFile)) {
                         $user = Yii::$app->getUser()->getIdentity();
                         $user->head = Yii::$app->params['image.host'] . $avatarName;
+                        $user->updated_at = date('Y-m-d H:i:s');
                         $user->save(false);
                         $ok = 1;
                     }
                 }
             }
         }
-        echo json_encode(['ok' => $ok]);
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
+        return ['ok' => $ok];
+        Yii::$app->end();
+    }
+
+    /**
+     * 保存收款二维码图
+     */
+    public function actionAjaxUploadPayQrcode()
+    {
+        $ok = 0;
+        if (Yii::$app->getRequest()->getIsPost()) {
+            $base64Img = Yii::$app->getRequest()->post('img');
+            if (preg_match('/^(data:image\/(jpg|png|gif|jpeg);base64,)/', $base64Img, $result)) {
+                $uid = Yii::$app->getUser()->getId();
+
+                $basePath = Yii::getAlias(Yii::$app->params['image.basePath']);
+                $imgPath = Yii::$app->params['image.relativePath'] . $uid . '/' . Yii::$app->params['payQrcode.imageName'];
+                $uploadFile = $basePath . $imgPath . '.' . $result[2];
+                $thumbFile = $basePath . $imgPath . Yii::$app->params['payQrcode.defaultSuffix'];
+                $payQrcodeName = $imgPath . Yii::$app->params['payQrcode.defaultSuffix'];
+
+                if (!is_dir(dirname($uploadFile))) {
+                    @mkdir(dirname($uploadFile));
+                }
+                if (file_put_contents($uploadFile, base64_decode(str_replace($result[1], '', $base64Img)))) {
+                    //按设定大小等比裁剪图片
+                    \yii\imagine\Image::thumbnail($uploadFile, Yii::$app->params['payQrcode.maxCutValueW'], Yii::$app->params['payQrcode.maxCutValueH'], \Imagine\Image\ManipulatorInterface::THUMBNAIL_INSET)
+                        ->save($thumbFile, ['quality' => 90]);
+
+                    @unlink($uploadFile);//删除上传原图
+                    if (is_file($thumbFile)) {
+                        $user = Yii::$app->getUser()->getIdentity();
+                        $user->pay_qrcode = Yii::$app->params['image.host'] . $payQrcodeName . '?v=' . time();
+                        $user->updated_at = date('Y-m-d H:i:s');
+                        $user->save(false);
+                        $ok = 1;
+                    }
+                }
+            }
+        }
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
+        return ['ok' => $ok];
         Yii::$app->end();
     }
 }

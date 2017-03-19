@@ -26,7 +26,7 @@ SiteIndexAsset::register($this);
                 <?php foreach ($topPosts as $key => $top) { ?>
                     <div class="item animated pulse <?= ($key == 0) ? 'active' : '';?>" data-img-index="<?= $key + 1; ?>">
                         <a href="<?= Url::to(['/article/detail', 'id' => $top['postid']], true); ?>" target="_blank">
-                            <img class="img-responsive" src="<?= $top['image'] ? $top['image'] . '_500x300' . $top['image_suffix'] : ''; ?>" alt="<?= Html::encode($top['title']) ?>">
+                            <img class="img-responsive" src="<?= $top['image'] ? $top['image'] . '_500x300' . $top['image_suffix'] : Yii::$app->params['post.header.image']; ?>" width="500" height="300" alt="<?= Html::encode($top['title']) ?>">
                         </a>
                     </div>
                 <?php } ?>
@@ -112,11 +112,13 @@ SiteIndexAsset::register($this);
                                 <img src="/public/img/view.png" alt="" width="100%" >
                             </a>
                         </div>
-                        <img src="<?= $post['image'] ? Url::to($post['image'] . '_326x195' . $post['image_suffix'], true) : ''; ?>" alt="" width="100%">
+                        <img src="<?= $post['image'] ? Url::to($post['image'] . '_326x195' . $post['image_suffix'], true) : Yii::$app->params['post.header.image']; ?>" alt="" height="100%">
                     </div>
                     <div class="post-body">
                         <div class="post-content">
-                            <h3 class="post-title"><?= $post['title'] ?></h3>
+                            <h3 class="post-title">
+                                <a href="<?= Url::to(['/article/detail', 'id' => $post['postid']]) ?>" title="<?= $post['title'] ?>" rel="bookmark"><?= $post['title'] ?></a>
+                            </h3>
                             <div class="post-detail">
                                 <?= Html::encode(mb_substr($post['description'], 1, 77)) ?>
                             </div>
@@ -142,10 +144,6 @@ SiteIndexAsset::register($this);
                                 <div class="pull-right align-right">
                                     <span class="icon-txt"><i class="fa fa-eye"></i> <?= $post['views'] ?></span>
                                     <span class="icon-txt"><i class="fa fa-commenting-o"></i> <?= $post['comments'] ?></span>
-                                    <span class="icon-txt">
-                                        <a class="btn btn-success btn-sm" href="<?= Url::to(['/article/detail', 'id' => $post['postid']], true); ?>" target="_blank"><i class="fa fa-book"></i> 阅读
-                                        </a>
-                                    </span>
                                 </div>
                             </div>
                         </div>

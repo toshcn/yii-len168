@@ -65,6 +65,7 @@ class m161206_134531_site_table_init extends Migration
             'nickname' => $this->string(20)->notNull()->unique()->comment('昵称'),
             'email' => $this->string(64)->notNull()->unique()->comment('Email'),
             'head' => $this->string(255)->notNull()->defaultValue('')->comment('头像'),
+            'pay_qrcode' => $this->string(255)->notNull()->defaultValue('')->comment('付款二维'),
             'mobile' => $this->bigInteger(11)->notNull()->defaultValue(0)->comment('手机'),
             'sex' => $this->boolean()->notNull()->defaultValue(-1)->comment('性别:1男0女-1保密'),
             'auth_key' => $this->string(32)->notNull()->defaultValue('')->comment('认证token'),
@@ -510,6 +511,7 @@ class m161206_134531_site_table_init extends Migration
                         `p`.`updated_at` AS `updated_at`,
                         `u`.`sex` AS `sex`,
                         `u`.`head` AS `head`,
+                        `u`.`pay_qrcode` AS `pay_qrcode`,
                         `u`.`nickname` AS `nickname`,
                         `u`.`motto` AS `motto`
                     FROM

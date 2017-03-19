@@ -104,8 +104,8 @@ class AuthForm extends Model
             try {
                 //创建会员模型对象
                 $user = new User(['scenario' => 'signup']);
-                $user->username = $this->username;
-                $user->nickname = $this->username;
+                $user->username = substr(Html::encode($this->username), 0, 20);
+                $user->nickname = $user->username;
                 $user->email = $this->email;
                 $user->group = Yii::$app->params['user.defaultRoleGroupId'];
                 $user->sex = -1;
@@ -142,7 +142,7 @@ class AuthForm extends Model
                     //头像文件夹
                     $headImgPath = Yii::getAlias(Yii::$app->params['image.basePath']) . Yii::$app->params['image.relativePath'] . $user->uid . '/' . Yii::$app->params['avatar.dirName'];
                     if (!is_dir($headImgPath)) {
-                        mkdir($headImgPath, 0764, true);
+                        mkdir($headImgPath);
                     }
 
                     $transaction->commit(); //提交事务

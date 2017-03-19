@@ -76,6 +76,20 @@ class ImageManager extends Object
         if (empty($this->imageName)) {
             $this->imageName = md5(\Yii::$app->user->getId() + time());
         }
+
+        $this->quality        = Yii::$app->params['image.quality'];
+        $this->makeWater      = Yii::$app->params['image.makeWater'];
+        $this->waterType      = Yii::$app->params['image.waterConfig']['type'];
+        $this->waterLocation  = Yii::$app->params['image.waterConfig']['location'];
+        $this->waterPadding   = Yii::$app->params['image.waterConfig']['padding'];
+        $this->waterImage     = Yii::$app->params['image.waterConfig']['image'];
+        $this->waterImageSize = Yii::$app->params['image.waterConfig']['size'];
+        $this->waterText      = Yii::$app->params['image.waterConfig']['text'];
+        $this->fontFile       = Yii::$app->params['image.waterConfig']['fontFile'];
+        $this->fontOptions    = Yii::$app->params['image.waterConfig']['fontOptions'];
+        if (!in_array($this->waterType, ['water', 'text'])) {
+            $this->makeWater = false;
+        }
     }
     /**
      * [getImageFile description]

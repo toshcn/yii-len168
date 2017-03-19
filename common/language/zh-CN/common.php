@@ -20,5 +20,9 @@ return [
     '<membership>' => '《会员注册协议》',
     'Case insensitive' => '大小写不限',
     'Click change' => '点击更新',
+    'Create A New Post' => '发表新文章',
+    'Original' => '原创',
+    'Reprint' => '转载',
+    'Translate' => '翻译',
 
 ];
