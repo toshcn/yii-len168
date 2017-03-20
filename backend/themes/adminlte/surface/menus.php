@@ -211,7 +211,7 @@ $this->params['contentClass'] = 'gray-bg';
             <?php if ($navMenuId === 0) {
                 $form = ActiveForm::begin([
                     'id' => 'navmenu-add-form',
-                    'action' => Url::to(['surface/menus'], 'http'),
+                    'action' => Url::to(['surface/menus']),
                     'fieldConfig' => ['template' => ''],
                 ]);
             ?>
