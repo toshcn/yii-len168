@@ -7,7 +7,7 @@ $params = array_merge(
 );
 return [
     'id' => 'app-frontend',
-    'name' => 'len168.com专注web技术分享，学好IT你就168',
+    'name' => 'len168.com专注IT技术分享，分享快乐，学好IT你就一路发',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',

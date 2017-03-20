@@ -25,14 +25,6 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            [
-                'class' => 'yii\filters\PageCache',
-                'only' => ['index'],
-                'duration' => 300,
-                'variations' => [
-                    \Yii::$app->language,
-                ]
-            ],
         ];
     }
 

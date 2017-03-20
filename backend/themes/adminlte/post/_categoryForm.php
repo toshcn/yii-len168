@@ -17,9 +17,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'parent')->textInput() ?>
+    <?= $form->field($model, 'termid', ['template' => '{input}'])->hiddenInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('common', 'Create'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('common', $model->isNewRecord ? 'Create' : 'Update'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?><br/>

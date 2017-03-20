@@ -1,4 +1,10 @@
 <?php
+/**
+ * @link http://www.len168.com/
+ * @copyright Copyright (c) 2015 len168.com
+ * @license http://www.len168.com/license/
+ */
+
 namespace backend\models;
 
 use Yii;
@@ -16,6 +22,7 @@ class PostCategoryForm extends Model
     public $slug; //分类别称
     public $description = ''; //描述
     public $parent = 0; //父节点 默认无节点
+    public $isNewRecord = true;
 
     private $_type = Terms::CATEGORY_CATE; //类型 '分类'
 
