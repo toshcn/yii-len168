@@ -118,7 +118,7 @@ class SurfaceController extends MainController
             $term->load(Yii::$app->getRequest()->post());
             $term->isNewRecord = false;
             $term->save();
-            $this->redirect(['surface/menus', 'menu' => $navMenuId]);
+            $this->redirect(['menus', 'menu' => $navMenuId]);
         }
 
         //添加菜单项
@@ -144,6 +144,6 @@ class SurfaceController extends MainController
                 $menus->findOne($objectid)->delete();
             }
         }
-        $this->redirect(['surface/menus', 'menu' => $navMenuId]);
+        $this->redirect(['menus', 'menu' => $navMenuId]);
     }
 }
