@@ -48,7 +48,7 @@ $this->params['contentClass'] = '';
                                         'aria-label' => Yii::t('yii', 'Update'),
                                         'data-pjax' => $model->termid,
                                     ];
-                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'javascript:;', $options);
+                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['/post/update-category', 'id' => $model->termid], $options);
                                 },
                             ],
                         ],

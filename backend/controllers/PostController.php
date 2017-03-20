@@ -72,18 +72,14 @@ class PostController extends MainController
      * 更新分类
      * @return minx
      */
-    public function actionUpdateCategory()
+    public function actionUpdateCategory($id)
     {
-        $id = intval(Yii::$app->getRequest()->get('id'));
-        if (!$id) {
-            return $this->redirect(['category']);
-        }
         $categoryForm = new PostCategoryForm();
-        if ($categoryForm->load(Yii::$app->getRequest()->post()) && $categoryForm->update()) {
+        if ($categoryForm->load(Yii::$app->getRequest()->post(), 'Terms') && $categoryForm->update()) {
             return $this->redirect(['category']);
         } else {
-            $model = new Terms();
-            $model = $model->findOne($id);
+            //var_dump($categoryForm->errors);die;
+            $model = Terms::findOne($id);
             return $this->render('updateCategory', [
                 'model' => $model,
             ]);
