@@ -237,7 +237,7 @@ $this->params['contentClass'] = 'gray-bg';
             <?php } else {
                 $form = ActiveForm::begin([
                     'id' => 'navmenu-edit-form',
-                    'action' => Url::to(['surface/edit-nav-menu'], 'http'),
+                    'action' => Url::to(['surface/edit-nav-menu']),
                     'fieldConfig' => ['template' => ''],
                 ]);
             ?>
