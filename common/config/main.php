@@ -30,6 +30,33 @@ return [
                         YII_ENV_DEV ? 'js/bootstrap.js' : 'js/bootstrap.min.js',
                     ],
                 ],
+                'frontend\assets\BasicAsset' => [
+                    'css' => [
+                        YII_ENV_DEV ? 'public/css/basic.css' : 'public/css/basic.min.css',
+                    ],
+                    'js' => [
+                        YII_ENV_DEV ? 'public/js/basic.js' : 'public/js/basic.min.js',
+                    ],
+                ],
+                'frontend\assets\SiteAsset' => [
+                    'css' => [
+                        YII_ENV_DEV ? 'public/css/site.css' : 'public/css/site.min.css',
+                    ],
+                    'js' => [
+                        YII_ENV_DEV ? 'public/js/site.js' : 'public/js/site.min.js',
+                    ],
+                ],
+                'frontend\assets\SiteIndexAsset' => [
+                    'js' => [
+                        YII_ENV_DEV ? 'public/js/jquery.smg.sliderpost.js' : 'public/js/jquery.smg.sliderpost.min.js',
+                        YII_ENV_DEV ? 'public/js/index.js' : 'public/js/index.min.js',
+                    ],
+                ],
+                'frontend\assets\ArticleAsset' => [
+                    'js' => [
+                        YII_ENV_DEV ? 'public/js/article.js' : 'public/js/article.min.js',
+                    ],
+                ],
             ],
         ],
         //角色权限管理组件

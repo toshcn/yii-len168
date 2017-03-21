@@ -103,15 +103,19 @@ class ArticleController extends Controller
         $cache = Yii::$app->cache;
         $uid = Yii::$app->user->getId();
         $postid = (int) Yii::$app->getRequest()->get('id', 0);
-        $model = new PostViews();
-        // 当数据库字段发生变化时，该缓存失效
-        $dependency = new \yii\caching\DbDependency(
-            ['sql' => 'SELECT MAX(updated_at) FROM {{%posts}} WHERE postid=' . $postid]
-        );
-        $cache->add('getPostViewsByPostCache', $model->getPostViewsByPost($postid)->asArray()->one(), 3000, $dependency);
         $post = $cache->get('getPostViewsByPostCache');
+
         if (!$post) {
-            throw new HttpException(404, '您在访问的文章不存在!');
+            $model = new PostViews();
+            $post = $model->getPostViewsByPost($postid)->asArray()->one();
+            // 当数据库字段发生变化时，该缓存失效
+            $dependency = new \yii\caching\DbDependency(
+                ['sql' => 'SELECT MAX(updated_at) FROM {{%posts}} WHERE postid=' . $postid]
+            );
+            $cache->add('getPostViewsByPostCache', $post, 3000, $dependency);
+            if (!$post) {
+                throw new HttpException(404, '您在访问的文章不存在!');
+            }
         }
         if ($post['status'] == Posts::STATUS_DRAFT && $post['user_id'] != Yii::$app->getUser()->getId()) {
             throw new HttpException(404, '您在访问的文章未发表或非公开!');
@@ -142,7 +146,6 @@ class ArticleController extends Controller
                 $cache->add('getUserComment-'.$postid.$uid, $myComment, 300);
             }
         }
-        //var_dump($postModel->getComments()->joinWith('replies')->asArray()->all());die;
 
         return $this->render('detail', [
             'postid' => $postid,

@@ -27,7 +27,7 @@ class BasicAsset extends AssetBundle
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
-        'common\assets\AwesomeAsset',
+        'frontend\assets\AwesomeAsset',
         'frontend\assets\SweetalertAsset',
     ];
 }

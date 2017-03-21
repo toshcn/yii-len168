@@ -21,7 +21,7 @@ class TimeagoAsset extends AssetBundle
     public $baseUrl = '@web/public/';
 
     public $js = [
-        'vendor/jquery-timeago/jquery.timeago.js',
+        'vendor/jquery-timeago/jquery.timeago.min.js',
         'vendor/jquery-timeago/locales/jquery.timeago.zh-CN.js',
     ];
 }

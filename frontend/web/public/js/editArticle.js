@@ -139,8 +139,8 @@
     var testEditormd = editormd;
 
     testEditormd.katexURL= {
-        js  : "/public/vendor/KaTeX/dist/katex.min",  // default: //cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min
-        css : "/public/vendor/KaTeX/dist/katex.min"   // default: //cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min
+        js  : "/public/vendor/katex/dist/katex.min",
+        css : "/public/vendor/katex/dist/katex.min"
     };
     testEditormd("word-edit", {
         width: "100%",

@@ -29,7 +29,7 @@ class SiteAsset extends AssetBundle
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
-        'common\assets\AwesomeAsset',
+        'frontend\assets\AwesomeAsset',
         'frontend\assets\BasicAsset',
         'frontend\assets\TimeagoAsset',
         'frontend\assets\AnimateAsset',

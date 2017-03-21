@@ -1,8 +1,8 @@
 ;
 var editormdView = editormd;
 editormdView.katexURL= {
-    js  : "/public/vendor/KaTeX/dist/katex.min",  // default: //cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min
-    css : "/public/vendor/KaTeX/dist/katex.min"   // default: //cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min
+    js  : "/public/vendor/katex/dist/katex.min",
+    css : "/public/vendor/katex/dist/katex.min"
 };
 function markdownToHTMLView(to, form) {
     //$.get("/public/vendor/editormd/examples/test.md", function(markdown) {
