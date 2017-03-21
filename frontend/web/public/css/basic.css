@@ -9,7 +9,7 @@
  */
 
 body {
-    font-size: 14px;
+    font: normal 16px/1.618 'Helvetica Neue','Microsoft YaHei UI','Microsoft YaHei','Noto Sans CJK SC',Sathu,'EucrosiaUPC',sans-serif;
 }
 div {
     display: block;
