@@ -34,14 +34,6 @@ class ArticleController extends Controller
     public function behaviors()
     {
         return [
-            [
-                'class' => 'yii\filters\PageCache',
-                'only' => ['lists'],
-                'duration' => 300,
-                'variations' => [
-                    \Yii::$app->language,
-                ]
-            ],
         ];
     }
 
