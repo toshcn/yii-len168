@@ -65,11 +65,11 @@ class ArticleController extends Controller
     /**
      * 分类列表
      */
-    public function actionLists()
+    public function actionLists($id)
     {
-        $id = Yii::$app->getRequest()->get('id', 0);
-        $query = Terms::findOne(['termid' => $id])
-                ->getNicePostViews()
+        $cache = Yii::$app->cache;
+        $cate = (int) $id;
+        $query = Terms::findOne(['termid' => $cate])->getNicePostViews()
                 ->select([
                     'postid', 'user_id', 'title', 'head', 'posttype', 'author', 'nickname', 'image', 'image_suffix', 'description', 'views', 'comments', 'created_at'
                 ]);
@@ -80,16 +80,25 @@ class ArticleController extends Controller
             'pageSize' => Yii::$app->params['post.pageSize']
         ]);
 
-        $posts = $query
-            ->orderBy(['postid' => SORT_DESC])
-            ->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->asArray()
-            ->all();
+        $posts = $cache->get(__METHOD__ . 'postListCache' . $pagination->getPage());
+        if (!$posts) {
+            $posts = $query->orderBy(['postid' => SORT_DESC])
+                ->offset($pagination->offset)
+                ->limit($pagination->limit)
+                ->asArray()
+                ->all();
+            $cache->add(__METHOD__ . 'postListCache' . $pagination->getPage(), $posts, Yii::$app->params['catch.time.postList']);
+        }
+
+        $categorys = $cache->get(__METHOD__ . 'categorysCache' . $cate);
+        if (!$categorys) {
+            $categorys = Terms::getCategorys($cate)->asArray()->all();
+            $cache->add(__METHOD__ . 'categorysCache' . $cate, $categorys, Yii::$app->params['catch.time.categorys']);
+        }
 
         return $this->render('lists', [
             'posts' => $posts,
-            'categorys' => Terms::getCategorys($id)->asArray()->all(),
+            'categorys' => $categorys,
             'pagination' => $pagination
         ]);
     }

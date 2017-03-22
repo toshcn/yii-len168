@@ -14,8 +14,9 @@ return [
     'post.defaultCategory' => 1,//默认未分类id
 
     'catch.time.topPosts' => 600, //首页置顶文章缓存时间秒
-    'catch.time.categorys' => 0, //分类缓存时间秒
+    'catch.time.categorys' => 600, //分类缓存时间秒
     'catch.time.post' => 600, //分类缓存时间秒
+    'catch.time.postList' => 600, //分类缓存时间秒
     'catch.time.userComment' => 600, //分类缓存时间秒
 
     'avatar.maxCutValue' => 150,//上传保存头像最大高宽px

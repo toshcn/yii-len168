@@ -62,16 +62,22 @@ class SiteController extends Controller
             'pageSize' => Yii::$app->params['post.pageSize']
         ]);
 
-        $views = $query->orderBy(['postid' => SORT_DESC])
-            ->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->asArray()
-            ->all();
-        $categorys = $cache->get(__METHOD__ . 'categorysCache');
+        $views = $cache->get(__METHOD__ . 'topPostListCache' . $pagination->getPage());
+        if (!$views) {
+            $views = $query->orderBy(['postid' => SORT_DESC])
+                ->offset($pagination->offset)
+                ->limit($pagination->limit)
+                ->asArray()
+                ->all();
+            $cache->add(__METHOD__ . 'topPostListCache' . $pagination->getPage(), $views, Yii::$app->params['catch.time.postList']);
+        }
+
+        $categorys = $cache->get(__METHOD__ . 'categorysCache0');
         if (!$categorys) {
             $categorys = Terms::getCategorys(0)->asArray()->all();
-            $cache->add(__METHOD__ . 'categorysCache', $categorys, Yii::$app->params['catch.time.categorys']);
+            $cache->add(__METHOD__ . 'categorysCache0', $categorys, Yii::$app->params['catch.time.categorys']);
         }
+
         $topPosts = $cache->get(__METHOD__ . 'topPostsCache');
         if (!$topPosts) {
             $topPosts = $post->getTopPosts()->asArray()->all();
