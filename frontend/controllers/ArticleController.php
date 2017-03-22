@@ -103,16 +103,16 @@ class ArticleController extends Controller
         $cache = Yii::$app->cache;
         $uid = Yii::$app->user->getId();
         $postid = (int) Yii::$app->getRequest()->get('id', 0);
-        $post = $cache->get('getPostViewsByPostCache');
+        $post = $cache->get(__METHOD__ . 'postCache' . $postid);
 
         if (!$post) {
             $model = new PostViews();
             $post = $model->getPostViewsByPost($postid)->asArray()->one();
             // 当数据库字段发生变化时，该缓存失效
             $dependency = new \yii\caching\DbDependency(
-                ['sql' => 'SELECT MAX(updated_at) FROM {{%posts}} WHERE postid=' . $postid]
+                ['sql' => 'SELECT MAX(updated_at) FROM {{%posts}} WHERE postid=' . (int) $postid]
             );
-            $cache->add('getPostViewsByPostCache', $post, 3000, $dependency);
+            $cache->add(__METHOD__ . 'postCache' . $postid, $post, Yii::$app->params['catch.time.post'], $dependency);
             if (!$post) {
                 throw new HttpException(404, '您在访问的文章不存在!');
             }
@@ -129,7 +129,7 @@ class ArticleController extends Controller
 
         $myComment = [];
         if (!Yii::$app->user->isGuest) {
-            if (!($myComment = $cache->get('getUserComment-'.$postid.$uid))) {
+            if (!($myComment = $cache->get(__METHOD__ . 'userComment-'.$postid.$uid))) {
                 $comment = new Comments();
                 $myComment = $comment->getUserComment($postid, $uid)->asArray()->one();
                 if ($myComment) {
@@ -143,7 +143,10 @@ class ArticleController extends Controller
                     $myComment['user']['head'] = $u['head'];
                     $myComment['user']['isauth'] = $u['isauth'];
                 }
-                $cache->add('getUserComment-'.$postid.$uid, $myComment, 300);
+                $dep = new \yii\caching\DbDependency(
+                    ['sql' => 'SELECT count(*) FROM {{%replies}} WHERE comment_id=' . (int) $myComment['commentid']]
+                );
+                $cache->add(__METHOD__ . 'userComment-'.$postid.$uid, $myComment, Yii::$app->params['catch.time.userComment'], $dep);
             }
         }
 

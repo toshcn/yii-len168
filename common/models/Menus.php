@@ -80,7 +80,21 @@ class Menus extends \yii\db\ActiveRecord
         return $this->hasOne(Terms::className(), ['termid' => 'object']);
     }
 
-    public function createMenu(Array $menus)
+     /**
+     * menus表对应的termRelations表关系 一对一
+     * @return object ActiveQuery object
+     */
+    public function getTermMenuRelation()
+    {
+        return $this->hasOne(TermRelations::className(), ['objectid' => 'menuid'])->andWhere(['type' => TermRelations::OBJECT_TYPE_MENU]);
+    }
+
+    /**
+     * 创建菜单
+     * @param  array  $menus [description]
+     * @return [type]        [description]
+     */
+    public function createMenu($menus = [])
     {
         $this->scenario = 'create';
         $menuId = [];

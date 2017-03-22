@@ -180,7 +180,12 @@ $this->params['contentClass'] = 'gray-bg';
                                     <div id="term-search" class="tab-pane">
                                         <div class="panel-body">
                                             <div class="menu-search-box">
-                                                <input class="form-control input-sm pull-left" type="text" maxlength="64" id="search-term-word" value="" placeholder="搜索分类标题" style="width: 60%;">
+                                                <select class="form-control input-sm" id="search-term-word" style="width: 60%; float: left;">
+                                                    <option value="0">一级分类</option>
+                                                <?php foreach ($categorys as $key => $item) {?>
+                                                    <option value="<?= $item['termid'] ?>"><?= $item['title'] ?></option>
+                                                <?php } ?>
+                                                </select>
                                                 <button class="btn btn-primary btn-sm pull-right" id="js-search-term-btn" type="button">搜索</button>
                                             </div>
                                             <div class="search-result">
@@ -415,7 +420,7 @@ $this->params['contentClass'] = 'gray-bg';
                 });
                 $.post(url, {'menus':'{"menus":['+menus.toString()+']}'}, function(json) {
                     var navMenuId = parseInt(<?= intval($navMenu['termid']) ?>);
-                    $.each($.parseJSON(json), function(i, v) {
+                    $.each(json, function(i, v) {
                         var itemId = v.menuid;
                         var id = v.cateid;
                         var title = $('[name="menu-item-term['+id+'][title]"]').val();
@@ -466,8 +471,7 @@ $this->params['contentClass'] = 'gray-bg';
                 var title = $('#search-post-word').val();
                 var html = '';
                 if (!_postCatch[title]) {
-                    $.post("<?= Url::to('/post/ajax-search-posts');?>", {"s":title}, function(json) {
-                        json = $.parseJSON(json);
+                    $.post("<?= Url::to(['/post/ajax-search-posts']);?>", {"s":title}, function(json) {
                         if (json.length) {
                             $.each(json, function(i, v) {
                                 html += '<li><label class="checkbox-label simple-txt"><input class="" type="checkbox" name="post-search-select" value="'+v.postid+'"></label>'+v.title+
@@ -492,8 +496,7 @@ $this->params['contentClass'] = 'gray-bg';
                 var title = $('#search-link-word').val();
                 var html = '';
                 if (!_linkCatch[title]) {
-                    $.post("<?= Url::to('/link/ajax-search-links');?>", {"s":title}, function(json) {
-                        json = $.parseJSON(json);
+                    $.post("<?= Url::to(['/link/ajax-search-links']);?>", {"s":title}, function(json) {
                         if (json.length) {
                             $.each(json, function(i, v) {
                                 html += '<li><label class="checkbox-label simple-txt"><input class="" type="checkbox" name="link-search-select" value="'+v.linkid+'"></label>'+v.link_title+
@@ -504,10 +507,10 @@ $this->params['contentClass'] = 'gray-bg';
                                     '</li>';
                             });
                         } else {
-                            html = '<li>不存在此文章： "<span>'+title+'</span>"</li>';
+                            html = '<li>不存在此链接： "<span>'+title+'</span>"</li>';
                         }
                         $('#link-search-result').html(html);
-                        _linkCatch[title] = {"html":html};//缓存此关键词查找到的文章
+                        _linkCatch[title] = {"html":html};//缓存此关键词查找到的链接
                     });
                 } else {
                     $('#link-search-result').html(_linkCatch[title].html);
@@ -515,11 +518,11 @@ $this->params['contentClass'] = 'gray-bg';
             });
             //搜索分类
             $('#js-search-term-btn').on('click.search-term', function() {
-                var title = $('#search-term-word').val();
+                var id = $('#search-term-word').children('option:selected').val();
+                var title = $('#search-term-word').children('option:selected').text();
                 var html = '';
-                if (!_termCatch[title]) {
-                    $.post("<?= Url::to('/surface/ajax-search-cates');?>", {"s":title}, function(json) {
-                        json = $.parseJSON(json);
+                if (!_termCatch[id]) {
+                    $.post("<?= Url::to(['/surface/ajax-search-cates']);?>", {"id":id}, function(json) {
                         if (json.length) {
                             $.each(json, function(i, v) {
                                 html += '<li><label class="checkbox-label simple-txt"><input class="" type="checkbox" name="term-search-select" value="'+v.termid+'"></label>'+v.title+
@@ -530,13 +533,13 @@ $this->params['contentClass'] = 'gray-bg';
                                     '</li>';
                             });
                         } else {
-                            html = '<li>不存在此文章： "<span>'+title+'</span>"</li>';
+                            html = '<li>不存在此分类： "<span>'+title+'</span>"</li>';
                         }
                         $('#term-search-result').html(html);
-                        _termCatch[title] = {"html":html};//缓存此关键词查找到的文章
+                        _termCatch[id] = {"html":html};//缓存此关键词查找到的分类
                     });
                 } else {
-                    $('#term-search-result').html(_termCatch[title].html);
+                    $('#term-search-result').html(_termCatch[id].html);
                 }
             });
             //提交navmenu-edit-form

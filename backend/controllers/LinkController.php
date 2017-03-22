@@ -8,6 +8,7 @@ use backend\models\LinkSearch;
 use backend\controllers\MainController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 use backend\models\LinkForm;
 use backend\models\LinkCategoryForm;
 use backend\models\LinkCategorySearch;
@@ -60,7 +61,7 @@ class LinkController extends MainController
         if ($categoryForm->load(Yii::$app->getRequest()->post()) && $categoryForm->create()) {
             return $this->redirect(['category']);
         } else {
-            return $this->render('category',[
+            return $this->render('category', [
                 'route' => $this->route,
                 'categoryForm' => $categoryForm,
                 'searchModel' => $searchModel,
@@ -153,13 +154,13 @@ class LinkController extends MainController
     public function actionAjaxSearchLinks()
     {
         $word = trim(Yii::$app->getRequest()->post('s'));
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
 
         if ($word) {
             $link = new Links();
             $link = $link->find()->select('linkid, link_title')->where(['like', 'link_title', $word])->asArray()->all();
-            return json_encode($link);
+            return $link;
         }
-        return json_encode([]);
+        return [];
     }
-
 }

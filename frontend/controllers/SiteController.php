@@ -53,9 +53,8 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $post = new PostViews();
-
-        $query = $post->getNicePostViews()
-            ->select(['postid', 'user_id', 'title', 'head', 'posttype', 'author', 'nickname', 'image', 'image_suffix', 'description', 'views', 'comments', 'created_at']);
+        $cache = Yii::$app->cache;
+        $query = $post->getNicePostViews()->select(['postid', 'user_id', 'title', 'head', 'posttype', 'author', 'nickname', 'image', 'image_suffix', 'description', 'views', 'comments', 'created_at']);
 
         $pagination = new Pagination([
             'totalCount' => $query->count(),
@@ -63,16 +62,24 @@ class SiteController extends Controller
             'pageSize' => Yii::$app->params['post.pageSize']
         ]);
 
-        $views = $query
-            ->orderBy(['postid' => SORT_DESC])
+        $views = $query->orderBy(['postid' => SORT_DESC])
             ->offset($pagination->offset)
             ->limit($pagination->limit)
             ->asArray()
             ->all();
-
+        $categorys = $cache->get(__METHOD__ . 'categorysCache');
+        if (!$categorys) {
+            $categorys = Terms::getCategorys(0)->asArray()->all();
+            $cache->add(__METHOD__ . 'categorysCache', $categorys, Yii::$app->params['catch.time.categorys']);
+        }
+        $topPosts = $cache->get(__METHOD__ . 'topPostsCache');
+        if (!$topPosts) {
+            $topPosts = $post->getTopPosts()->asArray()->all();
+            $cache->add(__METHOD__ . 'topPostsCache', $topPosts, Yii::$app->params['catch.time.topPosts']);
+        }
         return $this->render('index', [
-            'topPosts' => $post->getTopPosts()->asArray()->all(),
-            'categorys' => Terms::getCategorys()->asArray()->all(),
+            'topPosts' => $topPosts,
+            'categorys' => $categorys,
             'posts' => $views,
             'pagination' => $pagination
         ]);

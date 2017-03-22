@@ -12,6 +12,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\helpers\Json;
 use yii\base\Model;
+use yii\web\Response;
 use backend\controllers\MainController;
 use backend\models\MenuForm;
 use common\models\NavMenu;
@@ -60,6 +61,7 @@ class SurfaceController extends MainController
             'termRecent' => $term->getCategoryRecent('termid, title'),
             'linkRecent' => $link->getLinkRecent('linkid, link_title'),
             'postRecent' => $post->getPostRecent('postid, title'),
+            'categorys'  => Terms::getCategorys(0)->asArray()->all()
         ];
         if (empty($navMenuObj->hasNavMenu())) {
             $renderData['menuForm'] = $menuForm;
@@ -78,24 +80,31 @@ class SurfaceController extends MainController
      */
     public function actionAjaxSearchCates()
     {
-        $word = trim(Yii::$app->getRequest()->post('s'));
-
-        if ($word) {
-            $term = new Terms();
-            $term = $term->find()->select('termid, title')->where(['like', 'title', $word])->asArray()->all();
-            return json_encode($term);
-        }
-        return json_encode([]);
+        $id = intval(Yii::$app->getRequest()->post('id'));
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
+        $term = Terms::getCategorys($id, ['termid' => SORT_DESC])->select('termid, title')
+                ->asArray()
+                ->all();
+        return $term;
     }
 
+    /**
+     * 创建菜单
+     * @return json
+     */
     public function actionAjaxCreateMenu()
     {
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
         $menu   = new Menus();
         $request    = Yii::$app->getRequest();
         $menus = json_decode($request->post('menus'), true);
-        return Json::encode($menu->createMenu($menus['menus']));
+        return $menu->createMenu($menus['menus']);
     }
 
+    /**
+     * 编辑菜单
+     * @return [type] [description]
+     */
     public function actionEditNavMenu()
     {
         $term = new Terms();

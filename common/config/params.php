@@ -11,6 +11,12 @@ return [
     'user.defaultRoleGroupId' => 20,//默认会员组id: 10管理员, 20作者
     'user.defaultAvatar' => '/public/img/avatar.jpg',//会员默认头像
     'login.maxFailes' => 5,//最大登录错误次数，超过此值设置登录时限
+    'post.defaultCategory' => 1,//默认未分类id
+
+    'catch.time.topPosts' => 600, //首页置顶文章缓存时间秒
+    'catch.time.categorys' => 0, //分类缓存时间秒
+    'catch.time.post' => 600, //分类缓存时间秒
+    'catch.time.userComment' => 600, //分类缓存时间秒
 
     'avatar.maxCutValue' => 150,//上传保存头像最大高宽px
     'avatar.defaultSuffix' => '.jpg',//上传保存头像的类型

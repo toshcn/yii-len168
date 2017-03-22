@@ -87,18 +87,31 @@ class PostController extends MainController
     }
 
     /**
+     * 删除分类
+     * @return minx
+     */
+    public function actionDeleteCategory($id)
+    {
+        if ($id) {
+            Terms::deleteCategory($id);
+        }
+        return $this->redirect(['category']);
+    }
+
+    /**
      * 查找文章
      */
     public function actionAjaxSearchPosts()
     {
         $word = trim(Yii::$app->getRequest()->post('s'));
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
 
         if ($word) {
             $post = new Posts();
             $post = $post->find()->select('postid, title')->where(['like', 'title', $word])->andWhere(['and', ['isdel' => Posts::NO]])->asArray()->all();
-            return json_encode($post);
+            return $post;
         }
-        return json_encode([]);
+        return [];
     }
 
     /**

@@ -41,7 +41,17 @@ $this->params['contentClass'] = '';
                         [
                             'header' => '操作',
                             'class' => 'yii\grid\ActionColumn',
+                            'template' => '{update}{delete}',
                             'buttons' => [
+                                'delete' => function ($url, $model, $key) {
+                                    $options = [
+                                        'class' => 'pull-right',
+                                        'title' => Yii::t('yii', 'Delete'),
+                                        'aria-label' => Yii::t('yii', 'Delete'),
+                                        'data-pjax' => $model->termid,
+                                    ];
+                                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['/post/delete-category', 'id' => $model->termid], $options);
+                                },
                                 'update' => function ($url, $model, $key) {
                                     $options = [
                                         'title' => Yii::t('yii', 'Update'),

@@ -8,6 +8,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\Menus;
 
 /**
  * This is the model class for table "{{%terms}}".
@@ -176,9 +177,9 @@ class Terms extends \yii\db\ActiveRecord
      * @param  array  $orderBy [description]
      * @return [type]          [description]
      */
-    public static function getCategorys($termid = 0, $orderBy = ['counts' => SORT_DESC])
+    public static function getCategorys($termid = '', $orderBy = ['counts' => SORT_DESC])
     {
-        if ($termid) {
+        if ($termid !== '') {
             return static::find()
             ->where(['parent' => $termid, 'catetype' => self::CATEGORY_CATE])
             ->orderBy($orderBy);
@@ -242,28 +243,48 @@ class Terms extends \yii\db\ActiveRecord
         return false;
     }
 
+    public static function deleteCategory($termid)
+    {
+        if (($termid = (int) $termid) && $termid != Yii::$app->params['post.defaultCategory']) {
+            $menus = Menus::find()
+                ->where(['object' => $termid, 'menu_type' => Menus::MENU_TYPE_TERM])
+                ->with('termMenuRelation')
+                ->all();
+            foreach ($menus as $key => $item) {
+                if ($item->termMenuRelation) {
+                    $item->termMenuRelation->delete();
+                }
+                $item->delete();
+            }
+
+            TermRelations::updateAll(['term' => (int) Yii::$app->params['post.defaultCategory']], ['term' => $termid, 'type' => TermRelations::OBJECT_TYPE_POST]);
+
+            static::find()->where(['termid' => $termid, 'catetype' => self::CATEGORY_CATE])->one()->delete();
+        }
+    }
+
     /**
      * 减少关联数量
-     * @param  integer $tremid tremid
+     * @param  integer $termid termid
      * @return boolean
      */
-    public static function decreaseCount($tremid)
+    public static function decreaseCount($termid)
     {
-        if ($tremid) {
-            return Yii::$app->db->createCommand('UPDATE '.static::tableName().' SET counts = `counts` - 1 WHERE termid =:termid', [':termid' => intval($tremid)])->execute();
+        if ($termid) {
+            return Yii::$app->db->createCommand('UPDATE '.static::tableName().' SET counts = `counts` - 1 WHERE termid =:termid', [':termid' => intval($termid)])->execute();
         }
         return false;
     }
 
     /**
      * 添加关联数量
-     * @param  integer $tremid tremid
+     * @param  integer $termid termid
      * @return boolean
      */
-    public static function increaseCount($tremid)
+    public static function increaseCount($termid)
     {
-        if ($tremid) {
-            return Yii::$app->db->createCommand('UPDATE '.static::tableName().' SET counts = `counts` + 1 WHERE termid =:termid', [':termid' => intval($tremid)])->execute();
+        if ($termid) {
+            return Yii::$app->db->createCommand('UPDATE '.static::tableName().' SET counts = `counts` + 1 WHERE termid =:termid', [':termid' => intval($termid)])->execute();
         }
         return false;
     }
