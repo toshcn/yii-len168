@@ -927,7 +927,7 @@ a.slide-control:active {
 .post-box .post-title {
     overflow: hidden;
     margin: 20px 0;
-    height: 18px;
+    height: 1.2em;
     line-height: 1.2em;
     text-align: center;
     text-overflow: ellipsis;
