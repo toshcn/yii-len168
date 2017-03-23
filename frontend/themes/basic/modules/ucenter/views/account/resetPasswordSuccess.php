@@ -21,7 +21,7 @@ $this->params['bodyClass'] = 'gray-bg submit-success';
         <div class="account-head-nav">
             <a href="<?= Url::home(true) ?>">首页</a>
             <a href="<?= Url::to(['/ucenter/account/signup'], true) ?>">注册帐号</a>
-            <a href="<?= Url::to(['/ucenter/account/help']) ?>">帮助</a>
+            <a href="<?= Url::to(['/help/how-to-register']) ?>">帮助</a>
         </div>
     </div>
     <div class="account-content">

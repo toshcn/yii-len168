@@ -17,7 +17,7 @@ return [
     'Forget password?' => '忘记密码?',
     'Captcha' => '验证码',
     'Invalid token' => '无效的令牌',
-    '<membership>' => '《会员注册协议》',
+    '<membership>' => '《用户注册协议》',
     'Case insensitive' => '大小写不限',
     'Click change' => '点击更新',
     'Create A New Post' => '发表新文章',

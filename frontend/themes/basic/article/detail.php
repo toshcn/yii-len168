@@ -24,10 +24,10 @@ $this->params['bodyClass'] = 'gray-bg';
 $this->title = $post['title'];
 $my = Yii::$app->user->getIdentity();
 $canComment = !$post['islock'] && !$post['isdie'] && $post['iscomment'] ? 1 : 0;
+$this->params['description'] = $post['description'];
 ?>
 <div class="wrapper article-wrapper w-center">
     <div class="row">
-
         <div class="col-md-9" id="article-content">
             <div class="article-ibox">
                 <div class="article-head">
@@ -65,10 +65,10 @@ $canComment = !$post['islock'] && !$post['isdie'] && $post['iscomment'] ? 1 : 0;
                             <?php } ?>
                             <a href="<?= Url::to(['/article/detail', 'id' => $post['postid']])?>" rel=nofollow>本文链接</a>
                         </div>
+
                         <div class="article-wealth gray pull-right">
-                            <span class="green"><i class="fa fa-thumbs-o-up"></i>点赞(<?= $post['apps'] ?>)</span>
-                            <span class="red"><i class="fa fa-thumbs-o-down"></i>吐槽(<?= $post['opps'] ?>)</span>
-                            <span><i class="fa fa-clock-o"></i> <time class="timeago" datetime="<?= $post['created_at']?>" title="<?= $post['created_at']?>"><?= $post['created_at']?></time></span>
+                            <span><i class="fa fa-clock"></i>更新: <time class="timeago" datetime="<?= $post['updated_at']?>" title="<?= $post['updated_at']?>"><?= $post['updated_at']?></time></span>
+                            <span><i class="fa fa-clock-o"></i>创建: <time class="timeago" datetime="<?= $post['created_at']?>" title="<?= $post['created_at']?>"><?= $post['created_at']?></time></span>
                             <span>来自: <?= $post['os'] ?></span>
                         </div>
                     </div>
@@ -94,7 +94,7 @@ $canComment = !$post['islock'] && !$post['isdie'] && $post['iscomment'] ? 1 : 0;
                     </div>
                     <?php if ($post['pay_qrcode']) {?>
                     <div class="article-donate text-center">
-                        <div class="article-donate-header">如果本文章让您的技术有所提升，请随意打赏。分享技术，快乐共享！</div>
+                        <div class="article-donate-header">如果本文章让你的技术有所提升，请随意打赏。分享技术，快乐共享！</div>
                         <div class="article-donate-content">
                             <a href="<?= Html::encode($post['pay_qrcode']) ?>" data-gallery>
                                 <button type="button" class="btn btn-warning">支持作者</button>
@@ -124,8 +124,7 @@ $canComment = !$post['islock'] && !$post['isdie'] && $post['iscomment'] ? 1 : 0;
 
 
         </div>
-        <!-- 文章页右边作者资料展示框 begin -->
-        <?php if ($this->beginCache('article-author-cache')) { ?>
+        <!-- 文章页右边作者资料展示框  -->
         <div class="col-md-3">
             <div class="article-wrapper-right">
                 <div class="article-right-head">
@@ -157,8 +156,6 @@ $canComment = !$post['islock'] && !$post['isdie'] && $post['iscomment'] ? 1 : 0;
                 <div class="slides"></div>
             </div>
         </div>
-        <?php } ?>
-
     </div>
     <div class="hide" id="reply-template">
     <?php if (! \Yii::$app->user->isGuest) { ?>
@@ -216,7 +213,7 @@ $canComment = !$post['islock'] && !$post['isdie'] && $post['iscomment'] ? 1 : 0;
                 <div class="comment-footer">{standStr}</div>
             </div>
         </div>
-        <?php } ?>
+    <?php } ?>
     </div>
 
     <div class="reply-area hide" id="reply-area">
@@ -270,7 +267,7 @@ $canComment = !$post['islock'] && !$post['isdie'] && $post['iscomment'] ? 1 : 0;
 <?php JsBlock::begin() ?>
 <script>
     var _canConment = "<?= $canComment ?>";
-    var _postid = <?= $postid ?>;
+    var _postid = parseInt("<?= $postid ?>");
     var urlAsc = "<?= Url::to(['/ajax/article-comment', 'id' => $postid, 'sort' => 'asc'], true)?>";
     var urlDesc = "<?= Url::to(['/ajax/article-comment', 'id' => $postid, 'sort' => 'desc'], true)?>";
     var _articleCommentCatch = new Array();//分页评论数据缓存
@@ -285,7 +282,7 @@ $canComment = !$post['islock'] && !$post['isdie'] && $post['iscomment'] ? 1 : 0;
             $.get("<?= Url::to(['/ajax/increase-views'], true) ?>", {"id": _postid});
             //文章内容转html
             createMarkdownHTMLView();
-            var uid = <?= $post['user_id']?>;
+            var uid = parseInt("<?= $post['user_id']?>");
             //获取文章会员信息
             $.get(_authorWidgetUrl, {"id": uid}, function(html) {
                 if (html) {

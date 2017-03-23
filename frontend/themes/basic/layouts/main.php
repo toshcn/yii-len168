@@ -17,24 +17,25 @@ use yii\widgets\Menu;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-SiteAsset::register($this);
 /* @var $this->params['rememberName'] for remember user name*/
 $cookie = Yii::$app->request->cookies;
 $this->params['rememberName'] = $cookie->getValue('LOGINNAME_REMEMBER');
 
-$navMenuObj = new NavMenu(['navMenuId' => 1]);
+$navMenuObj = new NavMenu(['navMenuId' => Yii::$app->params['menu.topPosition']]);
 $this->params['navMenus'] = $navMenuObj->getSortNavMenuItems();
 
-$navMenuObj->navMenuId = 2;
+$navMenuObj->navMenuId = Yii::$app->params['menu.bottomPosition'];
 $navMenuObj->setNavMenuItems();
 $this->params['footerMenus'] = $navMenuObj->getFooterNavMenuItems();
+$this->params['bodyClass'] = isset($this->params['bodyClass']) ? $this->params['bodyClass'] : '';
+$this->params['description'] = isset($this->params['description']) ? $this->params['description'] : Yii::$app->params['siteDescription'];
+SiteAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
-    <meta charset="utf-8">
     <!-- 初始网页宽度为设置屏幕宽度，缩放级别为1.0，禁止用户缩放-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <!-- 设置360等双内核的浏览器渲染模式 -->
@@ -43,20 +44,13 @@ $this->params['footerMenus'] = $navMenuObj->getFooterNavMenuItems();
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <!-- 禁止移动浏览器转码 -->
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <!-- 网站标志 -->
-    <!-- <link rel="icon" type="image/png" href="favicon.png"> -->
     <title><?= Html::encode($this->title) . '|' . Yii::$app->name ?></title>
     <!-- 网站描述 -->
-    <meta name="description" content="">
+    <meta name="description" content="<?= Html::encode($this->params['description']) ?>">
     <!-- 网站SEO关键词 -->
-    <meta name="keywords" content="">
+    <meta name="keywords" content="<?= Html::encode(Yii::$app->params['siteKeywords']) ?>">
     <?= Html::csrfMetaTags() ?>
-    <?php
-        $this->head();
-        $this->params['bodyClass'] = isset($this->params['bodyClass']) ? $this->params['bodyClass'] : '';
-    ?>
-    <!-- <link href="/public/css/base.css" rel="stylesheet">
-    <link href="/public/css/site.css" rel="stylesheet"> -->
+    <?php $this->head() ?>
     <script type="text/javascript">
         var _authorWidget = new Array();
         var _authorWidgetUrl = "<?= Url::to(['/ajax/author-widget']) ?>";
@@ -68,7 +62,7 @@ $this->params['footerMenus'] = $navMenuObj->getFooterNavMenuItems();
     </script>
 </head>
 <body class="<?= $this->params['bodyClass'] ?> fixed-nav">
-    <?php $this->beginBody() ?>
+<?php $this->beginBody() ?>
     <div class="top-wrapper navbar-fixed-top" id="navbar-header">
         <div class="top-header w-center">
             <a id="top-logo" href="<?= Yii::$app->homeUrl ?>">LEN168</a>
@@ -110,9 +104,10 @@ $this->params['footerMenus'] = $navMenuObj->getFooterNavMenuItems();
             </div>
         </div>
     </div>
+
     <?= $content ?>
 
-    <div class="backtop">
+    <div class="backtop" id="backtop-box">
         <button type="button" class="btn btn-sm btn-info" id="backtop" title="返回顶部">
             <i class="fa fa-arrow-up"></i>
         </button>
@@ -242,7 +237,7 @@ $this->params['footerMenus'] = $navMenuObj->getFooterNavMenuItems();
         </div>
 
     </div>
-    <?php $this->endBody() ?>
+<?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>

@@ -21,6 +21,7 @@ function markdownToHTMLView(to, form) {
         searchReplace    : true,
         flowChart        : true,
         sequenceDiagram  : true,
+        autoLoadKaTeX    : false,
         path:"/public/vendor/editormd/lib/",
     });
 }

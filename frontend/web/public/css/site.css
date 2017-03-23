@@ -1113,6 +1113,7 @@ a.slide-control:active {
     margin-right: 1em;
     margin-bottom: 0;
     padding-top: .5em;
+    padding-bottom: .5em;
     width: 45px;
     font-size: 14px;
 }

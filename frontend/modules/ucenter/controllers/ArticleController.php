@@ -5,8 +5,6 @@
  * @license
  */
 
-
-
 namespace frontend\modules\ucenter\controllers;
 
 use Yii;

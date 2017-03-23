@@ -15,9 +15,10 @@ use common\models\NavMenu;
 /* @var $form yii\bootstrap\ActiveForm */
 
 $this->params['bodyClass'] = isset($this->params['bodyClass']) ? $this->params['bodyClass'] : 'gray-bg';
+$this->params['description'] = isset($this->params['description']) ? $this->params['description'] : Yii::$app->params['siteDescription'];
 
 AccountAsset::register($this);
-$navMenuObj = new NavMenu(['navMenuId' => 2]);
+$navMenuObj = new NavMenu(['navMenuId' => Yii::$app->params['menu.bottomPosition']]);
 $navMenuObj->setNavMenuItems();
 $this->params['footerMenus'] = $navMenuObj->getFooterNavMenuItems();
 ?>
@@ -35,13 +36,11 @@ $this->params['footerMenus'] = $navMenuObj->getFooterNavMenuItems();
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <!-- 禁止移动浏览器转码 -->
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <!-- 网站标志 -->
-    <!-- <link rel="icon" type="image/png" href="favicon.png"> -->
     <title><?= $this->title . ' | ' . \Yii::$app->name ?></title>
     <!-- 网站描述 -->
-    <meta name="description" content="">
+    <meta name="description" content="<?= Html::encode($this->params['description']) ?>">
     <!-- 网站SEO关键词 -->
-    <meta name="keywords" content="">
+    <meta name="keywords" content="<?= Html::encode(Yii::$app->params['siteKeywords']) ?>">
     <?= Html::csrfMetaTags() ?>
     <?php $this->head() ?>
 </head>
@@ -61,10 +60,8 @@ $this->params['footerMenus'] = $navMenuObj->getFooterNavMenuItems();
                     'submenuTemplate' => "",
                     'encodeLabels' => false,
                     'activateParents' => false,
-                    //'route' => 'article/detail',//$this->params['route'],
                     'items' => $this->params['footerMenus'],
                     ]);
-                //var_dump($this->params['footerMenus']);
             ?>
             <div class="site-detail">
                 <p>
@@ -102,4 +99,5 @@ $this->params['footerMenus'] = $navMenuObj->getFooterNavMenuItems();
     <?php JsBlock::end() ?>
     <?php $this->endBody() ?>
 </body>
+</html>
 <?php $this->endPage() ?>

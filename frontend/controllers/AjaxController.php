@@ -46,9 +46,14 @@ class AjaxController extends Controller
     public function actionAuthorWidget()
     {
         if ($uid = intval(Yii::$app->getRequest()->get('id'))) {
-            $model = new User();
-            //$author = $model->getAuthorWidget($uid);
-            if ($author = $model->getAuthorWidget($uid)) {
+            $cache = Yii::$app->cache;
+            $author = $cache->get(__METHOD__ . 'authorWidgetCache' . $uid);
+            if (!$author) {
+                $model = new User();
+                $author = $model->getAuthorWidget($uid);
+                $cache->add(__METHOD__ . 'authorWidgetCache' . $uid, $author, Yii::$app->params['catch.time.authorWidget']);
+            }
+            if ($author) {
                 return $this->renderAjax('_authorWidget', [
                     'author' => $author,
                     'myself' => Yii::$app->user->getId()

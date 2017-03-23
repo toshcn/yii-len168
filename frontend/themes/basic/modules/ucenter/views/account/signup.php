@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]); ?>
                 <?= $form->field($model, 'inviteCode', [
-                    'template' => '{label}<div class="col-md-4"><div class="input-icon input-icon-left"><i class="smg-icon fa fa-code"></i>{input}</div></div><div class="col-md-4 fix-help-block"><p class="has-error-hide">'.Html::a(Yii::t('common/sentence', 'How to get the registration invitation code?'), ['/ucenter/help/how-get-invite-code']).'</p>{error}</div>'])
+                    'template' => '{label}<div class="col-md-4"><div class="input-icon input-icon-left"><i class="smg-icon fa fa-code"></i>{input}</div></div><div class="col-md-4 fix-help-block"><p class="has-error-hide">'.Html::a(Yii::t('common/sentence', 'How to get the registration invitation code?'), ['/help/how-to-register']).'</p>{error}</div>'])
                     ->input('text', ['maxlength' => '32', 'placeholder' => Yii::t('common/label', 'Invitation Code')]) ?>
                 <?= $form->field($model, 'username', [
                     'template' => '{label}<div class="col-md-4"><div class="input-icon input-icon-left"><i class="smg-icon fa fa-user"></i>{input}</div></div><div class="col-md-4">{error}</div>'])
@@ -84,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ?>
                 <?= $form->field($model, 'agreement', [
                     'checkboxTemplate' => '<div class="col-md-3"></div><div class="col-md-4 fix-help-block">{beginLabel}{input}{label}{endLabel}</div><div class="col-md-4">{error}</div>'])
-                    ->checkbox(['label' => Yii::t('common/sentence', 'I have read and agree to this ') . Html::a(Html::encode(Yii::t('common', '<membership>')), ['/ucenter/account/request-password-reset'], ['class' => '']), 'labelOptions' => ['class' => "control-label pull-left"]])  ?>
+                    ->checkbox(['label' => Yii::t('common/sentence', 'I have read and agree to this ') . Html::a(Html::encode(Yii::t('common', '<membership>')), ['/help/registration-protocol'], ['class' => '']), 'labelOptions' => ['class' => "control-label pull-left"]])  ?>
 
                 <div class="form-group">
                     <div class="col-md-4 col-md-offset-3 align-center">

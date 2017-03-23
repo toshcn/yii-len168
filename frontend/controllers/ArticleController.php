@@ -109,10 +109,14 @@ class ArticleController extends Controller
         if (!$post) {
             $model = new PostViews();
             $post = $model->getPostViewsByPost($postid)->asArray()->one();
+            $post['typeStr'] = Posts::transformPostType($post['posttype']);
+            $post['copyrightStr'] = Posts::transformPostCopyright($post['copyright']);
+            $post['progress'] = $post['hp'] < PostAttributes::DEFAULT_HP ? $post['hp'] / PostAttributes::DEFAULT_HP * 100 : 100;
+
             // 当数据库字段发生变化时，该缓存失效
-            $dependency = new \yii\caching\DbDependency(
-                ['sql' => 'SELECT MAX(updated_at) FROM {{%posts}} WHERE postid=' . (int) $postid]
-            );
+            $dependency = new \yii\caching\DbDependency([
+                'sql' => 'SELECT MAX(updated_at) FROM {{%posts}} WHERE postid=' . (int) $postid
+            ]);
             $cache->add(__METHOD__ . 'postCache' . $postid, $post, Yii::$app->params['catch.time.post'], $dependency);
             if (!$post) {
                 throw new HttpException(404, '您在访问的文章不存在!');
@@ -124,9 +128,6 @@ class ArticleController extends Controller
             throw new HttpException(404, '您在访问的文章未发表或非公开!');
         }
 
-        $post['typeStr'] = Posts::transformPostType($post['posttype']);
-        $post['copyrightStr'] = Posts::transformPostCopyright($post['copyright']);
-        $post['progress'] = $post['hp'] < PostAttributes::DEFAULT_HP ? $post['hp'] / PostAttributes::DEFAULT_HP * 100 : 100;
 
         $myComment = [];
         if (!Yii::$app->user->isGuest) {

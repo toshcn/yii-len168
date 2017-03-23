@@ -37,7 +37,7 @@ return [
     'Invalid token' => '无效的令牌',
 
 
-    'Must agree to the membership agreement.' => '必需同意会员协议',
+    'Must agree to the membership agreement.' => '必需同意注册协议',
 
     'Unable to link {client} account. There is something wrong for DB.' => '数据错误，无法绑定此{client}账号。',
 
