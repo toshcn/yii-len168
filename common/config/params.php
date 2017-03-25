@@ -17,17 +17,17 @@ return [
     'menu.topPosition' => 1,//顶部菜单id
     'menu.bottomPosition' => 2,//底部菜单id
 
-    'help.aboute' => 2,//关于本站
+    'help.aboute' => 1,//关于本站
     'help.registrationProtocol' => 2,//注册协议
     'help.howToRegister' => 3,//注册说明
 
-    'catch.time.topPosts' => 600, //首页置顶文章缓存时间秒
-    'catch.time.categorys' => 600, //分类缓存时间秒
+    'catch.time.topPosts' => 60, //首页置顶文章缓存时间秒
+    'catch.time.categorys' => 60, //分类缓存时间秒
     'catch.time.post' => 1, //分类缓存时间秒
-    'catch.time.postList' => 600, //分类缓存时间秒
-    'catch.time.userComment' => 600, //分类缓存时间秒
+    'catch.time.postList' => 60, //分类缓存时间秒
+    'catch.time.userComment' => 60, //分类缓存时间秒
     'catch.time.help' => 1, //分类缓存时间秒
-    'catch.time.authorWidget' => 300, //分类缓存时间秒
+    'catch.time.authorWidget' => 30, //分类缓存时间秒
 
     'avatar.maxCutValue' => 150,//上传保存头像最大高宽px
     'avatar.defaultSuffix' => '.jpg',//上传保存头像的类型

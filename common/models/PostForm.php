@@ -228,7 +228,7 @@ class PostForm extends Model
             $post->ispay = $post->spend && $post->paytype ? Posts::YES : Posts::NO;
             $post->status = ($post->status != Posts::STATUS_ONLINE) && $this->isdraft ? Posts::STATUS_DRAFT : Posts::STATUS_ONLINE;
             $post->updated_at = date('Y-m-d H:i:s');
-            if ($post->save()) {
+            if ($post->save(false)) {
                 $this->updatePostTag($post);
                 $this->updatePostCategory($post);
                 return true;
