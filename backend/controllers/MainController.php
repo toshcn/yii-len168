@@ -32,7 +32,10 @@ class MainController extends Controller
     {
         if (parent::beforeAction($action)) {
             $user = Yii::$app->getUser()->getIdentity();
-            if (\Yii::$app->user->isGuest || $user->email != 'toshcn@foxmail.com') {
+            if (\Yii::$app->user->isGuest
+                || $user->group != User::GROUP_ADMIN
+                || !in_array($user->email, ['toshcn@foxmail.com', 'len168@qq.com'])
+            ) {
                 return $this->redirect(Yii::$app->urlManager->createAbsoluteUrl(['/ucenter/account/login'], Yii::$app->params['httpProtocol'], 'home'));
             }
             return true;
