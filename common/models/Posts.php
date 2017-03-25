@@ -125,7 +125,7 @@ class Posts extends \yii\db\ActiveRecord
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios['create'] = ['user_id', 'title', 'author', 'image', 'image_suffix', 'categorys', 'content', 'content_len', 'description', 'original_url', 'copyright', 'spend', 'paytype', 'posttype', 'parent', 'islock', 'iscomment', 'isopen', 'ispay', 'status', 'os', 'browser', 'created_at'];
+        $scenarios['create'] = ['user_id', 'title', 'author', 'image', 'image_suffix', 'categorys', 'content', 'content_len', 'description', 'original_url', 'copyright', 'spend', 'paytype', 'posttype', 'parent', 'islock', 'iscomment', 'isopen', 'ispay', 'status', 'os', 'browser', 'created_at', 'updated_at'];
         $scenarios['update'] = ['postid', 'user_id', 'title', 'author', 'image', 'image_suffix', 'categorys', 'content', 'content_len', 'description', 'original_url', 'copyright', 'spend', 'paytype', 'posttype', 'parent', 'islock', 'iscomment', 'isstick', 'isnice', 'isopen', 'ispay', 'isforever', 'isdie', 'status', 'updated_at'];
         return $scenarios;
     }

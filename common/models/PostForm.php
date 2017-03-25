@@ -181,8 +181,9 @@ class PostForm extends Model
             $post->browser = Yii::$app->getSession()->get('loginBrowser');
 
             $post->created_at = date('Y-m-d H:i:s');
+            $post->updated_at = $post->created_at;
             $post->content_len = mb_strlen($this->content);
-            if ($post->save()) {
+            if ($post->save(false)) {
                 //添加文章属性
                 $attr = new PostAttributes();
                 $attr->post_id = $post->postid;
