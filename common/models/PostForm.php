@@ -162,7 +162,7 @@ class PostForm extends Model
             $post->categorys = implode(',', $this->categorys);//新分类
             $post->image = Html::encode($this->image);
             $post->image_suffix = Html::encode($this->imageSuffix);
-            $post->content = Html::encode($this->content);
+            $post->content = $this->content;
             $post->content_len = mb_strlen($this->content);
             $post->description = Html::encode($this->description);
             $post->original_url = Html::encode($this->originalUrl);
@@ -213,7 +213,7 @@ class PostForm extends Model
             $post->categorys = implode(',', $this->categorys);//新分类
             $post->image = Html::encode($this->image);
             $post->image_suffix = Html::encode($this->imageSuffix);
-            $post->content = Html::encode($this->content);
+            $post->content = $this->content;
             $post->content_len = strlen($this->content);
             $post->description = Html::encode($this->description);
             $post->original_url = Html::encode($this->originalUrl);
