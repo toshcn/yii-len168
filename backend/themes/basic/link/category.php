@@ -1,5 +1,11 @@
 <?php
+/**
+ * @link http://www.len168.com/
+ * @copyright Copyright (c) 2015 len168.com
+ * @license http://www.len168.com/license/
+ */
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -39,7 +45,14 @@ $this->params['route'] = $route;
                         //['label' => '描述', 'value' => 'title'],
                         'parent',
 
-                        ['class' => 'yii\grid\ActionColumn'],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'buttons' => [
+                                'update' => function ($url, $model, $key) {
+                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['/link/update-category', 'id' => $model->termid]);
+                                },
+                            ],
+                        ],
                     ],
                 ]); ?>
 

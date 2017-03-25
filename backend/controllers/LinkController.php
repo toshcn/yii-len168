@@ -1,9 +1,15 @@
 <?php
+/**
+ * @link http://www.len168.com/
+ * @copyright Copyright (c) 2015 len168.com
+ * @license http://www.len168.com/license/
+ */
 
 namespace backend\controllers;
 
 use Yii;
 use common\models\Links;
+use common\models\Terms;
 use backend\models\LinkSearch;
 use backend\controllers\MainController;
 use yii\web\NotFoundHttpException;
@@ -101,8 +107,7 @@ class LinkController extends MainController
     }
 
     /**
-     * Updates an existing Links model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * 链接更新
      * @param integer $id
      * @return mixed
      */
@@ -111,9 +116,27 @@ class LinkController extends MainController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->linkid]);
+            return $this->redirect(['index']);
         } else {
-            return $this->render('update', [
+            return $this->render('_form', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * 链接分类更新
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdateCategory($id)
+    {
+        $model = Terms::findOne($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['category']);
+        } else {
+            return $this->render('_categoryForm', [
                 'model' => $model,
             ]);
         }

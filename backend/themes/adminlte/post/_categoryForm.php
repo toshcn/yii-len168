@@ -6,6 +6,9 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\TermCates */
 /* @var $form yii\widgets\ActiveForm */
+
+$this->title = '文章分类';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="term-cates-form white-box">
 

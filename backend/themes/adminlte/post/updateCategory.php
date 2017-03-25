@@ -5,12 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\TermCates */
 
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Term Cates',
-]) . ' ' . $model->termid;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Term Cates'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '全部文章', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->termid, 'url' => ['view', 'id' => $model->termid]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = '更新';
 ?>
 <div class="term-cates-update">
 

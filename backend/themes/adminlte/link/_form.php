@@ -1,4 +1,9 @@
 <?php
+/**
+ * @link http://www.len168.com/
+ * @copyright Copyright (c) 2015 len168.com
+ * @license http://www.len168.com/license/
+ */
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -6,6 +11,8 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Links */
 /* @var $form yii\widgets\ActiveForm */
+$this->title = '更新链接';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="links-form">

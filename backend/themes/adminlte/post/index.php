@@ -17,7 +17,7 @@ use common\widgets\JsBlock;
 /* @var $searchModel backend\models\PostsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Posts';
+$this->title = '全部文章';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['contentClass'] = 'white-bg';
 ?>

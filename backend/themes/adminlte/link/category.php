@@ -1,4 +1,9 @@
 <?php
+/**
+ * @link http://www.len168.com/
+ * @copyright Copyright (c) 2015 len168.com
+ * @license http://www.len168.com/license/
+ */
 
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -7,7 +12,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\TermCatesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Term Cates');
+$this->title = '链接分类列表';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['route'] = $route;
 $this->params['contentClass'] = '';
@@ -36,7 +41,14 @@ $this->params['contentClass'] = '';
                         //['label' => '描述', 'value' => 'title'],
                         'parent',
 
-                        ['class' => 'yii\grid\ActionColumn'],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'buttons' => [
+                                'update' => function ($url, $model, $key) {
+                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['/link/update-category', 'id' => $model->termid]);
+                                },
+                            ],
+                        ],
                     ],
                 ]); ?>
 

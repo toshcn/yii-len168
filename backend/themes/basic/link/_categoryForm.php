@@ -12,6 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'termid')->textInput(['maxlength' => 10]) ?>
     <?= $form->field($model, 'title')->textInput(['maxlength' => 128]) ?>
     <?= $form->field($model, 'slug')->textInput(['maxlength' => 128]) ?>
 

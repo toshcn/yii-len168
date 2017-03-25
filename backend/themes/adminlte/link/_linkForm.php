@@ -7,6 +7,9 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\TermCates */
 /* @var $form yii\widgets\ActiveForm */
 
+$this->title = '更新链接';
+$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="term-cates-form white-box">
 

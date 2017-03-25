@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\TermCatesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Term Cates');
+$this->title = '全部链接';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['route'] = $route;
 $this->params['contentClass'] = '';
