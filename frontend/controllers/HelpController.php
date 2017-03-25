@@ -26,13 +26,14 @@ class HelpController extends Controller
         }
         return $this->redirect(['/help/how-to-register']);
     }
+
     /**
-     * 注册帮助
+     * 关于本站
      * @return mixed
      */
-    public function actionHowToRegister()
+    public function actionAboute()
     {
-        return $this->renderHelpPost(Yii::$app->params['help.howToRegister']);
+        return $this->renderHelpPost(Yii::$app->params['help.aboute']);
     }
 
     /**
@@ -42,6 +43,15 @@ class HelpController extends Controller
     public function actionRegistrationProtocol()
     {
         return $this->renderHelpPost(Yii::$app->params['help.registrationProtocol']);
+    }
+
+    /**
+     * 注册帮助
+     * @return mixed
+     */
+    public function actionHowToRegister()
+    {
+        return $this->renderHelpPost(Yii::$app->params['help.howToRegister']);
     }
 
     /**

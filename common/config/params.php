@@ -16,9 +16,10 @@ return [
     'post.defaultCategory' => 1,//默认未分类id
     'menu.topPosition' => 1,//顶部菜单id
     'menu.bottomPosition' => 2,//底部菜单id
-    'help.howToRegister' => 1,//注册说明
-    'help.registrationProtocol' => 1,//注册协议
-    'help.aboutePost' => 1,//注册说明
+
+    'help.aboute' => 1,//关于本站
+    'help.registrationProtocol' => 2,//注册协议
+    'help.howToRegister' => 3,//注册说明
 
     'catch.time.topPosts' => 600, //首页置顶文章缓存时间秒
     'catch.time.categorys' => 600, //分类缓存时间秒
