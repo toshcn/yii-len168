@@ -372,7 +372,7 @@ $this->params['contentClass'] = 'gray-bg';
                 });
                 $.post(url, {'menus':'{"menus":['+menus.toString()+']}'}, function(json) {
                     var navMenuId = parseInt(<?= intval($navMenu['termid']) ?>);
-                    $.each($.parseJSON(json), function(i, v) {
+                    $.each(json, function(i, v) {
                         var itemId = v.menuid;
                         var id = v.cateid;
                         var title = $('[name="menu-item-post['+id+'][title]"]').val();
@@ -396,7 +396,7 @@ $this->params['contentClass'] = 'gray-bg';
                 });
                 $.post(url, {'menus':'{"menus":['+menus.toString()+']}'}, function(json) {
                     var navMenuId = parseInt(<?= intval($navMenu['termid']) ?>);
-                    $.each($.parseJSON(json), function(i, v) {
+                    $.each(json, function(i, v) {
                         var itemId = v.menuid;
                         var id = v.cateid;
                         var title = $('[name="menu-item-link['+id+'][title]"]').val();

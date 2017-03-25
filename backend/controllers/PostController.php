@@ -108,7 +108,7 @@ class PostController extends MainController
 
         if ($word) {
             $post = new Posts();
-            $post = $post->find()->select('postid, title')->where(['like', 'title', $word])->andWhere(['and', ['isdel' => Posts::NO]])->asArray()->all();
+            $post = $post->find()->select('postid, title')->where(['like', 'title', $word])->andWhere(['and', 'status', Posts::STATUS_ONLINE])->asArray()->all();
             return $post;
         }
         return [];
