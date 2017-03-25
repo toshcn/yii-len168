@@ -43,7 +43,7 @@ class m161206_134531_site_table_init extends Migration
     const TB_POST_VIEWS = '{{%post_views}}';//文章视图表
 
     public function safeUp()
-    {
+    {return true;
         $tableOptions      = null;
         $tableOptions_user = null;
 
