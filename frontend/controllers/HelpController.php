@@ -71,6 +71,9 @@ class HelpController extends Controller
         if (!$post) {
             $model = new PostViews();
             $post = $model->getPostViewsByPost($postid)->asArray()->one();
+            if (!$post) {
+                throw new HttpException(404, '您在访问的文章不存在!');
+            }
             $post['copyrightStr'] = Posts::transformPostCopyright($post['copyright']);
 
             // 当数据库字段发生变化时，该缓存失效
@@ -78,9 +81,6 @@ class HelpController extends Controller
                 'sql' => 'SELECT MAX(updated_at) FROM {{%posts}} WHERE postid=' . (int) $postid
             ]);
             $cache->add(__METHOD__ . 'helpCache' . $postid, $post, Yii::$app->params['catch.time.help'], $dependency);
-            if (!$post) {
-                throw new HttpException(404, '您在访问的文章不存在!');
-            }
         }
         if ($post['status'] == Posts::STATUS_DRAFT && $post['user_id'] != Yii::$app->getUser()->getId()) {
             throw new HttpException(404, '您在访问的文章未发表或非公开!');

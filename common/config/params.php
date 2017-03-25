@@ -17,7 +17,7 @@ return [
     'menu.topPosition' => 1,//顶部菜单id
     'menu.bottomPosition' => 2,//底部菜单id
 
-    'help.aboute' => 1,//关于本站
+    'help.aboute' => 2,//关于本站
     'help.registrationProtocol' => 2,//注册协议
     'help.howToRegister' => 3,//注册说明
 
