@@ -35,6 +35,7 @@ class PostController extends CommonController
     public function actionCreate()
     {
         $model = new PostForm();
+        $model->author = Yii::$app->getUser()->getIdentify()->nickname;
         if (Yii::$app->getRequest()->getIsPost()) {
             if ($model->load(Yii::$app->getRequest()->post()) && $model->createPost()) {
                 if ($model->postid) {
