@@ -35,7 +35,6 @@ class PostController extends CommonController
     public function actionCreate()
     {
         $model = new PostForm();
-        $model->author = Yii::$app->getUser()->getIdentify()->nickname;
         if (Yii::$app->getRequest()->getIsPost()) {
             if ($model->load(Yii::$app->getRequest()->post()) && $model->createPost()) {
                 if ($model->postid) {
@@ -59,10 +58,11 @@ class PostController extends CommonController
                 't' => date('Y-m-d H:i:s')
             ]);
         }
-
+        $post = (new Posts)->attributes;
+        $post['author'] = Yii::$app->getUser()->getIdentity()->nickname;
         return $this->render('create', [
             'postid' => 0,
-            'post' => (new Posts)->attributes,
+            'post' => $post,
             'imageModel' => new ImageForm(),
             'categorys' => Terms::getTermChildrens(0, Terms::CATEGORY_CATE),
             'postTags' => [],
