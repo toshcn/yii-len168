@@ -563,10 +563,10 @@ class m161206_134531_site_table_init extends Migration
 
     public function safeDown()
     {
-        if (!YII_DEBUG) {
+        /*if (!YII_DEBUG) {
             echo "m161206_134531_site_table_init cannot be reverted.\n";
-            return;
-        }
+            return false;
+        }*/
         $this->menuDown();
         //删除外键约束
         $this->dropForeignKey('fk-user_login-user_id', self::TB_USER_LOGIN);
