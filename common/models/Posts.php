@@ -66,7 +66,7 @@ class Posts extends \yii\db\ActiveRecord
 
             ['original_url', 'url'],
             ['original_url', 'string', 'max' => 255],
-            [['image', 'description'], 'string', 'max' => 128],
+            [['image', 'description'], 'string', 'max' => 255],
 
             ['copyright', 'default', 'value' => self::COPYRIGHT_INDICATE_THE_SOURCE],
             ['copyright', 'in', 'range' => [self::COPYRIGHT_INDICATE_THE_SOURCE, self::COPYRIGHT_CONTACT_THE_AUTHOR, self::COPYRIGHT_FORBIDDEN_REPRINT]],
