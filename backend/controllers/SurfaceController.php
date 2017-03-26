@@ -85,6 +85,8 @@ class SurfaceController extends MainController
         $term = Terms::getCategorys($id, ['termid' => SORT_DESC])->select('termid, title')
                 ->asArray()
                 ->all();
+
+        $term[] = Terms::find()->where(['termid' => $id, 'catetype' => Terms::CATEGORY_CATE])->select('termid, title')->asArray()->one();
         return $term;
     }
 
