@@ -1052,6 +1052,7 @@ a.slide-control:active {
     height: 120px;
     padding: 0;
     text-indent: 2em;
+    line-height: 1.5em;
     overflow: hidden;
 }
 
