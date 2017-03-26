@@ -75,12 +75,15 @@ class PostViews extends \yii\db\ActiveRecord
 
     /**
      * 首页顶部推荐文章
+     * @param integer $limit 获取条数
+     * @param array $order 排序条件
      * @return \yii\db\ActiveQuery
      */
-    public function getTopPosts($limit = 10)
+    public function getTopPosts($limit = 10, $order = ['postid' => SORT_DESC])
     {
         return $this->find()
             ->where(['isstick' => Posts::YES, 'status' => Posts::STATUS_ONLINE])
-            ->limit(intval($limit));
+            ->limit(intval($limit))
+            ->orderBy($order);
     }
 }
