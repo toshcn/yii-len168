@@ -28,7 +28,7 @@ return [
             ],
         ],
         'session' => [
-            'cookieParams' => ['domain' => '.' . DOMAIN, 'lifetime' => 24 * 3600],
+            'cookieParams' => ['domain' => '.' . DOMAIN, 'lifetime' => 0],
             'timeout' => 3600,
         ],
 
