@@ -4,6 +4,7 @@
  * @author toshcn <toshcn@qq.com>
  * @since 0.1.0
  */
+
 ;(function($) {
     $(document).ready(function() {
         //监听滚动时事

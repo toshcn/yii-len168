@@ -310,7 +310,11 @@ class PostController extends CommonController
             $imageManager->setExtension($image->img_suffix);
             $imageManager->imageName = $image->img_name;
 
-            if ($imageManager->edit(intval($cropper['width']), intval($cropper['height']), [intval($cropper['x']), intval($cropper['y'])])) {
+            $cropper['width'] = intval($cropper['width']);
+            $cropper['height'] = intval($cropper['height']);
+            $cropper['x'] = $cropper['x'] >= 0 ? intval($cropper['x']) : 0;
+            $cropper['y'] = $cropper['y'] >= 0 ? intval($cropper['y']) : 0;
+            if ($imageManager->edit($cropper['width'], $cropper['height'], [$cropper['x'], $cropper['y']])) {
                 $image->img_version += 1;
                 $image->save();
 

@@ -21,13 +21,13 @@ return [
     'help.registrationProtocol' => 2,//注册协议
     'help.howToRegister' => 3,//注册说明
 
-    'catch.time.topPosts' => 600, //首页置顶文章缓存时间秒
-    'catch.time.categorys' => 600, //分类缓存时间秒
-    'catch.time.post' => 600, //文章缓存时间秒
-    'catch.time.postList' => 600, //文章列表缓存时间秒
-    'catch.time.userComment' => 600, //评论缓存时间秒
-    'catch.time.help' => 1000, //分类缓存时间秒
-    'catch.time.authorWidget' => 300, //会员资料缓存时间秒
+    'catch.time.topPosts' => 6, //首页置顶文章缓存时间秒
+    'catch.time.categorys' => 6, //分类缓存时间秒
+    'catch.time.post' => 6, //文章缓存时间秒
+    'catch.time.postList' => 6, //文章列表缓存时间秒
+    'catch.time.userComment' => 6, //评论缓存时间秒
+    'catch.time.help' => 10, //分类缓存时间秒
+    'catch.time.authorWidget' => 3, //会员资料缓存时间秒
 
     'avatar.maxCutValue' => 150,//上传保存头像最大高宽px
     'avatar.defaultSuffix' => '.jpg',//上传保存头像的类型

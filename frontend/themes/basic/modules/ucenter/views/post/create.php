@@ -130,10 +130,9 @@ if ($parentPost) {
                             <div class="form-group col-md-6" style="position: relative;">
                                 <input class="form-control post-tag-input" id="edit-post-tag" name="" type="text">
                                 <div class="selected-tag" id="selected-tag">
-                                <?php
-                                if ($postid) {
-                                    $currentTags = [];
-                                    foreach ($postTags as $key => $tag) {
+                                <?php if ($postid) {
+                                    $currentTags = []; ?>
+                                    <?php foreach ($postTags as $key => $tag) {
                                         $currentTags[] = $tag['termid'];
                                     ?>
                                         <label class="label label-sm label-warning post-tag-seleted" data-tag="<?= $tag['termid'];?>" title="点击删除">
@@ -161,7 +160,7 @@ if ($parentPost) {
                     <div class="word-desc">
                         <div class="clearfix"><label for="">简短描述</label></div>
                         <textarea class="form-control edit-desc" name="PostForm[description]" id="edit-desc" cols="10" rows="5" maxlength="250" placeholder="文章简短描述250字内"><?= $post['description'];?></textarea>
-                        <span class="desc-len">还可输入<b id="desc-len"><?= 250-strlen($post['description']);?></b>个字</span>
+                        <span class="desc-len">还可输入<b id="desc-len"><?= 250 - mb_strlen($post['description']);?></b>个字</span>
                     </div>
 
                     <div class="post-config">

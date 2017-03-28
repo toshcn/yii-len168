@@ -7,7 +7,7 @@
             runPostFlash($(window).height(), scrollHeight);
         });
         runPostFlash($(window).height(), $(document).scrollTop());
-         $('.slide-post').smgSlidePost();
+        $('.slide-post').smgSlidePost();
     });
     //文章列表延时显示
     function runPostFlash(screenHeight, scrollHeight) {

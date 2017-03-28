@@ -164,7 +164,7 @@ class PostForm extends Model
             $post->image_suffix = Html::encode($this->imageSuffix);
             $post->content = $this->content;
             $post->content_len = mb_strlen($this->content);
-            $post->description = Html::encode($this->description);
+            $post->description = $this->description;
             $post->original_url = Html::encode($this->originalUrl);
             $post->copyright = $this->copyright;
             $post->spend = $this->spend;
@@ -216,7 +216,7 @@ class PostForm extends Model
             $post->image_suffix = Html::encode($this->imageSuffix);
             $post->content = $this->content;
             $post->content_len = strlen($this->content);
-            $post->description = Html::encode($this->description);
+            $post->description = $this->description;
             $post->original_url = Html::encode($this->originalUrl);
             $post->copyright = $this->copyright;
             $post->spend = $this->spend;

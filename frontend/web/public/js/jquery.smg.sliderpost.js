@@ -1,5 +1,5 @@
 /**
- * jQuery plugin smgSlidePost for shuimugua.com
+ * jQuery plugin smgSlidePost for len168.com
  *
  * @author xiaohao <toshcn@foxmail.com>
  * @vesion 0.1.0
@@ -9,12 +9,11 @@
 ;(function($, window) {
     /** @type {Object} 默认配置 */
     var defaults = {
-        img: '.post-img',//图片所在层div
-        post: '.post-text',//文章所在层div
+        slideList: '.slide-list',//列表所在层div
         active: '.active',//当前显示的层
+        activeClass: 'active',//当前显示的层的class
         item: '.item',//用作计数的类名
-        imgIndex: 'data-img-index',//用作图片列表分类的 data名
-        postIndex: 'data-post-index',//用作文章列表分类的 data名
+        itemIndex: 'data-item-index',//用作列表分类的 data名
         prevs: 'slide-prev',//上一个按钮的name
         nexts: 'slide-next',//下一个按钮的name
         interval: 5000,//轮播时间
@@ -94,10 +93,9 @@
     function bindNext() {
         $this.find('[name="'+setts.nexts+'"]').on('click.slideNextEvent', function() {
             var index = 0;
-            var img = $(this).siblings().children(setts.img);
-            var post = $(this).siblings().children(setts.post);
-            var total = img.children(setts.item).length;
-            var active = parseInt(img.children(setts.active).attr(setts.imgIndex));
+            var list = $(this).siblings(setts.slideList);
+            var total = list.children(setts.item).length;
+            var active = parseInt(list.children(setts.active).attr(setts.itemIndex));
             if (isNaN(active)) {
                 return;
             } else if (active == 1 && total > 1) {
@@ -107,19 +105,16 @@
             } else {
                 index = active + 1;
             }
-            img.find('.active').removeClass('active');
-            post.find('.active').removeClass('active');
-            img.children('['+setts.imgIndex+'="'+index+'"]').addClass('active');
-            post.children('['+setts.postIndex+'="'+index+'"]').addClass('active');
+            list.children(setts.active).removeClass(setts.activeClass);
+            list.children('['+setts.itemIndex+'="'+index+'"]').addClass(setts.activeClass);
         });
     };
     function bindPrev() {
         $this.find('[name="'+setts.prevs+'"]').on('click.slideNextEvent', function() {
             var index = 0;
-            var img = $(this).siblings().children(setts.img);
-            var post = $(this).siblings().children(setts.post);
-            var total = img.children(setts.item).length;
-            var active = parseInt(img.children(setts.active).attr(setts.imgIndex));
+            var list = $(this).siblings(setts.slideList);
+            var total = list.children(setts.item).length;
+            var active = parseInt(list.children(setts.active).attr(setts.itemIndex));
             if (isNaN(active)) {
                 return;
             } else if (active == 1 && total > 1) {
@@ -129,10 +124,8 @@
             } else {
                 index = active - 1;
             }
-            img.find('.active').removeClass('active');
-            post.find('.active').removeClass('active');
-            img.children('['+setts.imgIndex+'="'+index+'"]').addClass('active');
-            post.children('['+setts.postIndex+'="'+index+'"]').addClass('active');
+            list.children(setts.active).removeClass(setts.activeClass);
+            list.children('['+setts.itemIndex+'="'+index+'"]').addClass(setts.activeClass);
         });
     };
     function playSlide() {

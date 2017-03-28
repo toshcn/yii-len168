@@ -72,14 +72,14 @@ class ArticleController extends Controller
             'pageSize' => Yii::$app->params['post.pageSize']
         ]);
 
-        $posts = $cache->get(__METHOD__ . 'postListCache' . $pagination->getPage());
+        $posts = '';//$cache->get(__METHOD__ . 'postListCache' . $cate . $pagination->getPage());
         if (!$posts) {
             $posts = $query->orderBy(['postid' => SORT_DESC])
                 ->offset($pagination->offset)
                 ->limit($pagination->limit)
                 ->asArray()
                 ->all();
-            $cache->add(__METHOD__ . 'postListCache' . $pagination->getPage(), $posts, Yii::$app->params['catch.time.postList']);
+            $cache->add(__METHOD__ . 'postListCache' . $cate . $pagination->getPage(), $posts, Yii::$app->params['catch.time.postList']);
         }
 
         $categorys = $cache->get(__METHOD__ . 'categorysCache' . $cate);

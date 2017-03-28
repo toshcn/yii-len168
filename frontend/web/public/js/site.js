@@ -11,7 +11,7 @@
         $('#backtop').on('click.backtopEvent', function() {
             var speed=200;//滑动的速度
             $('body').animate({ scrollTop: 0 }, speed);
-            return false;
+            fixBackTop();
         });
         //展示会员信息弹出小部件
         $('body').on('mouseenter.authorLayoutEvent', '.author-widget', function() {
@@ -40,6 +40,10 @@
 
 
     });
+    function fixBackTop() {
+        document.documentElement.scrollTop=1;
+        document.body.scrollTop=1;
+    }
     //加关注
     $('body').on('click.addFollower', '[name^="add-follower-"]', function() {
         if (isGuest()) {
