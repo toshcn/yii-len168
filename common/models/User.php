@@ -43,6 +43,8 @@ use common\models\Posts;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    const YES = 1;
+    const NO = 0;
     const STATUS_DELETE = -1;
     const STATUS_LOCK = 0;//登录锁定
     const STATUS_ACTIVE = 1;//正常
@@ -113,30 +115,30 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'uid'                 => Yii::t('common', 'User ID'),
-            'group'              => Yii::t('common', 'User Group'),
-            'username'           => Yii::t('common', 'User Name'),
-            'nickname'           => Yii::t('common', 'Nick Name'),
-            'mobile'             => Yii::t('common', 'Mobile'),
-            'email'              => Yii::t('common', 'Email'),
-            'sex'                => Yii::t('common', 'Sex'),
-            'auth_key'           => Yii::t('common', 'Auth Key'),
-            'password'           => Yii::t('common', 'Password'),
-            'reset_token'        => Yii::t('common', 'Reset Token'),
-            'reset_token_expire' => Yii::t('common', 'Reset Token Expire'),
-            'motto'              => Yii::t('common', 'Motto'),
-            'hp'                 => Yii::t('common', 'Hp'),
-            'golds'              => Yii::t('common', 'Golds'),
-            'crystal'            => Yii::t('common', 'Crystal'),
-            'posts'              => Yii::t('common', 'Posts'),
-            'comments'           => Yii::t('common', 'Comments'),
-            'friends'            => Yii::t('common', 'Friends'),
-            'followers'          => Yii::t('common', 'Followers'),
-            'isauth'             => Yii::t('common', 'Isauth'),
-            'status'             => Yii::t('common', 'Status'),
-            'safe_level'         => Yii::t('common', 'Safe Level'),
-            'created_at'         => Yii::t('common', 'Created At'),
-            'updated_at'         => Yii::t('common', 'Updated At'),
+            'uid'                => Yii::t('common/label', 'User ID'),
+            'group'              => Yii::t('common/label', 'User Group'),
+            'username'           => Yii::t('common/label', 'User Name'),
+            'nickname'           => Yii::t('common/label', 'Nick Name'),
+            'mobile'             => Yii::t('common/label', 'Mobile'),
+            'email'              => Yii::t('common/label', 'Email'),
+            'sex'                => Yii::t('common/label', 'Sex'),
+            'auth_key'           => Yii::t('common/label', 'Auth Key'),
+            'password'           => Yii::t('common/label', 'Password'),
+            'reset_token'        => Yii::t('common/label', 'Reset Token'),
+            'reset_token_expire' => Yii::t('common/label', 'Reset Token Expire'),
+            'motto'              => Yii::t('common/label', 'Motto'),
+            'hp'                 => Yii::t('common/label', 'Hp'),
+            'golds'              => Yii::t('common/label', 'Golds'),
+            'crystal'            => Yii::t('common/label', 'Crystal'),
+            'posts'              => Yii::t('common/label', 'Posts'),
+            'comments'           => Yii::t('common/label', 'Comments'),
+            'friends'            => Yii::t('common/label', 'Friends'),
+            'followers'          => Yii::t('common/label', 'Followers'),
+            'isauth'             => Yii::t('common/label', 'Is Auth'),
+            'status'             => Yii::t('common/label', 'Status'),
+            'safe_level'         => Yii::t('common/label', 'Safe Level'),
+            'created_at'         => Yii::t('common/label', 'Created At'),
+            'updated_at'         => Yii::t('common/label', 'Updated At'),
         ];
     }
 
@@ -704,6 +706,15 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * 认证 map
+     * @return array
+     */
+    public static function getAuthMap()
+    {
+        return ['' => '请选择', self::YES => '已认证', self::NO => '未认证'];
+    }
+
+    /**
      * 状态 map
      * @return array
      */
@@ -732,7 +743,7 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * 更改状态
      * @param  integer $status 推荐状态0,1
-     * @param  array|integer $id    文章id
+     * @param  array|integer $id    user id
      * @return boolean
      */
     public static function updateStatus($status, $id)
@@ -757,8 +768,29 @@ class User extends ActiveRecord implements IdentityInterface
             $temp[] = (int) $value;
         }
         return (boolean) static::updateAll(
-            ['status' => $status],
+            ['status' => intval($status)],
             ['uid' => $temp, 'group' => [self::GROUP_AUTHOR]]
+        );
+    }
+
+    /**
+     * 更改认证状态
+     * @param  integer $auth 认证1，0未认证
+     * @param  array|integer $id    user id
+     * @return boolean
+     */
+    public static function updateAuth($auth, $id)
+    {
+        if (!is_array($id)) {
+            $id = [$id];
+        }
+        $temp = [];
+        foreach ($id as $key => $value) {
+            $temp[] = (int) $value;
+        }
+        return (boolean) static::updateAll(
+            ['isauth' => intval($auth)],
+            ['uid' => $temp]
         );
     }
 }

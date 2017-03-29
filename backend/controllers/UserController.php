@@ -58,57 +58,6 @@ class UserController extends AuthController
     }
 
     /**
-     * Creates a new User model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new User();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->uid]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Updates an existing User model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->uid]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Deletes an existing User model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-
-    /**
      * 更改状态
      * @return json
      */
@@ -123,6 +72,23 @@ class UserController extends AuthController
 
         return ['ok' => 0];
     }
+    /**
+     * 认证
+     * @return json
+     */
+    public function actionAjaxAuth()
+    {
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
+        $auth = Yii::$app->getRequest()->post('auth');
+        $id = Yii::$app->getRequest()->post('id', []);
+        if ($id && $auth !== null) {
+            return ['ok' => User::updateAuth($auth, $id)];
+        }
+
+        return ['ok' => 0];
+    }
+
+
 
     /**
      * Finds the User model based on its primary key value.
