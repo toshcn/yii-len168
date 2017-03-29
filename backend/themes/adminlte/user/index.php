@@ -16,7 +16,7 @@ use common\widgets\JsBlock;
 /* @var $searchModel backend\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Users';
+$this->title = '会员管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
@@ -31,8 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'uid',
             [
                 'attribute' => 'group',

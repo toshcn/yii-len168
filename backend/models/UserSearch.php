@@ -89,6 +89,7 @@ class UserSearch extends User
             ->andFilterWhere(['like', 'os', $this->os])
             ->andFilterWhere(['like', 'browser', $this->browser]);
 
+        $query->orderBy(['uid' => SORT_DESC]);
         return $dataProvider;
     }
 }
