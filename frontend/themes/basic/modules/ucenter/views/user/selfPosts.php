@@ -40,7 +40,8 @@ $this->params['bodyClass'] = 'gray-bg';
                         <div class="col-md-12">
                             <table class="table">
                                 <col width="45%" />
-                                <col width="20%" />
+                                <col width="10%" />
+                                <col width="10%" />
                                 <col width="10%" />
                                 <col width="15%" />
                                 <col width="10%" />
@@ -49,6 +50,7 @@ $this->params['bodyClass'] = 'gray-bg';
                                         <th>标题</th>
                                         <th>回复/浏览</th>
                                         <th>状态</th>
+                                        <th>被推荐</th>
                                         <th>日期</th>
                                         <th>操作</th>
                                     </tr>
@@ -62,6 +64,12 @@ $this->params['bodyClass'] = 'gray-bg';
                                             </td>
                                             <td><?= $item['comments'] ?>/<?= $item['views'] ?></td>
                                             <td><?= Posts::transformPostStatus($item['status']) ?></td>
+                                            <td><?php if ($item['isnice'] || $item['isstick']) { ?>
+                                                <span class="fa fa-check text-success"></span>
+                                                <?php } else { ?>
+                                                <span class="fa fa-remove text-danger"></span>
+                                                <?php } ?>
+                                             </td>
                                             <td><?= substr($item['created_at'], 0, 10) ?></td>
                                             <td>
                                                 <a href="<?= Url::to(['/ucenter/post/update', 'id' => $item['postid']], true); ?>">

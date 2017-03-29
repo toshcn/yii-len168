@@ -39,13 +39,15 @@ $this->params['bodyClass'] = 'gray-bg';
                         <div class="col-md-12">
                             <table class="table">
                                 <col width="55%" />
-                                <col width="20%" />
+                                <col width="10%" />
+                                <col width="10%" />
                                 <col width="15%" />
                                 <col width="10%" />
                                 <thead>
                                     <tr>
                                         <th>标题</th>
                                         <th>回复/浏览</th>
+                                        <th>被推荐</th>
                                         <th>日期</th>
                                         <th>查看</th>
                                     </tr>
@@ -58,6 +60,12 @@ $this->params['bodyClass'] = 'gray-bg';
                                                 <?= Html::encode($item['title']) ?></a>
                                             </td>
                                             <td><?= $item['comments'] ?>/<?= $item['views'] ?></td>
+                                            <td><?php if ($item['isnice'] || $item['isstick']) { ?>
+                                                <span class="fa fa-check text-success"></span>
+                                                <?php } else { ?>
+                                                <span class="fa fa-remove text-danger"></span>
+                                                <?php } ?>
+                                             </td>
                                             <td><?= substr($item['created_at'], 0, 10) ?></td>
                                             <td>
                                                 <a href="<?= Url::to(['/article/detail', 'id' => $item['postid']], true); ?>" target="_blank">

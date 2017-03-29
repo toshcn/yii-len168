@@ -9,7 +9,7 @@
  */
 
 body {
-    font: normal 16px/1.618 'Helvetica Neue','Microsoft YaHei UI','Microsoft YaHei','Noto Sans CJK SC',Sathu,'EucrosiaUPC',sans-serif;
+    font: normal 14px/1.618 'Helvetica Neue','Microsoft YaHei UI','Microsoft YaHei','Noto Sans CJK SC',Sathu,'EucrosiaUPC',sans-serif;
 }
 
 a {
@@ -516,6 +516,7 @@ input[type=checkbox]:checked:before {
   border-image: none;
   border-style: solid solid none;
   border-width: 1px 0px;
+  font-size: 14px;
 }
 .ibox-footer {
   color: inherit;

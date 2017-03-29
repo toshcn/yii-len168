@@ -73,7 +73,7 @@ class UserController extends CommonController
         }
 
         $postView = new PostViews();
-        $columns = ['postid', 'user_id', 'title', 'comments', 'views', 'status', 'created_at'];
+        $columns = ['postid', 'user_id', 'title', 'comments', 'views', 'status', 'isnice', 'isstick', 'created_at'];
         if ($uid === Yii::$app->getUser()->getId()) {
             $view = 'selfPosts';
             $user = Yii::$app->getUser()->getIdentity();

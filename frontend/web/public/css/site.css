@@ -166,7 +166,7 @@
 .w-center {
     margin: 0 auto;
     width: 80%;
-    max-width: 1300px;
+    max-width: 1200px;
 }
 
 /** login-widget */
@@ -1126,9 +1126,9 @@ a.slide-control:active {
 
 .article-ibox .article-title .title {
     margin: 10px 0;
-    line-height: 1.2em;
+    line-height: 1.4em;
     color: orange;
-    font-size: 24px;
+    font-size: 1.2em;
     overflow: hidden;
 }
 
@@ -1233,7 +1233,7 @@ a.slide-control:active {
 .article-hp .progress,
 .social-comment .comment-hp .progress {
     position: relative;
-    height: 12px;
+    height: 1em;
     margin-bottom: 10px;
 }
 
