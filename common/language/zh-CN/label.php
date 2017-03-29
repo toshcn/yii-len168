@@ -43,6 +43,7 @@ return [
     'Post Status' => '文章状态',
 
     'User Id'          => '帐号',
+    'User ID'          => '帐号',
     'User Name' => '用户名',
     'User Group' => '会员组',
 
