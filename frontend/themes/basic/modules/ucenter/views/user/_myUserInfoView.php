@@ -17,7 +17,7 @@ use yii\helpers\Html;
         <div class="name">
             <h4>
                 <?php
-                switch ($author['sex']) {
+                switch ($userDetail['sex']) {
                     case -1:
                         echo '<i class="fa fa-transgender green" title="保密"></i>';
                         break;
