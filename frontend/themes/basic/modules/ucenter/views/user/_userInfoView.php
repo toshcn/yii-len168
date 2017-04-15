@@ -16,7 +16,19 @@ use yii\helpers\Html;
         <img class="img-circle circle-border" src="<?= $userDetail['head'] ?>" width="120" alt="">
         <div class="name">
             <h4>
-                <i class="fa fa-mars green"></i> <?= Html::encode($userDetail['nickname']) ?>
+                <?php
+                switch ($author['sex']) {
+                    case -1:
+                        echo '<i class="fa fa-transgender green" title="保密"></i>';
+                        break;
+                    case 1:
+                        echo '<i class="fa fa-mars green" title="男"></i>';
+                        break;
+                    case 0:
+                        echo '<i class="fa fa-venus green" title="女"></i>';
+                        break;
+                }?>
+                <?= Html::encode($userDetail['nickname']) ?>
                 <?php if ($userDetail['isauth']) { ?>
                     <span class="green" title="已认证"><i class="fa fa-shield"></i></span>
                 <?php } else { ?>
