@@ -293,13 +293,13 @@
     color: #FFFFFF;
 }
 .login-frame .signup-btn {
-    color: #333!important;
+    color: #333;
     border-color: #cccccc;
     box-shadow: 0px 1px 1px rgba(0,0,0,0.15);
 }
 .login-frame .signup-btn:hover {
     color: #f7671d;
-    background-color: #fff;
+    background-color: #FFFFFF;
 }
 
 /** message-widget css */

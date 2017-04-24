@@ -156,7 +156,7 @@ SiteAsset::register($this);
                 <div class="login-widget-content" node-type="inner">
                     <div class="login-widget-tab">
                         <a class="cur" href="javascript:;">密码登录</a>
-                        <a class="" href="javascript:;">扫码登录</a>
+                        <a class="" href="javascript:;" title="未实现">扫码登录</a>
                     </div>
                     <div class="login-frame">
                         <div class="item error-item">
@@ -193,10 +193,10 @@ SiteAsset::register($this);
                                 <legend align="center" class="other-txt">其他方式登录</legend>
                             </fieldset>
                             <div class="sns-login">
-                                <a href="" title="微博"><i class="fa fa-weibo icon-md"></i></a>
+                                <!--<a href="" title="微博"><i class="fa fa-weibo icon-md"></i></a>
                                 <a href="" title="QQ"><i class="fa fa-qq icon-qq"></i></a>
-                                <a href="" title="微信"><i class="fa fa-weixin icon-md"></i></a>
-                                <a href="" title="Github"><i class="fa fa-github icon-github"></i></a>
+                                <a href="" title="微信"><i class="fa fa-weixin icon-md"></i></a>-->
+                                <a href="<?= Url::to(['/ucenter/auth/login', 'authclient' => 'github'], true)?>" title="Github"><i class="fa fa-github icon-github"></i></a>
                             </div>
                         </div>
                     </div>
