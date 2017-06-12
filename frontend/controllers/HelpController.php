@@ -84,7 +84,7 @@ class HelpController extends Controller
         }
         if ($post['status'] == Posts::STATUS_DRAFT && $post['user_id'] != Yii::$app->getUser()->getId()) {
             throw new HttpException(404, '您在访问的文章未发表或非公开!');
-        } else if (!$post['isopen'] && $post['user_id'] != $uid) {
+        } else if (!$post['isopen'] && $post['user_id'] != Yii::$app->getUser()->id) {
             throw new HttpException(404, '您在访问的文章未发表或非公开!');
         }
 
