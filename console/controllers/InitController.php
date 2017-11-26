@@ -31,7 +31,7 @@ class InitController extends Controller
     {
         echo "创建菜单 ...\n"; // comment 提示当前操作
         $auth = Yii::$app->authManager;
-        foreach ($this->routes as $key => $value) {
+        foreach ($this->routes() as $key => $value) {
             if ($auth->getItem($value) === null) {
                 $createPost = $auth->createPermission($value);
                 $auth->add($createPost);
