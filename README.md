@@ -16,7 +16,7 @@ PHP >= 5.6.0.
 ### Clone from Github
 
 ~~~
-git clone https://github.com/toshcn/yii-len168
+git clone https://github.com/toshcn/yii-len168 yoursite
 ~~~
 
 ### Composer
