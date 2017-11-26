@@ -97,7 +97,7 @@ Are your sure to create an Administrator? (yes|no) [no]:yes
 6. 配置网站域名位于 `common/config/main-local.php`
 - `define('DOMAIN', 'yoursite.com');`
 7. WEB服务器配置域名指定前后台应用:
-
+- WEB服务器如：nginx, apache请配置好伪静态.
 - for frontend `/path/to/yoursite/frontend/web/` and using the URL `http://frontend/`
 - for backend `/path/to/yoursite/backend/web/` and using the URL `http://backend/`
 
