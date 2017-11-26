@@ -100,6 +100,7 @@ Are your sure to create an Administrator? (yes|no) [no]:yes
 
 - for frontend `/path/to/yoursite/frontend/web/` and using the URL `http://frontend/`
 - for backend `/path/to/yoursite/backend/web/` and using the URL `http://backend/`
+
 8. 终端执行`php yii worker`打开`Beanstalkd`消息队列.
 9. 访问[前台:http:://frontend]
 10. 访问[后台:http:://backend]
