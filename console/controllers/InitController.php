@@ -13,6 +13,7 @@ use yii\console\Controller;
 use common\models\User;
 use common\models\UserLogin;
 use common\models\UserInfo;
+use mdm\admin\models\Menu;
 
 /**
  * Application initialization console controllers to create Administrator and something.
@@ -37,6 +38,19 @@ class InitController extends Controller
                 $auth->add($createPost);
             }
         }
+        $menus = $this->menus();
+        $menu = new Menu();
+        foreach ($menus as $key => $value) {
+            $menu->id = $value[0];
+            $menu->name = $value[1];
+            if ($value[2]) {
+                $menu->parent = $value[2];
+            }
+            $menu->route = $value[3];
+            $menu->isNewRecord = true;
+            $menu->save();
+        }
+        echo "创建完成 ...\n"; // comment 提示当前操作
         return self::EXIT_CODE_NORMAL;
     }
 
@@ -110,7 +124,10 @@ class InitController extends Controller
         return self::EXIT_CODE_NORMAL;
     }
 
-
+    /**
+     * 路由荐
+     * @return array
+     */
     private function routes()
     {
         return [
@@ -165,6 +182,27 @@ class InitController extends Controller
             '/user/login',
             '/user/logout',
             '/user/view',
+        ];
+    }
+
+    /**
+     * 菜单项
+     * @return array
+     */
+    private function menus()
+    {
+        return [
+            [1, '仪表盘', '', '/system/index'],
+            [2, '文章', '', '/post/index'],
+            [3, '全部文章', 2, '/post/index'],
+            [4, '文章分类', 2, '/post/category'],
+            [5, '外观', '', '/surface/index'],
+            [6, '前台菜单', 5, '/surface/menus'],
+            [7, '链接', '', '/link/index'],
+            [8, '全部链接', 7, '/link/index'],
+            [9, '链接分类', 7, '/link/category'],
+            [10, '会员', '', '/user/index'],
+            [11, '全部会员', 10, '/user/index'],
         ];
     }
 }
