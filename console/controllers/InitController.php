@@ -24,6 +24,23 @@ use common\models\UserInfo;
 class InitController extends Controller
 {
     /**
+     * 初始化路由
+     * @return [type] [description]
+     */
+    public function actionCreateMenu()
+    {
+        echo "创建菜单 ...\n"; // comment 提示当前操作
+        $auth = Yii::$app->authManager;
+        foreach ($this->routes as $key => $value) {
+            if ($auth->getItem($value) === null) {
+                $createPost = $auth->createPermission($value);
+                $auth->add($createPost);
+            }
+        }
+        return self::EXIT_CODE_NORMAL;
+    }
+
+    /**
      * createAdministrator 创建超级管理员帐号
      * @return [type] [description]
      */
@@ -91,5 +108,63 @@ class InitController extends Controller
         }
         echo "已取消 \n";
         return self::EXIT_CODE_NORMAL;
+    }
+
+
+    private function routes()
+    {
+        return [
+            '/auth/*',
+            '/auth/error',
+            '/auth/index',
+            '/auth/login',
+            '/auth/logout',
+            '/link/*',
+            '/link/ajax-search-links',
+            '/link/category',
+            '/link/create',
+            '/link/delete',
+            '/link/error',
+            '/link/index',
+            '/link/update',
+            '/link/update-category',
+            '/link/view',
+            '/main/*',
+            '/main/error',
+            '/post/*',
+            '/post/ajax-lock',
+            '/post/ajax-nice',
+            '/post/ajax-search-posts',
+            '/post/ajax-stick',
+            '/post/category',
+            '/post/delete-category',
+            '/post/error',
+            '/post/index',
+            '/post/update-category',
+            '/site/*',
+            '/site/error',
+            '/site/index',
+            '/site/login',
+            '/site/logout',
+            '/surface/*',
+            '/surface/ajax-create-menu',
+            '/surface/ajax-search-cates',
+            '/surface/edit-nav-menu',
+            '/surface/error',
+            '/surface/index',
+            '/surface/menus',
+            '/system/*',
+            '/system/error',
+            '/system/general',
+            '/system/index',
+            '/user/*',
+            '/user/ajax-auth',
+            '/user/ajax-status',
+            '/user/error',
+            '/user/index',
+            '/user/login',
+            '/user/logout',
+            '/user/view',
+        ];
     }
 }
