@@ -74,6 +74,7 @@ return [
                         'common' => 'common.php',
                         'common/sentence' => 'sentence.php',
                         'common/label' => 'label.php',
+                        'common/term' => 'term.php',
                     ],
                 ],
                 '*' => [

@@ -50,12 +50,12 @@ class Menus extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'menuid' => Yii::t('common/termMenus', 'Menu Id'),
-            'object' => Yii::t('common/termMenus', 'Object Id'),
-            'menu_type' => Yii::t('common/termMenus', 'Menu Type'),
-            'menu_title' => Yii::t('common/termMenus', 'Menu Title'),
-            'menu_parent' => Yii::t('common/termMenus', 'Menu Parent'),
-            'menu_sort' => Yii::t('common/termMenus', 'Sort'),
+            'menuid' => 'Menu Id',
+            'object' => 'Object Id',
+            'menu_type' => 'Menu Type',
+            'menu_title' => 'Menu Title',
+            'menu_parent' => 'Menu Parent',
+            'menu_sort' => 'Sort',
         ];
     }
 
