@@ -43,6 +43,7 @@ class InitController extends Controller
         foreach ($menus as $key => $value) {
             $menu->id = $value[0];
             $menu->name = $value[1];
+            $menu->parent = 'NULL';
             if ($value[2]) {
                 $menu->parent = $value[2];
             }
