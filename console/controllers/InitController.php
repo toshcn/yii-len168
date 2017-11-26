@@ -39,16 +39,14 @@ class InitController extends Controller
             }
         }
         $menus = $this->menus();
-        $menu = new Menu();
         foreach ($menus as $key => $value) {
+            $menu = new Menu();
             $menu->id = $value[0];
             $menu->name = $value[1];
-            $menu->parent = 'NULL';
             if ($value[2]) {
                 $menu->parent = $value[2];
             }
             $menu->route = $value[3];
-            $menu->isNewRecord = true;
             $menu->save();
         }
         echo "创建完成 ...\n"; // comment 提示当前操作
