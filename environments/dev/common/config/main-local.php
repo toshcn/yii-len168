@@ -15,39 +15,15 @@ define('DOMAIN_USER_CENTER', 'user.' . DOMAIN);
 define('DOMAIN_LOGIN', 'login.' . DOMAIN);
 
 return [
+    'timeZone' => 'Asia/Shanghai',//时区
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=yii2advanced',
             'username' => 'root',
             'password' => '123456',
+            'tablePrefix'   => 'len168_',
             'charset' => 'utf8',
-        ],
-        'cache' => [
-           'class' => 'yii\caching\MemCache',
-           'servers' => [
-               [
-                   'host' => '127.0.0.1',
-                   'port' => 11211,
-                   'weight' => 60,
-               ],
-            ]
-        ],
-        'user' => [
-            'class' => 'yii\web\User',
-            'identityClass' => 'common\models\User',
-            'identityCookie' => ['name' => '_identity', 'httpOnly' => true, 'domain' => '.' . DOMAIN],
-            'enableAutoLogin' => false,
-        ],
-        'authClientCollection' => [
-            'class' => 'yii\authclient\Collection',
-            'clients' => [
-                'github' => [
-                    'class' => 'yii\authclient\clients\GitHub',
-                    'clientId' => '',
-                    'clientSecret' => '',
-                ],
-            ],
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
@@ -67,6 +43,34 @@ return [
             'messageConfig' => [
                 'charset' => 'UTF-8',
                 'from' => ['len168@len168.com' => 'len168'],
+            ],
+        ],
+        'cache' => [
+           'class' => 'yii\caching\FileCache'
+        ],
+        'user' => [
+            'class' => 'yii\web\User',
+            'identityClass' => 'common\models\User',
+            'identityCookie' => ['name' => '_identity', 'httpOnly' => true, 'domain' => '.' . DOMAIN],
+            'enableAutoLogin' => false,
+        ],
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'github' => [
+                    'class' => 'yii\authclient\clients\GitHub',
+                    'clientId' => '',
+                    'clientSecret' => '',
+                ],
+            ],
+        ],
+        'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'targets' => [
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['trace', 'info', 'error', 'warning'],
+                ],
             ],
         ],
         'beanstalk'=>[
