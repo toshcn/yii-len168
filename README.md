@@ -17,7 +17,7 @@ PHP >= 5.6.0.
 ### Clone from Github
 
 ~~~
-git clone https://github.com/toshcn/yii-len168 yoursite
+git clone https://github.com/toshcn/yii-len168.git yoursite
 ~~~
 
 ### Composer
@@ -69,4 +69,4 @@ Are your sure to create an Administrator? (yes|no) [no]:yes
 10. 访问[后台:http:://backend]
 
 ### Donate
-![](https://github.com/toshcn/yii-len168/blob/master/frontend/web/pay.jpg)
+![](https://github.com/toshcn/yii-len168/blob/master/frontend/web/pay.jpg?v=1)
