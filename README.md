@@ -69,4 +69,4 @@ Are your sure to create an Administrator? (yes|no) [no]:yes
 10. 访问[后台:http:://backend]
 
 ### Donate
-![](https://www.len168.com/upload/img/10000/pay_qrcode/pay.jpg?v=1490506788 =320)
+![](https://github.com/toshcn/yii-len168/blob/master/frontend/web/logo_300x300.jpg)
