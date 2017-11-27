@@ -3,6 +3,7 @@ Len168 Yii 2 Advanced Application Demo
 
 len168是基于Yii 2 高级模块开发的学习demo, 是本人用于学习Yii 2开发的一个练手项目, 在些分享给大家, 希望对入门的同学有所帮助.
 
+个人网站DEMO[len168.com](https:://www.len168.com)
 
 REQUIREMENTS
 ------------
@@ -67,3 +68,5 @@ Are your sure to create an Administrator? (yes|no) [no]:yes
 9. 访问[前台:http:://frontend]
 10. 访问[后台:http:://backend]
 
+### Donate
+![](https://www.len168.com/upload/img/10000/pay_qrcode/pay.jpg?v=1490506788 =320)
