@@ -69,4 +69,4 @@ Are your sure to create an Administrator? (yes|no) [no]:yes
 10. 访问[后台:http:://backend]
 
 ### Donate
-![](https://github.com/toshcn/yii-len168/blob/master/frontend/web/pay.jpg =320)
+![](https://github.com/toshcn/yii-len168/blob/master/frontend/web/pay.jpg){:width="320px"}
