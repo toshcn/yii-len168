@@ -3,6 +3,7 @@ Len168 Yii 2 Advanced Application Demo
 
 len168是基于Yii 2 高级模块开发的学习demo, 是本人用于学习Yii 2开发的一个练手项目, 在些分享给大家, 希望对入门的同学有所帮助.
 
+个人网站DEMO[len168.com](https:://www.len168.com)
 
 REQUIREMENTS
 ------------
@@ -16,7 +17,7 @@ PHP >= 5.6.0.
 ### Clone from Github
 
 ~~~
-git clone https://github.com/toshcn/yii-len168 yoursite
+git clone https://github.com/toshcn/yii-len168.git yoursite
 ~~~
 
 ### Composer
@@ -27,7 +28,7 @@ git clone https://github.com/toshcn/yii-len168 yoursite
 安装 [Composer](http://getcomposer.org/)后, 使用下面命令安装各种依赖:
 
 ~~~
-php composer.phar global require "fxp/composer-asset-plugin:1.0.0"
+php composer.phar global require "fxp/composer-asset-plugin:~1.0.0"
 php composer.phar install
 ~~~
 
@@ -67,3 +68,5 @@ Are your sure to create an Administrator? (yes|no) [no]:yes
 9. 访问[前台:http:://frontend]
 10. 访问[后台:http:://backend]
 
+### Donate
+![](https://github.com/toshcn/yii-len168/blob/master/frontend/web/pay.jpg?v=1)
