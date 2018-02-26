@@ -28,7 +28,7 @@ git clone https://github.com/toshcn/yii-len168.git yoursite
 安装 [Composer](http://getcomposer.org/)后, 使用下面命令安装各种依赖:
 
 ~~~
-php composer.phar global require "fxp/composer-asset-plugin:1.0.0"
+php composer.phar global require "fxp/composer-asset-plugin:~1.0.0"
 php composer.phar install
 ~~~
 
