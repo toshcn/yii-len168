@@ -322,19 +322,19 @@ $this->params['description'] = $post['description'];
                 return false;
             });
 
-
             $('#send-comment-login').on('click.forLogin', showLoginWidget);
             //统计输入字数
             $('[name="send[comment]"]').on('input', function() {
                 var txt = $(this).val();
                 var len = txt.replace(/[^\x00-\xff]/g,"aaa").length;
-                var maxlen = <?= Comments::TEXT_MAX_LENGHT ?>;
+                var maxlen = parseInt("<?= Comments::TEXT_MAX_LENGHT ?>");
                 if (len > maxlen) {
                     $(this).val(txt.substr(0, maxlen));
                     $('#comment-length').text(0);
                 } else {
-                    $('#comment-length').text(maxlen - len);
+                    $('#comment-length').text(len);
                 }
+                $('#comment-can-length').text(maxlen - len);
             });
             //发表评论
             $('#send-comment').on('click.sendComment', sendComment);
@@ -515,7 +515,6 @@ $this->params['description'] = $post['description'];
 
             $('#article-content [name="my-'+reply.comment_id+'"]').append(myHtml);
 
-
             $('#article-content .timeago').timeago();//时间美化
             var cmd = "comment-md-"+reply.comment_id+"-"+reply.replyid;
             var mymd = "my-md-"+reply.comment_id+"-"+reply.replyid;
@@ -611,7 +610,6 @@ $this->params['description'] = $post['description'];
                 $this.attr('data-show', 'hide');
                 $this.html('收起回复 <i class="fa fa-angle-double-up"></i>');
             }
-
         }
 
         //获取评论的回复
@@ -665,9 +663,7 @@ $this->params['description'] = $post['description'];
                 $('#article-content .timeago').timeago();//时间美化
                 createMarkdownHTMLView();
             }
-
         }
-
     });
 
 </script>

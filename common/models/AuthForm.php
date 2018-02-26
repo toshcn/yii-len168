@@ -72,8 +72,8 @@ class AuthForm extends Model
 
             ['password', 'match', 'pattern' => '/^[A-Za-z]\w+$/', 'message' => Yii::t('common/sentence', 'English begin and English numeral underline combination.')],
 
+            [['os', 'browser'], 'default', 'value' => ''],
             [['os', 'browser'], 'string', 'max' => 32],
-            [['os', 'browser'], 'safe'],
             ['captcha', 'captcha', 'captchaAction' => 'ucenter/auth/captcha'],
             ['agreement', 'compare', 'compareValue' => self::YES, 'message' => Yii::t('common/sentence', 'Must agree to the membership agreement.')],
             ['nickname', 'validateNickname'],
