@@ -55,6 +55,7 @@ class LoginForm extends Model
             [['os', 'browser', 'username'], 'trim'],
             // username and password are both required
             [['username', 'password'], 'required'],
+            [['os', 'browser'], 'default', 'value' => ''],
             [['os', 'browser'], 'string'],
             // username is validated by validateUsername()
             ['username', 'validateUsername'],

@@ -39,6 +39,9 @@ class OAuthHandler
         /* @var Auth $auth */
         $auth = Auth::find()->where(['source' => $this->client->getId(), 'source_id' => $id])->one();
 
+
+        Yii::$app->getSession()->set('loginOS', $this->client->getTitle());
+        Yii::$app->getSession()->set('loginBrowser', [$this->client->getTitle(), '']);
         if (Yii::$app->getUser()->isGuest) {
             if ($auth) { // login
                 /* @var User $user */
