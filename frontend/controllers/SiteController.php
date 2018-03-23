@@ -90,9 +90,10 @@ class SiteController extends Controller
             'pagination' => $pagination
         ]);
     }
+
     /**
      * 退出登录 logout
-     * @return redirect to home page
+     * @return \yii\web\Response to home page
      */
     public function actionLogout()
     {
