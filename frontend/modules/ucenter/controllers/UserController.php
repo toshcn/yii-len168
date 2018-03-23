@@ -33,15 +33,16 @@ class UserController extends CommonController
 {
     /**
      * 会员个人主页
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionIndex()
     {
         return $this->redirect(['/ucenter/user/posts']);
     }
+
     /**
      * 个人信息
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionDetail()
     {
@@ -62,7 +63,7 @@ class UserController extends CommonController
 
     /**
      * 文章
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionPosts()
     {
@@ -108,9 +109,10 @@ class UserController extends CommonController
             'pagination' => $pagination
         ]);
     }
+    
     /**
      * 我的评论
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionComments()
     {
@@ -119,7 +121,7 @@ class UserController extends CommonController
             ->select(['commentid', 'post_id', 'apps', 'opps', 'comment_at'])
             ->joinWith([
                 'post' => function ($query) {
-                    return $query->select(['title']);
+                    return $query->select(['title', 'postid']);
                 }
             ]);
         $pagination = new Pagination([
@@ -143,7 +145,7 @@ class UserController extends CommonController
 
     /**
      * 我的私信
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionMessages()
     {
@@ -187,7 +189,7 @@ class UserController extends CommonController
 
     /**
      * 关注页
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionFriends()
     {
@@ -234,7 +236,7 @@ class UserController extends CommonController
 
     /**
      * 粉丝页
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionFollowers()
     {
@@ -282,7 +284,7 @@ class UserController extends CommonController
 
     /**
      * 修改个人信息
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionInfo()
     {
@@ -310,7 +312,7 @@ class UserController extends CommonController
 
     /**
      * 第三方绑定列表
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionLinkOauth()
     {
@@ -324,7 +326,9 @@ class UserController extends CommonController
 
     /**
      * 解绑第三方帐号
-     * @return [type] [description]
+     * @return mixed
+     * @throws \Exception
+     * @throws \yii\db\StaleObjectException
      */
     public function actionUnlinkOauth()
     {
@@ -340,7 +344,7 @@ class UserController extends CommonController
 
     /**
      * 邀请注册页
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionInvite()
     {
@@ -358,7 +362,7 @@ class UserController extends CommonController
     }
     /**
      * 发送邀请码
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionInviteGuest()
     {
@@ -382,7 +386,7 @@ class UserController extends CommonController
 
     /**
      * 修改个人头像
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionAvatar()
     {
@@ -396,7 +400,7 @@ class UserController extends CommonController
 
     /**
      * 修改收款二维码
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionPayQrcode()
     {
@@ -409,7 +413,7 @@ class UserController extends CommonController
 
     /**
      * 重新发送邀请码
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionResendInvite()
     {
@@ -424,7 +428,7 @@ class UserController extends CommonController
     }
     /**
      * 获取邀请码列表
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionGetInvitesList()
     {
@@ -449,7 +453,7 @@ class UserController extends CommonController
     }
     /**
      * 加关注
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionAddFollower()
     {
@@ -480,7 +484,7 @@ class UserController extends CommonController
     }
     /**
      * 取消关注
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionRemoveFollower()
     {
@@ -503,7 +507,7 @@ class UserController extends CommonController
     }
     /**
      * 发纸条
-     * @return [type] [description]
+     * @return mixed
      */
     public function actionAjaxSendMessage()
     {

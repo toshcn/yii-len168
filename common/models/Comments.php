@@ -120,8 +120,8 @@ class Comments extends \yii\db\ActiveRecord
 
     /**
      * 获取评论立场的字符表达
-     * @param  [type] $stand [description]
-     * @return [type]        [description]
+     * @param  integer $stand
+     * @return string
      */
     public function transformCommentStand($stand)
     {
@@ -137,9 +137,11 @@ class Comments extends \yii\db\ActiveRecord
         }
         return $str;
     }
+
     /**
      * 添加评论
      * @param array $content 评论表单
+     * @return bool
      */
     public function addComment($content)
     {
@@ -164,11 +166,13 @@ class Comments extends \yii\db\ActiveRecord
 
         return false;
     }
+
     /**
      * 增加正方评论数
      * @param  integer $commentid 评论ID
-     * @param  integer $hp        改变的生命值
+     * @param  integer $hp 改变的生命值
      * @return boolean|integer            成功或失败
+     * @throws \yii\db\Exception
      */
     public static function increaseApps($commentid, $hp)
     {
@@ -177,11 +181,13 @@ class Comments extends \yii\db\ActiveRecord
         }
         return false;
     }
+
     /**
      * 增加反方评论数
      * @param  integer $commentid 评论ID
-     * @param  integer $hp        改变的生命值
+     * @param  integer $hp 改变的生命值
      * @return boolean|integer            成功或失败
+     * @throws \yii\db\Exception
      */
     public static function increaseOpps($commentid, $hp)
     {
@@ -194,8 +200,9 @@ class Comments extends \yii\db\ActiveRecord
     /**
      * 改变生命值
      * @param  integer $commentid 评论ID
-     * @param  integer $hp        改变的生命值
+     * @param  integer $hp 改变的生命值
      * @return boolean|integer            成功或失败
+     * @throws \yii\db\Exception
      */
     public static function changeHp($commentid, $hp)
     {

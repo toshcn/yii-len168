@@ -30,6 +30,8 @@ return [
             ],
         ],
         'session' => [
+            'class' => 'yii\web\CacheSession',
+            'name' => 'len168-site',
             'cookieParams' => ['domain' => '.' . DOMAIN, 'lifetime' => 24 * 3600],
             'timeout' => 3600,
         ],
