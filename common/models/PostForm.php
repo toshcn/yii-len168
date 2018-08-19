@@ -159,7 +159,7 @@ class PostForm extends Model
             $post->title = Html::encode($this->title);
             $post->user_id = Yii::$app->getUser()->getId();
             $post->author = Html::encode($this->author);
-            $post->categorys = implode(',', $this->categorys);//新分类
+            $post->categorys = (string) implode(',', $this->categorys);//新分类
             $post->image = Html::encode($this->image);
             $post->image_suffix = Html::encode($this->imageSuffix);
             $post->content = $this->content;

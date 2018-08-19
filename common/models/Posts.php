@@ -56,7 +56,7 @@ class Posts extends \yii\db\ActiveRecord
             [['title', 'author', 'categorys', 'content', 'image', 'original_url', 'description'], 'trim'],
             [['title', 'author', 'content'], 'required'],
             ['title', 'string', 'max' => 60],
-            ['author', 'string', 'max' => 10],
+            ['author', 'string', 'max' => 15],
             ['image_suffix', 'string', 'max' => 20],
 
             [['iscomment', 'isopen'], 'default', 'value' => self::YES],
