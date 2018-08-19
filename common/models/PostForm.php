@@ -163,7 +163,7 @@ class PostForm extends Model
             $post->image = Html::encode($this->image);
             $post->image_suffix = Html::encode($this->imageSuffix);
             $post->content = $this->content;
-            $post->content_len = mb_strlen($this->content);
+            $post->content_len = (int) mb_strlen($this->content);
             $post->description = $this->description;
             $post->original_url = Html::encode($this->originalUrl);
             $post->copyright = intval($this->copyright);
@@ -182,7 +182,7 @@ class PostForm extends Model
 
             $post->created_at = date('Y-m-d H:i:s');
             $post->updated_at = $post->created_at;
-            $post->content_len = mb_strlen($this->content);
+
             if ($post->save(false)) {
                 //添加文章属性
                 $attr = new PostAttributes();
@@ -211,11 +211,11 @@ class PostForm extends Model
             $this->_oldCategorys = $post->categorys;//记录旧的分类
             $post->title = Html::encode($this->title);
             $post->author = Html::encode($this->author);
-            $post->categorys = implode(',', $this->categorys);//新分类
+            $post->categorys = (string) implode(',', $this->categorys);//新分类
             $post->image = Html::encode($this->image);
             $post->image_suffix = Html::encode($this->imageSuffix);
             $post->content = $this->content;
-            $post->content_len = strlen($this->content);
+            $post->content_len = (int) mb_strlen($this->content);
             $post->description = $this->description;
             $post->original_url = Html::encode($this->originalUrl);
             $post->copyright = intval($this->copyright);
