@@ -88,7 +88,7 @@ class PostForm extends Model
             ['posttype', 'default', 'value' => Posts::POST_TYPE_ORIGINAL],
             ['posttype', 'in', 'range' => [Posts::POST_TYPE_ORIGINAL, Posts::POST_TYPE_REPRINT, Posts::POST_TYPE_TRANSLATE]],
 
-            [['postid', 'spend', 'parent', 'isdraft'], 'integer'],
+            [['content_len', 'postid', 'spend', 'parent', 'isdraft'], 'integer'],
 
             ['originalUrl', 'url'],
             [['originalUrl', 'image', 'description'], 'string', 'max' => 255],
@@ -163,7 +163,7 @@ class PostForm extends Model
             $post->image = Html::encode($this->image);
             $post->image_suffix = Html::encode($this->imageSuffix);
             $post->content = $this->content;
-            $post->content_len = (int) mb_strlen($this->content);
+            $post->content_len = intval(mb_strlen($this->content));
             $post->description = $this->description;
             $post->original_url = Html::encode($this->originalUrl);
             $post->copyright = intval($this->copyright);
@@ -215,7 +215,7 @@ class PostForm extends Model
             $post->image = Html::encode($this->image);
             $post->image_suffix = Html::encode($this->imageSuffix);
             $post->content = $this->content;
-            $post->content_len = (int) mb_strlen($this->content);
+            $post->content_len = intval(mb_strlen($this->content));
             $post->description = $this->description;
             $post->original_url = Html::encode($this->originalUrl);
             $post->copyright = intval($this->copyright);
