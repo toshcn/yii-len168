@@ -122,7 +122,7 @@ class ArticleController extends Controller
                 throw new HttpException(404, '您在访问的文章不存在!');
             }
         }
-        if (Yii::$app->getUser()->getId() != 1000) {
+        if (Yii::$app->getUser()->getId() != 10000) {
             if ($post['status'] == Posts::STATUS_DRAFT && $post['user_id'] != Yii::$app->getUser()->getId()) {
                 throw new HttpException(404, '您在访问的文章未发表或非公开!');
             } else if (!$post['isopen'] && $post['user_id'] != $uid) {
