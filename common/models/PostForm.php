@@ -27,6 +27,7 @@ class PostForm extends Model
     public $image;              //文章主图
     public $imageSuffix;        //文章主图
     public $content;            //文章内容
+    public $content_len;        //文章内容长度
     public $categorys;          //分类 array
     public $description;        //文章描述
     public $originalUrl;        //文章转载的原地址
