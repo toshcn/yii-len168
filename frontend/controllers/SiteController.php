@@ -93,7 +93,7 @@ class SiteController extends Controller
 
     /**
      * 退出登录 logout
-     * @return \yii\web\Response to home page
+     * @return redirect to home page
      */
     public function actionLogout()
     {

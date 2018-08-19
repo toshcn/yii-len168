@@ -166,19 +166,19 @@ class PostForm extends Model
             $post->content_len = mb_strlen($this->content);
             $post->description = $this->description;
             $post->original_url = Html::encode($this->originalUrl);
-            $post->copyright = $this->copyright;
-            $post->spend = $this->spend;
-            $post->paytype = $this->paytype;
-            $post->posttype = $this->posttype;
-            $post->parent = $this->parent;
-            $post->iscomment = $this->iscomment;
-            $post->isopen = $this->isopen;
+            $post->copyright = intval($this->copyright);
+            $post->spend = intval($this->spend);
+            $post->paytype = intval($this->paytype);
+            $post->posttype = intval($this->posttype);
+            $post->parent = intval($this->parent);
+            $post->iscomment = intval($this->iscomment);
+            $post->isopen = intval($this->isopen);
 
             $post->ispay = $post->spend && $post->paytype ? Posts::YES : Posts::NO;
             $post->status = $this->isdraft ? Posts::STATUS_DRAFT : Posts::STATUS_ONLINE;
 
-            $post->os = Yii::$app->getSession()->get('loginOS');
-            $post->browser = Yii::$app->getSession()->get('loginBrowser');
+            $post->os = Html::encode(Yii::$app->getSession()->get('loginOS'));
+            $post->browser = Html::encode(Yii::$app->getSession()->get('loginBrowser'));
 
             $post->created_at = date('Y-m-d H:i:s');
             $post->updated_at = $post->created_at;
