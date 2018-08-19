@@ -106,7 +106,7 @@ class ArticleController extends Controller
         $postid = (int)Yii::$app->getRequest()->get('id', 0);
         $post = $cache->get(__METHOD__ . 'postCache' . $postid);
 
-        if (!$post) {
+        if ($post === false) {
             $model = new PostViews();
             $post = $model->getPostViewsByPost($postid)->asArray()->one();
             $post['typeStr'] = Posts::transformPostType(intval($post['posttype']));
