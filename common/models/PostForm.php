@@ -177,8 +177,8 @@ class PostForm extends Model
             $post->ispay = $post->spend && $post->paytype ? Posts::YES : Posts::NO;
             $post->status = $this->isdraft ? Posts::STATUS_DRAFT : Posts::STATUS_ONLINE;
 
-            $post->os = Html::encode(Yii::$app->getSession()->get('loginOS'));
-            $post->browser = Html::encode(Yii::$app->getSession()->get('loginBrowser'));
+            $post->os = Yii::$app->getSession()->get('loginOS');
+            $post->browser = Yii::$app->getSession()->get('loginBrowser');
 
             $post->created_at = date('Y-m-d H:i:s');
             $post->updated_at = $post->created_at;
@@ -218,14 +218,14 @@ class PostForm extends Model
             $post->content_len = strlen($this->content);
             $post->description = $this->description;
             $post->original_url = Html::encode($this->originalUrl);
-            $post->copyright = $this->copyright;
-            $post->spend = $this->spend;
-            $post->paytype = $this->paytype;
-            $post->posttype = $this->posttype;
-            $post->parent = $this->parent;
-            $post->iscomment = $this->iscomment;
-            $post->isopen = $this->isopen;
-            $post->ispay = $this->ispay;
+            $post->copyright = intval($this->copyright);
+            $post->spend = intval($this->spend);
+            $post->paytype = intval($this->paytype);
+            $post->posttype = intval($this->posttype);
+            $post->parent = intval($this->parent);
+            $post->iscomment = intval($this->iscomment);
+            $post->isopen = intval($this->isopen);
+            $post->ispay = intval($this->ispay);
             $post->ispay = $post->spend && $post->paytype ? Posts::YES : Posts::NO;
             $post->status = ($post->status != Posts::STATUS_ONLINE) && $this->isdraft ? Posts::STATUS_DRAFT : Posts::STATUS_ONLINE;
             $post->updated_at = date('Y-m-d H:i:s');
